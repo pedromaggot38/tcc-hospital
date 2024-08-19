@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { BadgeHelp, HouseIcon, LogOut, Newspaper, PanelBottom, Settings2, Users } from "lucide-react";
+import { BadgeHelp, HouseIcon, LogOut, Menu, Newspaper, Settings2, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -99,7 +99,7 @@ export function Sidebar() {
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button size="icon" variant="outline" className="sm:hidden">
-                                <PanelBottom className="h-5 w-5" />
+                                <Menu className="h-5 w-5" />
                                 <span className="sr-only">Abrir / Fechar menu</span>
                             </Button>
                         </SheetTrigger>
@@ -128,7 +128,7 @@ export function Sidebar() {
                                     /*          TODO          */
                                     /*   Botão de Dark mode   */
                                 }
-                                
+
                                 <Link href="#" className="flex items-center space-x-4 p-2 rounded-lg hover:bg-primary/20">
                                     <span className="text-lg"><LogOut className="text-red-600" /></span>
                                     <span className="font-medium">Sair</span>
