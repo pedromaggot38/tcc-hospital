@@ -4,6 +4,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { BadgeHelp, HouseIcon, LogOut, Menu, Newspaper, Settings2, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ModeToggle } from "../modeToggle";
 
 const menuItems = [
     {
@@ -41,7 +42,7 @@ const menuItems = [
 export function Sidebar() {
     return (
         <div className="flex w-full flex-col bg-muted/40">
-            <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col">
+            <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col dark:bg-black">
                 <nav className="flex flex-col items-center gap-4 px-2 py-5">
                     <TooltipProvider delayDuration={100}>
                         <Image src="/logo.png" alt="Logo" width={50} height={50} className="bg-background" />
@@ -54,7 +55,7 @@ export function Sidebar() {
                                         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full hover:bg-primary/20
                                         bg-background"
                                     >
-                                        <span className="text-lg text-gray-700">{item.icon}</span>
+                                        <span className="text-lg text-gray-700 dark:text-white">{item.icon}</span>
                                         <span className="sr-only">{item.accessibility}</span>
                                     </Link>
                                 </TooltipTrigger>
@@ -68,10 +69,7 @@ export function Sidebar() {
 
                 <nav className="flex flex-col items-center gap-4 px-2 py-5 mt-auto text">
 
-                    {
-                        /*          TODO          */
-                        /*   Botão de Dark mode   */
-                    }
+                    <ModeToggle />
 
                     <TooltipProvider delayDuration={100}>
                         <Tooltip>
@@ -124,10 +122,9 @@ export function Sidebar() {
 
                             <nav className="mt-auto">
 
-                                {
-                                    /*          TODO          */
-                                    /*   Botão de Dark mode   */
-                                }
+                                <div className="p-2 rounded-lg hover:bg-primary/20">
+                                    <ModeToggle />
+                                </div>
 
                                 <Link href="#" className="flex items-center space-x-4 p-2 rounded-lg hover:bg-primary/20">
                                     <span className="text-lg"><LogOut className="text-red-600" /></span>

@@ -30,10 +30,10 @@ const cardItems = [
 
 export default function Dashboard() {
   return (
-    <main className="sm:ml-14 p-2">
-      <section className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+    <main className="">
+      <section className="grid grid-cols-2 gap-2 lg:grid-cols-4 ">
         {cardItems.map((item, index) => (
-          <Card key={index}>
+          <Card key={index} className="dark:bg-">
             <CardHeader>
               <div className="flex items-center justify-center">
                 <CardTitle className="sm:text-xl text-lg text-gray-800 select-none">

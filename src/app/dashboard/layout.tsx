@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { DashboardHeader } from "@/components/dashboard/header";
 import Footer from "@/components/dashboard/footer";
+import { ThemeProvider } from "@/components/dashboard/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,21 +19,28 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body className={cn(
-        "min-h-screen bg-background font-sans antialiased",
+        "min-h-screen bg-background font-sans antialiased dark:bg-black",
         inter.className
       )}>
-        <div className="flex flex-col">
-          <Sidebar />
-          <div className="">
-            <div className="ml-14 hidden sm:flex"><DashboardHeader /></div>
-            <main className="">
-              {children}
-            </main>
-            <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex flex-col">
+            <Sidebar />
+            <div className="sm:ml-14 sm:p-2 p-2">
+              <div className="hidden sm:flex"><DashboardHeader /></div>
+              <main className="">
+                {children}
+              </main>
+              <Footer />
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   );
