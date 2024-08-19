@@ -42,7 +42,7 @@ const menuItems = [
 export function Sidebar() {
     return (
         <div className="flex w-full flex-col bg-muted/40">
-            <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col dark:bg-black">
+            <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col">
                 <nav className="flex flex-col items-center gap-4 px-2 py-5">
                     <TooltipProvider delayDuration={100}>
                         <Image src="/logo.png" alt="Logo" width={50} height={50} className="bg-background" />

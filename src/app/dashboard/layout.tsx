@@ -21,7 +21,7 @@ export default function DashboardLayout({
   return (
     <html lang="en" className="h-full">
       <body className={cn(
-        "min-h-screen bg-background font-sans antialiased dark:bg-black",
+        "min-h-screen bg-background font-sans antialiased",
         inter.className
       )}>
         <ThemeProvider
