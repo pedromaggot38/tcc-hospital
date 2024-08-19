@@ -2,6 +2,49 @@ import { Sidebar } from "@/components/dashboard/sidebar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { DashboardHeader } from "@/components/dashboard/header";
+import Footer from "@/components/dashboard/footer";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "",
+};
+
+export default function DashboardLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={cn(
+        "min-h-screen bg-background font-sans antialiased",
+        inter.className
+      )}>
+        <div className="flex flex-col">
+          <Sidebar />
+          <div className="">
+            <div className="ml-14 hidden sm:flex"><DashboardHeader /></div>
+            <main className="">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </div>
+      </body>
+    </html>
+  );
+}
+
+
+{/*
+  
+import { Sidebar } from "@/components/dashboard/sidebar";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,3 +70,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+*/}

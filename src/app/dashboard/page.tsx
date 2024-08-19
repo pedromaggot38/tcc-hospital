@@ -1,3 +1,6 @@
+import { LastNews } from "@/components/dashboard/lastnews";
+import { LastUsers } from "@/components/dashboard/lastusers";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
@@ -48,21 +51,9 @@ export default function Dashboard() {
         ))}
       </section>
       <Separator className="my-3" />
-      <section className="grid grid-cols-1 gap-2 lg:grid-cols-2 sm:grid-cols-1 row-span-3">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-center">
-              <CardTitle className="sm:text-xl text-lg text-gray-800 select-none">
-                Últimos Posts
-              </CardTitle>
-            </div>
-          </CardHeader>
-
-          <CardContent className="text-center font-bold text-cyan-500">
-            {/* TODO - Implementar lista de últimas notícias postadas no banco de dados */}
-            teste
-          </CardContent>
-        </Card>
+      <section className="grid grid-cols-1 gap-2 lg:grid-cols-2 sm:grid-cols-1 row-span-3 h-600">
+        <LastUsers />
+        <LastNews />
       </section>
     </main>
   );

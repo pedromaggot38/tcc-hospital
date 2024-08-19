@@ -54,7 +54,7 @@ export function Sidebar() {
                                         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full hover:bg-primary/20
                                         bg-background"
                                     >
-                                        <span className="text-lg">{item.icon}</span>
+                                        <span className="text-lg text-gray-700">{item.icon}</span>
                                         <span className="sr-only">{item.accessibility}</span>
                                     </Link>
                                 </TooltipTrigger>
