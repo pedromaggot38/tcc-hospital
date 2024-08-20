@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-export function settingsSecurity() {
+export function SecuritySettings() {
     return (
         <div>
             <Card x-chunk="dashboard-04-chunk-1">

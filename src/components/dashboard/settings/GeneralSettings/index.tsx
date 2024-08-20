@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 
-export function settingsGeneral() {
+export function GeneralSettings() {
     return (
         <div>
             <Card x-chunk="dashboard-04-chunk-1">
