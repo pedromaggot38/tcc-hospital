@@ -6,6 +6,6 @@ export const RegisterSchema = z.object({
     role: z.enum(['root', 'admin', 'journalist']),
     isBlocked: z.boolean(),
     name: z.string().min(6),
-    phone: z.number().max(11),
+    phone: z.number().max(12),
     email: z.string().email(),
 })

@@ -1,11 +1,22 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 
 export function GeneralSettings() {
     return (
-        <div>
+        <div className="flex flex-col gap-3">
             <Card x-chunk="dashboard-04-chunk-1">
                 <CardHeader>
                     <CardTitle>Seu Nome</CardTitle>
@@ -68,7 +79,7 @@ export function GeneralSettings() {
                   TODO
                   CRUD
                 */}
-                        <Input placeholder="seuemail@email.com" />
+                        <Input placeholder="11-999999999" />
                     </form>
                 </CardContent>
             </Card>
@@ -84,12 +95,14 @@ export function GeneralSettings() {
                         </label>
                     </div>
                     <AlertDialog>
-                        <AlertDialogTrigger className="bg-red-500 ">Salvar</AlertDialogTrigger>
+                        <AlertDialogTrigger>
+                            <Button variant="outline">Salvar</Button>
+                        </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
                                 <AlertDialogTitle>Confirmar Alteração</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                Você tem certeza que deseja alterar os dados?
+                                    Você tem certeza que deseja alterar os dados?
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>

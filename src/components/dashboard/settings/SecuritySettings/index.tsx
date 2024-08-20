@@ -1,11 +1,19 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 export function SecuritySettings() {
     return (
-        <div>
+        <div className="flex flex-col gap-3">
             <Card x-chunk="dashboard-04-chunk-1">
                 <CardHeader>
                     <CardTitle>Alterar Senha</CardTitle>
@@ -43,8 +51,10 @@ export function SecuritySettings() {
                     </form>
                 </CardContent>
                 <CardFooter className="border-t px-6 py-4">
-                    <AlertDialog>
-                        <AlertDialogTrigger className="bg-red-500 ">Salvar</AlertDialogTrigger>
+                <AlertDialog>
+                        <AlertDialogTrigger>
+                            <Button variant="outline">Salvar</Button>
+                        </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
                                 <AlertDialogTitle>Confirmar Alteração</AlertDialogTitle>

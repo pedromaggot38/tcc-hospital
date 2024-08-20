@@ -22,7 +22,6 @@ export default function Dashboard() {
         </nav>
         <div className="grid gap-6">
           <GeneralSettings />
-
         </div>
       </div>
     </main>

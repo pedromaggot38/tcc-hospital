@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export function LastNews() {
   return (
@@ -10,12 +10,28 @@ export function LastNews() {
             Últimos Posts
           </CardTitle>
         </div>
-        <Separator className="px-2" />
       </CardHeader>
-      <CardContent className="text-center font-bold text-cyan-500">
+      <CardContent className="font-bold text-cyan-500">
         {/* TODO - Implementar lista de últimas notícias postadas no banco de dados */}
         <article>
-
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Título</TableHead>
+                <TableHead>Criado por</TableHead>
+                <TableHead>Publicado</TableHead>
+                <TableHead>Criado em</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>Lorem Ipsium</TableCell>
+                <TableCell>Pedro Sanches</TableCell>
+                <TableCell>Sim</TableCell>
+                <TableCell>19/08/2024</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </article>
       </CardContent>
     </Card>
