@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button"
+'use client'
+import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -6,11 +7,12 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { CircleUser, Menu, Package2, Search } from "lucide-react"
-import Link from "next/link"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { CircleUser, Menu, Package2, Search } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const menuItems = [
     {
@@ -31,6 +33,8 @@ const menuItems = [
 ];
 
 export function DashboardHeader() {
+    const pathname = usePathname();
+
     return (
         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
             <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -45,9 +49,9 @@ export function DashboardHeader() {
                     <Link
                         key={item.title}
                         href={item.path}
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        className={`text-muted-foreground transition-colors hover:text-foreground ${pathname === item.path ? 'text-primary font-semibold' : ''}`}
                     >
-                        <span className="">{item.title}</span>
+                        <span>{item.title}</span>
                         <span className="sr-only">, {item.accessibility}</span>
                     </Link>
                 ))}
@@ -77,9 +81,9 @@ export function DashboardHeader() {
                             <Link
                                 key={item.title}
                                 href={item.path}
-                                className="text-muted-foreground hover:text-foreground"
+                                className={`text-muted-foreground transition-colors hover:text-foreground ${pathname === item.path ? 'text-primary font-semibold' : ''}`}
                             >
-                                <span className="">{item.title}</span>
+                                <span>{item.title}</span>
                                 <span className="sr-only">, {item.accessibility}</span>
                             </Link>
                         ))}
@@ -109,21 +113,19 @@ export function DashboardHeader() {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <Link
-                                key="settings"
                                 href="/dashboard/settings"
-                                className="text-muted-foreground hover:text-foreground"
+                                className={`text-muted-foreground hover:text-foreground ${pathname === '/dashboard/settings' ? 'text-primary font-semibold' : ''}`}
                             >
-                                <span className="">Configurações</span>
+                                <span>Configurações</span>
                                 <span className="sr-only">Configurações</span>
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Link
-                                key="Ajuda"
                                 href="/help"
-                                className="text-muted-foreground hover:text-foreground"
+                                className={`text-muted-foreground hover:text-foreground ${pathname === '/help' ? 'text-primary font-semibold' : ''}`}
                             >
-                                <span className="">Ajuda</span>
+                                <span>Ajuda</span>
                                 <span className="sr-only">Ajuda</span>
                             </Link>
                         </DropdownMenuItem>
@@ -133,5 +135,5 @@ export function DashboardHeader() {
                 </DropdownMenu>
             </div>
         </header>
-    )
+    );
 }
