@@ -2,8 +2,8 @@ import { Sidebar } from "@/components/dashboard/sidebar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { DashboardHeader } from "@/components/dashboard/header";
-import Footer from "@/components/dashboard/footer";
+import { DashboardHeader } from "@/components/dashboard/dashboardHeader";
+import Footer from "@/components/dashboard/dashboardFooter";
 import { ThemeProvider } from "@/components/dashboard/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -30,16 +30,11 @@ export default function DashboardLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col">
-            <Sidebar />
-            <div className="sm:ml-14 sm:p-2 p-2">
-              <div className="hidden sm:flex"><DashboardHeader /></div>
-              <main className="">
-                {children}
-              </main>
-              <Footer />
-            </div>
-          </div>
+          <DashboardHeader />
+          <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
+            {children}
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

@@ -45,7 +45,7 @@ export function Sidebar() {
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col">
                 <nav className="flex flex-col items-center gap-4 px-2 py-5">
                     <TooltipProvider delayDuration={100}>
-                        <Image src="/logo.png" alt="Logo" width={50} height={50} className="bg-background" />
+                        <Image src="/logo.png" alt="Logo" width={50} height={50} className="bg-transparent" />
 
                         {menuItems.map((item) => (
                             <Tooltip key={item.title}>
@@ -53,7 +53,7 @@ export function Sidebar() {
                                     <Link
                                         href={item.path}
                                         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full hover:bg-primary/20
-                                        bg-background"
+                                        bg-transparent p-6"
                                     >
                                         <span className="text-lg text-gray-700 dark:text-white">{item.icon}</span>
                                         <span className="sr-only">{item.accessibility}</span>
