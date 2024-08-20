@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "@/schemas/auth/user"
+import { RegisterSchema } from "@/schemas/auth/user"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -19,15 +19,20 @@ export const RegisterForm = () => {
     const [success, setSuccess] = useState<string | undefined>("")
     const [isPending, startTransition] = useTransition()
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const form = useForm<z.infer<typeof RegisterSchema>>({
+        resolver: zodResolver(RegisterSchema),
         defaultValues: {
             username: '',
             password: '',
+            role: 'journalist',
+            isBlocked: false,
+            name: '',
+            phone:'',
+            email: ''
         }
     })
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         setError('')
         setSuccess('')
 
