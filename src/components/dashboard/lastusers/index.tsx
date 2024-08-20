@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export function LastUsers() {
   return (
@@ -11,15 +11,35 @@ export function LastUsers() {
             Últimos Usuários
           </CardTitle>
         </div>
-        <Separator className="px-2" />
       </CardHeader>
-      <CardContent className="text-center font-bold text-cyan-500">
-        {/* TODO - Implementar lista de últimas notícias postadas no banco de dados */}
+      <CardContent className="font-bold text-cyan-500">
+        {/* TODO - Implementar lista de últimos usuários no banco de dados */}
         <article>
-          <Avatar className="w-8 h-8">
-            <AvatarImage src="https://github.com/pedromaggot38.png" />
-            <AvatarFallback>PB</AvatarFallback>
-          </Avatar>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Avatar</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead>Cargo</TableHead>
+                <TableHead>Bloqueado</TableHead>
+                <TableHead>Data</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <Avatar className="w-8 h-8">
+                    <AvatarImage src="https://github.com/pedromaggot38.png" />
+                    <AvatarFallback>PB</AvatarFallback>
+                  </Avatar>
+                </TableCell>
+                <TableCell>Pedro Sanches</TableCell>
+                <TableCell>Root</TableCell>
+                <TableCell>Não</TableCell>
+                <TableCell>24/07/2024</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </article>
       </CardContent>
     </Card>

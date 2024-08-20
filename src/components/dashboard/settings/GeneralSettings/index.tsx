@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -83,7 +83,21 @@ export function GeneralSettings() {
                             Eu concordo com os <a href="/termos" className="text-blue-500 underline">termos de serviço</a> e a <a href="/politica-de-privacidade" className="text-blue-500 underline">política de privacidade</a>.
                         </label>
                     </div>
-                    <Button>Salvar</Button>
+                    <AlertDialog>
+                        <AlertDialogTrigger className="bg-red-500 ">Salvar</AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Confirmar Alteração</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                Você tem certeza que deseja alterar os dados?
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                <AlertDialogAction>Continuar</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                 </CardFooter>
             </Card>
         </div>

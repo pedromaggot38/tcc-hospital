@@ -52,8 +52,8 @@ export default function Dashboard() {
       </section>
       <Separator className="my-3" />
       <section className="grid grid-cols-1 gap-2 lg:grid-cols-2 sm:grid-cols-1 row-span-3 h-600">
-        <LastUsers />
         <LastNews />
+        <LastUsers />
       </section>
     </main>
   );

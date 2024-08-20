@@ -1,3 +1,4 @@
+import { GeneralSettings } from "@/components/dashboard/settings/GeneralSettings"
 import Link from "next/link"
 
 export default function Dashboard() {
@@ -20,6 +21,7 @@ export default function Dashboard() {
           <Link href="#">Advanced</Link>
         </nav>
         <div className="grid gap-6">
+          <GeneralSettings />
 
         </div>
       </div>
