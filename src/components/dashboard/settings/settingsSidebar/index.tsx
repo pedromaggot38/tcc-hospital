@@ -24,6 +24,7 @@ export default function SettingsSidebar({ children }: SidebarProps) {
           <Link
             href="/dashboard/settings/security"
             className={`font-semibold ${pathname === '/dashboard/settings/security' ? 'text-primary' : ''}`}
+
           >Segurança</Link>
           <Link href="#"></Link>
           <Link href="#"></Link>
