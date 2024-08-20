@@ -1,6 +1,7 @@
 'use client'
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas/auth/user"
 import { Button } from "@/components/ui/button"
@@ -15,8 +16,14 @@ import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
+import { login } from "../../../actions/login";
 
 export const LoginForm = () => {
+
+    const [error, setError] = useState<string | undefined>("")
+    const [success, setSuccess] = useState<string | undefined>("")
+    const [isPending, startTransition] = useTransition()
+
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
         defaultValues: {
@@ -24,11 +31,19 @@ export const LoginForm = () => {
             password: '',
         }
     })
-    
-    const onSubmit = (values: z.infer<typeof LoginSchema>) =>{
-        console.log(values)
-    }
 
+    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+        setError('')
+        setSuccess('')
+
+        startTransition(() => {
+            login(values)
+            .then((data) => {
+                setError(data.error)
+                setSuccess(data.success)
+            })
+        })
+    }
 
 
     return (
@@ -56,6 +71,7 @@ export const LoginForm = () => {
                                                 <FormControl>
                                                     <Input
                                                         placeholder="Username"
+                                                        disabled={isPending}
                                                         {...field}
                                                         required
                                                     />
@@ -75,6 +91,7 @@ export const LoginForm = () => {
                                                 <FormControl>
                                                     <Input
                                                         placeholder="••••••••••••••"
+                                                        disabled={isPending}
                                                         type="password"
                                                         {...field}
                                                         required
@@ -85,9 +102,13 @@ export const LoginForm = () => {
                                         )}
                                     />
                                 </div>
-                                <FormError message="" />
-                                <FormSuccess message="" />
-                                <Button type="submit" className="w-full">
+                                <FormError message={error}	 />
+                                <FormSuccess message={success} />
+                                <Button
+                                    type="submit"
+                                    className="w-full"
+                                    disabled={isPending}
+                                >
                                     Login
                                 </Button>
                             </div>
