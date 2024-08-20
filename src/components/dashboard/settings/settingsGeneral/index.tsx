@@ -1,4 +1,5 @@
-import { AlertDialog,
+import {
+    AlertDialog,
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
@@ -6,52 +7,85 @@ import { AlertDialog,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger } from "@/components/ui/alert-dialog";
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 
-export function SecuritySettings() {
+export function SettingsGeneral() {
     return (
         <div className="flex flex-col gap-3">
             <Card x-chunk="dashboard-04-chunk-1">
                 <CardHeader>
-                    <CardTitle>Alterar Senha</CardTitle>
+                    <CardTitle>Seu Nome</CardTitle>
                     <CardDescription>
-                        Digite sua senha atual:
+                        Digite seu nome e sobrenome:
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-
                     <form>
                         {/*
                   TODO
                   CRUD
                 */}
-                        <Input placeholder="********" />
+                        <Input placeholder="Nome e Sobrenome" />
                     </form>
                 </CardContent>
-
             </Card>
             <Card x-chunk="dashboard-04-chunk-2">
                 <CardHeader>
-                    <CardTitle>Nova Senha</CardTitle>
+                    <CardTitle>Foto de Perfil</CardTitle>
                     <CardDescription>
-                        Digite e confirme a nova senha:
+                        Digite a URL do seu perfil Github como no exemplo:
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form className="flex flex-col gap-4">
                         <Input
-                            placeholder="********"
-                        />
-                        <Input
-                            placeholder="********"
+                            placeholder="https://github.com/username.png"
                         />
                     </form>
                 </CardContent>
-                <CardFooter className="border-t px-6 py-4">
-                <AlertDialog>
+            </Card>
+            <Card x-chunk="dashboard-04-chunk-1">
+                <CardHeader>
+                    <CardTitle>Seu E-mail</CardTitle>
+                    <CardDescription>
+                        Digite seu e-mail:
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form>
+                        {/*
+                  TODO
+                  CRUD
+                */}
+                        <Input placeholder="seuemail@email.com" />
+                    </form>
+                </CardContent>
+            </Card>
+            <Card x-chunk="dashboard-04-chunk-1">
+                <CardHeader>
+                    <CardTitle>Telefone</CardTitle>
+                    <CardDescription>
+                        Digite seu número de telefone:
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form>
+                        {/*
+                  TODO
+                  CRUD
+                */}
+                        <Input placeholder="11-999999999" />
+                    </form>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardFooter className="px-6 py-4 flex items-center justify-between">
+                    <AlertDialog>
                         <AlertDialogTrigger>
                             <Button variant="outline">Salvar</Button>
                         </AlertDialogTrigger>
