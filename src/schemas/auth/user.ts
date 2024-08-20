@@ -1,13 +1,17 @@
-import { z } from 'zod'
+import * as z from 'zod'
 
-export const CredentialsSchema = z.object({
-    username: z.string().min(6),
-    password: z.string().min(8),
+export const LoginSchema = z.object({
+    username: z.string().min(6, {
+        message: "Usuário deve conter ao menos 6 caracteres"
+    }),
+    password: z.string().min(6, {
+        message: "Senha é obrigatória"
+    }),
 })
 
 export const RegisterSchema = z.object({
     username: z.string().min(6),
-    password: z.string().min(8),
+    password: z.string().min(6),
     role: z.enum(['root', 'admin', 'journalist']),
     isBlocked: z.boolean(),
     name: z.string().min(6),
