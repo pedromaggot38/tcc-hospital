@@ -22,7 +22,7 @@ export default function Users() {
                             <DialogHeader>
                                 <DialogTitle>Criar Novo Usuário</DialogTitle>
                                 <DialogDescription>
-                                    Faça as alterações do perfil aqui
+                                    Digite as informações do novo usuário
                                 </DialogDescription>
                             </DialogHeader>
                             <div className="grid gap-4 py-4">
@@ -30,19 +30,19 @@ export default function Users() {
                                     <Label htmlFor="username" className="text-right">
                                         Username
                                     </Label>
-                                    <Input id="username" className="col-span-3" required />
+                                    <Input id="username" name="username" className="col-span-3" required />
                                 </div>
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label htmlFor="password" className="text-right">
                                         Senha
                                     </Label>
-                                    <Input id="password" className="col-span-3" />
+                                    <Input id="password" name="password" className="col-span-3" />
                                 </div>
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label htmlFor="blocked" className="text-right">
                                         Bloqueado
                                     </Label>
-                                    <Select required>
+                                    <Select required name="blocked">
                                         <SelectTrigger className="w-[180px]">
                                             <SelectValue placeholder="Selecione" />
                                         </SelectTrigger>
@@ -56,9 +56,9 @@ export default function Users() {
                                 </div>
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label htmlFor="image" className="text-right">
-                                        Role
+                                        Cargo
                                     </Label>
-                                    <Select required>
+                                    <Select required name="role">
                                         <SelectTrigger className="w-[180px]">
                                             <SelectValue placeholder="Selecione" />
                                         </SelectTrigger>
@@ -72,25 +72,24 @@ export default function Users() {
                                         </SelectContent>
                                     </Select>
                                 </div>
-
                                 <Separator />
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label htmlFor="email" className="text-right">
                                         E-mail
                                     </Label>
-                                    <Input id="email" className="col-span-3" />
+                                    <Input id="email" name="email" className="col-span-3" />
                                 </div>
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label htmlFor="phone" className="text-right">
                                         Telefone
                                     </Label>
-                                    <Input id="phone" className="col-span-3" />
+                                    <Input id="phone" name="phone" className="col-span-3" />
                                 </div>
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label htmlFor="image" className="text-right">
                                         Avatar
                                     </Label>
-                                    <Input id="image" className="col-span-3" />
+                                    <Input id="image" name="image" className="col-span-3" />
                                 </div>
 
                             </div>
@@ -147,37 +146,37 @@ export default function Users() {
                                                             <Label htmlFor="name" className="text-right">
                                                                 Nome
                                                             </Label>
-                                                            <Input id="name" className="col-span-3" />
+                                                            <Input id="name" name="name" className="col-span-3" />
                                                         </div>
                                                         <div className="grid grid-cols-4 items-center gap-4">
                                                             <Label htmlFor="username" className="text-right">
                                                                 Username
                                                             </Label>
-                                                            <Input id="username" className="col-span-3" />
+                                                            <Input id="username" name="username" className="col-span-3" />
                                                         </div>
                                                         <div className="grid grid-cols-4 items-center gap-4">
                                                             <Label htmlFor="email" className="text-right">
                                                                 E-mail
                                                             </Label>
-                                                            <Input id="email" className="col-span-3" />
+                                                            <Input id="email" name="email" className="col-span-3" />
                                                         </div>
                                                         <div className="grid grid-cols-4 items-center gap-4">
                                                             <Label htmlFor="phone" className="text-right">
                                                                 Telefone
                                                             </Label>
-                                                            <Input id="phone" className="col-span-3" />
+                                                            <Input id="phone" name="phone" className="col-span-3" />
                                                         </div>
                                                         <div className="grid grid-cols-4 items-center gap-4">
                                                             <Label htmlFor="image" className="text-right">
                                                                 Avatar
                                                             </Label>
-                                                            <Input id="image" className="col-span-3" />
+                                                            <Input id="image" name="image" className="col-span-3" />
                                                         </div>
                                                         <div className="grid grid-cols-4 items-center gap-4">
                                                             <Label htmlFor="blocked" className="text-right">
                                                                 Bloqueado
                                                             </Label>
-                                                            <Select>
+                                                            <Select name="blocked">
                                                                 <SelectTrigger className="w-[180px]">
                                                                     <SelectValue placeholder="Selecione" />
                                                                 </SelectTrigger>
@@ -191,9 +190,9 @@ export default function Users() {
                                                         </div>
                                                         <div className="grid grid-cols-4 items-center gap-4">
                                                             <Label htmlFor="image" className="text-right">
-                                                                Role
+                                                                Cargo
                                                             </Label>
-                                                            <Select>
+                                                            <Select name="role">
                                                                 <SelectTrigger className="w-[180px]">
                                                                     <SelectValue placeholder="Selecione" />
                                                                 </SelectTrigger>
