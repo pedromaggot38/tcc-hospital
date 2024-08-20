@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function Users() {
@@ -13,7 +14,91 @@ export default function Users() {
             <div className="w-full max-w-6xl px-4">
                 <div className="flex justify-between">
                     <h1 className="text-3xl font-semibold pb-6">Usuários</h1>
-                    <Button>Adicionar Usuário</Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="outline">Criar Usuário</Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[500px]">
+                            <DialogHeader>
+                                <DialogTitle>Criar Novo Usuário</DialogTitle>
+                                <DialogDescription>
+                                    Faça as alterações do perfil aqui
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className="grid gap-4 py-4">
+                                <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label htmlFor="username" className="text-right">
+                                        Username
+                                    </Label>
+                                    <Input id="username" className="col-span-3" required />
+                                </div>
+                                <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label htmlFor="password" className="text-right">
+                                        Senha
+                                    </Label>
+                                    <Input id="password" className="col-span-3" />
+                                </div>
+                                <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label htmlFor="blocked" className="text-right">
+                                        Bloqueado
+                                    </Label>
+                                    <Select required>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Selecione" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="false">Não</SelectItem>
+                                                <SelectItem value="true">Sim</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label htmlFor="image" className="text-right">
+                                        Role
+                                    </Label>
+                                    <Select required>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Selecione" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>Cargos</SelectLabel>
+                                                <SelectItem value="root">Root</SelectItem>
+                                                <SelectItem value="admin">Administrador</SelectItem>
+                                                <SelectItem value="journalist">Jornalista</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                <Separator />
+                                <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label htmlFor="email" className="text-right">
+                                        E-mail
+                                    </Label>
+                                    <Input id="email" className="col-span-3" />
+                                </div>
+                                <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label htmlFor="phone" className="text-right">
+                                        Telefone
+                                    </Label>
+                                    <Input id="phone" className="col-span-3" />
+                                </div>
+                                <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label htmlFor="image" className="text-right">
+                                        Avatar
+                                    </Label>
+                                    <Input id="image" className="col-span-3" />
+                                </div>
+
+                            </div>
+                            <DialogFooter>
+                                <Button type="submit">Criar</Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
                 </div>
 
                 <Card className="w-full">
