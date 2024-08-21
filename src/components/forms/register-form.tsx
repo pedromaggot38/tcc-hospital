@@ -1,13 +1,13 @@
 'use client'
-import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { Controller, useForm } from "react-hook-form";
+import * as z from "zod";
 import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterSchema } from "@/schemas/auth/user"
-import { Button } from "@/components/ui/button"
+import { RegisterSchema } from "@/schemas/auth/user";
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 import { Separator } from "../ui/separator";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
@@ -15,12 +15,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { register } from "@/../actions/user";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
 import { useDialog } from "@/hooks/useDialog";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export const RegisterForm = () => {
-
-    const [error, setError] = useState<string | undefined>("")
-    const [success, setSuccess] = useState<string | undefined>("")
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
+    const [isDialogOpen, setDialogOpen] = useState(false); // Estado para controlar a abertura do Dialog
+
     const { dialogOpen, openDialog, closeDialog, handleConfirm, handleCancel } = useDialog(() => {
         form.handleSubmit(onSubmit)();
     });
@@ -33,51 +35,64 @@ export const RegisterForm = () => {
             role: 'journalist',
             isBlocked: "false",
         }
-    })
+    });
 
     const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         console.log("Form is being submitted", values);
-        setError('')
-        setSuccess('')
+        setError('');
+        setSuccess('');
 
         startTransition(() => {
             register(values)
                 .then((data) => {
                     console.log("Response received", data);
-                    setError(data.error)
-                    setSuccess(data.success)
+                    setError(data.error);
+                    setSuccess(data.success);
+
+                    // Clear success message after 3 seconds
+                    setTimeout(() => setSuccess(''), 3000);
+
+                    // Clear error message after 3 seconds
+                    setTimeout(() => setError(''), 3000);
+
+                    // Fechar o Dialog após a criação bem-sucedida
+                    if (data.success) {
+                        setDialogOpen(false); // Fecha o Dialog
+                    }
                 })
                 .catch((error) => {
-                    console.error("Error during login", error);
+                    console.error("Error during registration", error);
                     setError("Houve um erro ao criar o usuário.");
+
+                    // Clear error message after 3 seconds
+                    setTimeout(() => setError(''), 3000);
                 });
-        })
-    }
+        });
+    };
 
     const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         openDialog();
-    }
+    };
 
     return (
-        <Dialog>
-            <DialogTrigger className="hover:bg-primary" asChild>
-                <Button variant="outline">Criar Usuário</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px]">
-                <Form {...form}>
-                    <form
-                        className="grid gap-4 py-4"
-                        onSubmit={handleFormSubmit}
-                    >
-                        <DialogHeader>
-                            <DialogTitle>Criar Novo Usuário</DialogTitle>
-                            <DialogDescription>
-                                Digite as informações do novo usuário
-                            </DialogDescription>
-                        </DialogHeader>
-                        <div className="grid gap-4 py-4">
+        <>
+            <Button variant="outline" onClick={() => setDialogOpen(true)}>Criar Usuário</Button>
+            <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+                <DialogContent className="sm:max-w-[500px]">
+                    <Form {...form}>
+                        <form
+                            className="grid gap-4 py-4"
+                            onSubmit={handleFormSubmit}
+                        >
+                            <DialogHeader>
+                                <DialogTitle>Criar Novo Usuário</DialogTitle>
+                                <DialogDescription>
+                                    Digite as informações do novo usuário
+                                </DialogDescription>
+                            </DialogHeader>
 
+                            {/* Username Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormField
                                     control={form.control}
@@ -100,6 +115,7 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
+                            {/* Password Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormField
                                     control={form.control}
@@ -123,70 +139,72 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
-
-                            {/* ERRO NO CONSOLE DO NAVEGADOR, DEVIDO AOS DOIS SELECTS isBlocked E role */}
-
-                            
+                            {/* isBlocked Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <FormField
-                                    control={form.control}
-                                    name="isBlocked"
-                                    render={({ field }) => (
-                                        <>
-                                            <FormLabel className="col-span-1 text-right">Bloqueado</FormLabel>
-                                            <FormItem className="col-span-3">
-                                                <FormControl>
-                                                    <Select {...field}>
-                                                        <SelectTrigger className="w-full">
-                                                            <SelectValue placeholder="Selecione" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            <SelectGroup>
-                                                                <SelectItem value="false">Não</SelectItem>
-                                                                <SelectItem value="true">Sim</SelectItem>
-                                                            </SelectGroup>
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        </>
-                                    )}
-                                />
+                                <FormLabel className="col-span-1 text-right">Bloqueado</FormLabel>
+                                <FormItem className="col-span-3">
+                                    <FormControl>
+                                        <Controller
+                                            name="isBlocked"
+                                            control={form.control}
+                                            render={({ field }) => (
+                                                <Select
+                                                    {...field}
+                                                    value={field.value ?? ''}
+                                                    onValueChange={(value) => field.onChange(value)}
+                                                >
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue placeholder="Selecione" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectItem value="false">Não</SelectItem>
+                                                            <SelectItem value="true">Sim</SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            )}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
                             </div>
 
+                            {/* Role Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <FormField
-                                    control={form.control}
-                                    name="role"
-                                    render={({ field }) => (
-                                        <>
-                                            <FormLabel className="col-span-1 text-right">Cargo</FormLabel>
-                                            <FormItem className="col-span-3">
-                                                <FormControl>
-                                                    <Select {...field}>
-                                                        <SelectTrigger className="w-full">
-                                                            <SelectValue placeholder="Selecione" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            <SelectGroup>
-                                                                <SelectLabel>Cargos</SelectLabel>
-                                                                <SelectItem value="root">Root</SelectItem>
-                                                                <SelectItem value="admin">Administrador</SelectItem>
-                                                                <SelectItem value="journalist">Jornalista</SelectItem>
-                                                            </SelectGroup>
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        </>
-                                    )}
-                                />
+                                <FormLabel className="col-span-1 text-right">Cargo</FormLabel>
+                                <FormItem className="col-span-3">
+                                    <FormControl>
+                                        <Controller
+                                            name="role"
+                                            control={form.control}
+                                            render={({ field }) => (
+                                                <Select
+                                                    {...field}
+                                                    value={field.value ?? ''}
+                                                    onValueChange={(value) => field.onChange(value)}
+                                                >
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue placeholder="Selecione" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectLabel>Cargos</SelectLabel>
+                                                            <SelectItem value="root">Root</SelectItem>
+                                                            <SelectItem value="admin">Administrador</SelectItem>
+                                                            <SelectItem value="journalist">Jornalista</SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            )}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
                             </div>
 
                             <Separator />
-
+                            
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormField
                                     control={form.control}
@@ -259,11 +277,11 @@ export const RegisterForm = () => {
                                     name="image"
                                     render={({ field }) => (
                                         <>
-                                            <FormLabel className="col-span-1 text-right">Avatar</FormLabel>
+                                            <FormLabel className="col-span-1 text-right">Imagem</FormLabel>
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Avatar"
+                                                        placeholder="URL da imagem"
                                                         disabled={isPending}
                                                         {...field}
                                                     />
@@ -275,32 +293,43 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
-
-                        </div>
-                        <div className="flex justify-end">
-                            <FormError message={error} />
-                            <FormSuccess message={success} />
-                            <AlertDialog>
-                                <AlertDialogTrigger className="hover:bg-primary" asChild>
-                                    <Button className="w-min" variant="outline">Criar</Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle>Confirmar Criação</AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                            Você tem certeza que deseja criar este usuário?
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel onClick={handleCancel}>Cancelar</AlertDialogCancel>
-                                        <AlertDialogAction onClick={handleConfirm}>Continuar</AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
-                        </div>
-                    </form>
-                </Form>
-            </DialogContent>
-        </Dialog>
-    )
-}
+                            <div className="flex items-center justify-between mt-4">
+                                <div className="flex justify-end space-x-4">
+                                    {error && (
+                                        <Alert variant="destructive">
+                                            <AlertTitle>Error</AlertTitle>
+                                            <AlertDescription>{error}</AlertDescription>
+                                        </Alert>
+                                    )}
+                                    {success && (
+                                        <Alert variant="default">
+                                            <AlertTitle>Success</AlertTitle>
+                                            <AlertDescription>{success}</AlertDescription>
+                                        </Alert>
+                                    )}
+                                </div>
+                                <AlertDialog>
+                                    <AlertDialogTrigger className="hover:bg-primary" asChild>
+                                        <Button className="w-min" variant="outline">Criar</Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Confirmar Criação</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Você tem certeza que deseja criar este usuário?
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel onClick={handleCancel}>Cancelar</AlertDialogCancel>
+                                            <AlertDialogAction onClick={handleConfirm}>Continuar</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                            </div>
+                        </form>
+                    </Form>
+                </DialogContent>
+            </Dialog>
+        </>
+    );
+};
