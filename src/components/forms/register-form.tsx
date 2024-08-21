@@ -123,6 +123,10 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
+
+                            {/* ERRO NO CONSOLE DO NAVEGADOR, DEVIDO AOS DOIS SELECTS isBlocked E role */}
+
+                            
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormField
                                     control={form.control}
