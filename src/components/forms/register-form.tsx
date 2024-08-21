@@ -38,30 +38,31 @@ export const RegisterForm = () => {
         console.log("Form is being submitted", values);
         setError('');
         setSuccess('');
-
+    
         startTransition(() => {
             register(values)
                 .then((data) => {
                     console.log("Response received", data);
                     setError(data.error);
                     setSuccess(data.success);
-
-                    // Clear success message after 3 seconds
-                    setTimeout(() => setSuccess(''), 3000);
-
-                    // Clear error message after 3 seconds
-                    setTimeout(() => setError(''), 3000);
-
-                    // Fechar o Dialog após a criação bem-sucedida
+    
+                    // Limpa os campos do formulário após a criação bem-sucedida
                     if (data.success) {
+                        form.reset(); // Limpa o formulário
                         setDialogOpen(false); // Fecha o Dialog
                     }
+    
+                    // Limpa as mensagens de sucesso ou erro após 3 segundos
+                    setTimeout(() => {
+                        setSuccess('');
+                        setError('');
+                    }, 3000);
                 })
                 .catch((error) => {
                     console.error("Error during registration", error);
                     setError("Houve um erro ao criar o usuário.");
-
-                    // Clear error message after 3 seconds
+    
+                    // Limpa a mensagem de erro após 3 segundos
                     setTimeout(() => setError(''), 3000);
                 });
         });
