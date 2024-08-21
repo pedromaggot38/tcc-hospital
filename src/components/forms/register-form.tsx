@@ -81,7 +81,13 @@ export const RegisterForm = () => {
 
     return (
         <>
-            <Button variant="outline" onClick={() => setDialogOpen(true)}>Criar Usuário</Button>
+            <Button
+            className="hover:bg-primary hover:text-white"
+                variant="outline"
+                onClick={() => setDialogOpen(true)}
+            >
+                Criar Usuário
+            </Button>
             <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
                 <DialogContent className="sm:max-w-[500px]">
                     <Form {...form}>
@@ -303,7 +309,7 @@ export const RegisterForm = () => {
                                     <FormSuccess message={success} />
                                 </div>
                                 <AlertDialog>
-                                    <AlertDialogTrigger className="hover:bg-primary" asChild>
+                                    <AlertDialogTrigger className="hover:bg-primary hover:text-white" asChild>
                                         <Button className="w-min" variant="outline">Criar</Button>
                                     </AlertDialogTrigger>
                                     <AlertDialogContent>
