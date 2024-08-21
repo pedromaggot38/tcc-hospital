@@ -1,3 +1,4 @@
+'use client'
 import { AlertDialog,
     AlertDialogAction,
     AlertDialogCancel,
@@ -10,6 +11,7 @@ import { AlertDialog,
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useDialog } from "@/hooks/useDialog";
 
 export function SettingsSecurity() {
     return (
@@ -52,7 +54,7 @@ export function SettingsSecurity() {
                 </CardContent>
                 <CardFooter className="border-t px-6 py-4">
                 <AlertDialog>
-                        <AlertDialogTrigger asChild>
+                        <AlertDialogTrigger className="hover:bg-primary" asChild>
                             <Button variant="outline">Salvar</Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>

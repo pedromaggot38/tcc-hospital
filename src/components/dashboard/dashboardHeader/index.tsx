@@ -13,6 +13,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CircleUser, Menu, Package2, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const menuItems = [
     {
@@ -33,7 +34,12 @@ const menuItems = [
 ];
 
 export function DashboardHeader() {
+    const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
+
+    const closeMenu = () => {
+        setIsOpen(false);
+    };
 
     return (
         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -101,17 +107,17 @@ export function DashboardHeader() {
                         />
                     </div>
                 </form>
-                <DropdownMenu>
+                <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="secondary" size="icon" className="rounded-full">
                             <CircleUser className="h-5 w-5" />
-                            <span className="sr-only">Toggle user menu</span>
+                            <span className="sr-only">Botão do Usuário</span>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={closeMenu}>
                             <Link
                                 href="/dashboard/settings"
                                 className={`text-muted-foreground hover:text-foreground ${pathname === '/dashboard/settings' ? 'text-primary font-semibold' : ''}`}
@@ -120,7 +126,7 @@ export function DashboardHeader() {
                                 <span className="sr-only">Configurações</span>
                             </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={closeMenu}>
                             <Link
                                 href="/help"
                                 className={`text-muted-foreground hover:text-foreground ${pathname === '/help' ? 'text-primary font-semibold' : ''}`}
@@ -130,7 +136,11 @@ export function DashboardHeader() {
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-red-600">Logout</DropdownMenuItem>
+                        <DropdownMenuItem
+                            className="text-red-600"
+                            onClick={closeMenu}>
+                            Logout
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

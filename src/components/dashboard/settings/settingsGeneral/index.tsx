@@ -1,3 +1,4 @@
+'use client'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -12,8 +13,53 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useDialog } from "@/hooks/useDialog";
+import { useState, useTransition } from "react";
+import { RegisterSchema } from "@/schemas/auth/user"
+import { register } from "@/../actions/user";
+import * as z from "zod"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function SettingsGeneral() {
+
+    const [error, setError] = useState<string | undefined>("")
+    const [success, setSuccess] = useState<string | undefined>("")
+    const [isPending, startTransition] = useTransition();
+    const { dialogOpen, openDialog, closeDialog, handleConfirm, handleCancel } = useDialog(() => {
+        form.handleSubmit(onSubmit)();
+    });
+
+    const form = useForm<z.infer<typeof RegisterSchema>>({
+        resolver: zodResolver(RegisterSchema),
+        defaultValues: {
+            username: '',
+            password: '',
+            role: 'journalist',
+            isBlocked: "false",
+        }
+    })
+
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+        console.log("Form is being submitted", values);
+        setError('')
+        setSuccess('')
+
+        startTransition(() => {
+            register(values)
+                .then((data) => {
+                    console.log("Response received", data);
+                    setError(data.error)
+                    setSuccess(data.success)
+                })
+                .catch((error) => {
+                    console.error("Error during login", error);
+                    setError("Houve um erro ao criar o usuário.");
+                });
+        })
+    }
+
+
     return (
         <div className="flex flex-col gap-3">
             <Card x-chunk="dashboard-04-chunk-1">
@@ -85,7 +131,7 @@ export function SettingsGeneral() {
             <Card>
                 <CardFooter className="px-6 py-4 flex items-center justify-between">
                     <AlertDialog>
-                        <AlertDialogTrigger asChild>
+                        <AlertDialogTrigger className="hover:bg-primary" asChild>
                             <Button variant="outline">Salvar</Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
