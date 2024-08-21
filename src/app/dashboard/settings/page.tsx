@@ -2,10 +2,13 @@ import { SettingsGeneral } from "@/components/dashboard/settings/settingsGeneral
 import SettingsSidebar from "@/components/dashboard/settings/settingsSidebar";
 
 
-export default function SettingsPage() {
+const SettingsPage = () => {
   return (
-    <SettingsSidebar>
+    <div>
+      <SettingsSidebar>
         <SettingsGeneral />
     </SettingsSidebar>
+    </div>
   );
 }
+export default SettingsPage

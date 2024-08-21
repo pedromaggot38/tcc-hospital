@@ -85,7 +85,7 @@ export function SettingsGeneral() {
             <Card>
                 <CardFooter className="px-6 py-4 flex items-center justify-between">
                     <AlertDialog>
-                        <AlertDialogTrigger>
+                        <AlertDialogTrigger asChild>
                             <Button variant="outline">Salvar</Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>

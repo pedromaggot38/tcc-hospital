@@ -13,13 +13,18 @@ import { Separator } from "../ui/separator";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { register } from "../../../actions/register";
+import { register } from "@/../actions/user";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
+import { useDialog } from "@/hooks/useDialog";
 
 export const RegisterForm = () => {
 
     const [error, setError] = useState<string | undefined>("")
     const [success, setSuccess] = useState<string | undefined>("")
-    const [isPending, startTransition] = useTransition()
+    const [isPending, startTransition] = useTransition();
+    const { dialogOpen, openDialog, closeDialog, handleConfirm, handleCancel } = useDialog(() => {
+        form.handleSubmit(onSubmit)();
+    });
 
     const form = useForm<z.infer<typeof RegisterSchema>>({
         resolver: zodResolver(RegisterSchema),
@@ -28,7 +33,6 @@ export const RegisterForm = () => {
             password: '',
             role: 'journalist',
             isBlocked: "false",
-
         }
     })
 
@@ -51,6 +55,10 @@ export const RegisterForm = () => {
         })
     }
 
+    const handleFormSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        openDialog();
+    }
 
     return (
         <Dialog>
@@ -61,8 +69,7 @@ export const RegisterForm = () => {
                 <Form {...form}>
                     <form
                         className="grid gap-4 py-4"
-                        onSubmit={form.handleSubmit(onSubmit)
-                        }
+                        onSubmit={handleFormSubmit}
                     >
                         <DialogHeader>
                             <DialogTitle>Criar Novo Usuário</DialogTitle>
@@ -269,9 +276,23 @@ export const RegisterForm = () => {
                         </div>
                         <FormError message={error} />
                         <FormSuccess message={success} />
-                        <DialogFooter>
-                            <Button type="submit">Criar</Button>
-                        </DialogFooter>
+                        <AlertDialog open={dialogOpen} onOpenChange={closeDialog}>
+                            <AlertDialogTrigger>
+                                <Button variant="outline">Criar</Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Confirmar Criação</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        Você tem certeza que deseja criar este usuário?
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel onClick={handleCancel}>Cancelar</AlertDialogCancel>
+                                    <AlertDialogAction onClick={handleConfirm}>Continuar</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
                     </form>
                 </Form>
             </DialogContent>

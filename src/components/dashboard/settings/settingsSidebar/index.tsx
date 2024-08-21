@@ -19,7 +19,7 @@ export default function SettingsSidebar({ children }: SidebarProps) {
   };
 
   return (
-    <main className="">
+    <div>
       <div className="mx-auto grid w-full max-w-6xl gap-2">
         <h1 className="text-3xl font-semibold pb-6">Configurações</h1>
       </div>
@@ -52,6 +52,6 @@ export default function SettingsSidebar({ children }: SidebarProps) {
           {children}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

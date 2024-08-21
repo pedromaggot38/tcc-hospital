@@ -2,10 +2,11 @@ import { SettingsSecurity } from "@/components/dashboard/settings/settingsSecuri
 import SettingsSidebar from "@/components/dashboard/settings/settingsSidebar";
 
 
-export default function SettingsPage() {
+const SettingsSecurityPage = () => {
   return (
     <SettingsSidebar>
         <SettingsSecurity />
     </SettingsSidebar>
   );
 }
+export default SettingsSecurityPage

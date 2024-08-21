@@ -52,7 +52,7 @@ export function SettingsSecurity() {
                 </CardContent>
                 <CardFooter className="border-t px-6 py-4">
                 <AlertDialog>
-                        <AlertDialogTrigger>
+                        <AlertDialogTrigger asChild>
                             <Button variant="outline">Salvar</Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
