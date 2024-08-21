@@ -10,9 +10,11 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Input } from "@/components/ui/input";
 import { Separator } from "../ui/separator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { register } from "@/../actions/user";
+import { register } from "@/../actions/auth/register";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
 import { useDialog } from "@/hooks/useDialog";
+import { FormSuccess } from "../form-success";
+import { FormError } from "../form-error";
 
 export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
@@ -20,7 +22,7 @@ export const RegisterForm = () => {
     const [isPending, startTransition] = useTransition();
     const [isDialogOpen, setDialogOpen] = useState(false); // Estado para controlar a abertura do Dialog
 
-    const { dialogOpen, openDialog, closeDialog, handleConfirm, handleCancel } = useDialog(() => {
+    const { openDialog, handleConfirm, handleCancel } = useDialog(() => {
         form.handleSubmit(onSubmit)();
     });
 
@@ -30,7 +32,7 @@ export const RegisterForm = () => {
             username: '',
             password: '',
             role: 'journalist',
-            isBlocked: "false",
+            isBlocked: false,
         }
     });
 
@@ -38,30 +40,34 @@ export const RegisterForm = () => {
         console.log("Form is being submitted", values);
         setError('');
         setSuccess('');
-    
+
         startTransition(() => {
             register(values)
                 .then((data) => {
                     console.log("Response received", data);
                     setError(data.error);
                     setSuccess(data.success);
-    
+
                     // Limpa os campos do formulário após a criação bem-sucedida
                     if (data.success) {
                         form.reset(); // Limpa o formulário
-                        setDialogOpen(false); // Fecha o Dialog
+
+                        // Adiciona um delay antes de fechar o Dialog
+                        setTimeout(() => {
+                            setDialogOpen(false); // Fecha o Dialog
+                        }, 4000);
                     }
-    
-                    // Limpa as mensagens de sucesso ou erro após 3 segundos
+
+                    // Limpa as mensagens de sucesso ou erro após 8 segundos
                     setTimeout(() => {
                         setSuccess('');
                         setError('');
-                    }, 3000);
+                    }, 8000);
                 })
                 .catch((error) => {
                     console.error("Error during registration", error);
                     setError("Houve um erro ao criar o usuário.");
-    
+
                     // Limpa a mensagem de erro após 3 segundos
                     setTimeout(() => setError(''), 3000);
                 });
@@ -148,8 +154,8 @@ export const RegisterForm = () => {
                                             render={({ field }) => (
                                                 <Select
                                                     {...field}
-                                                    value={field.value ?? ''}
-                                                    onValueChange={(value) => field.onChange(value)}
+                                                    value={field.value ? 'true' : 'false'} // Converte o valor booleano para string
+                                                    onValueChange={(value) => field.onChange(value === 'true')} // Converte a string de volta para booleano
                                                 >
                                                     <SelectTrigger className="w-full">
                                                         <SelectValue placeholder="Selecione" />
@@ -202,7 +208,7 @@ export const RegisterForm = () => {
                             </div>
 
                             <Separator />
-                            
+
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormField
                                     control={form.control}
@@ -291,7 +297,11 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
-                            <div className="flex items-center justify-end mt-4">
+                            <div className="flex items-center justify-between mt-4">
+                                <div className="flex gap-4 items-center">
+                                    <FormError message={error} />
+                                    <FormSuccess message={success} />
+                                </div>
                                 <AlertDialog>
                                     <AlertDialogTrigger className="hover:bg-primary" asChild>
                                         <Button className="w-min" variant="outline">Criar</Button>
