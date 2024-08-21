@@ -5,7 +5,7 @@ export const LoginSchema = z.object({
         message: "Usuário deve conter ao menos 6 caracteres"
     }),
     password: z.string().min(6, {
-        message: "Senha é obrigatória"
+        message: "Senha deve conter ao menos 6 caracteres"
     }),
 })
 
@@ -17,15 +17,15 @@ export const RegisterSchema = z.object({
         message: "Mínimo de 6 caracteres"
     }),
     role: z.enum(['root', 'admin', 'journalist']),
-    isBlocked: z.boolean(),
+    isBlocked: z.enum(['true', 'false']),
     name: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
-    }),
+    }).optional(),
     phone: z.string().max(12).min(8, {
         message: "Mínimo de 8 caracteres"
-    }),
+    }).optional(),
     email: z.string().email({
         message: "Digite um e-mail válido"
-    }),
-    image: z.string(),
-})
+    }).optional(), // Torna o campo opcional
+    image: z.string().optional(), // Torna o campo opcional
+});

@@ -1,6 +1,7 @@
 import { EditProfileForm } from "@/components/forms/edit-profile-form";
 import { RegisterForm } from "@/components/forms/register-form";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
@@ -42,6 +43,7 @@ const Users = () => {
                                         <TableCell>11 99999-9999</TableCell>
                                         <TableCell>Não</TableCell>
                                         <TableCell className="p-0">
+                                            
                                             <EditProfileForm />
                                         </TableCell>
                                     </TableRow>
