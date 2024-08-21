@@ -9,13 +9,10 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Separator } from "../ui/separator";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { register } from "@/../actions/user";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
 import { useDialog } from "@/hooks/useDialog";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
@@ -293,21 +290,7 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
-                            <div className="flex items-center justify-between mt-4">
-                                <div className="flex justify-end space-x-4">
-                                    {error && (
-                                        <Alert variant="destructive">
-                                            <AlertTitle>Error</AlertTitle>
-                                            <AlertDescription>{error}</AlertDescription>
-                                        </Alert>
-                                    )}
-                                    {success && (
-                                        <Alert variant="default">
-                                            <AlertTitle>Success</AlertTitle>
-                                            <AlertDescription>{success}</AlertDescription>
-                                        </Alert>
-                                    )}
-                                </div>
+                            <div className="flex items-center justify-end mt-4">
                                 <AlertDialog>
                                     <AlertDialogTrigger className="hover:bg-primary" asChild>
                                         <Button className="w-min" variant="outline">Criar</Button>
