@@ -120,7 +120,7 @@ export function DashboardHeader() {
                         <DropdownMenuItem className={`${pathname === '/dashboard/settings' ? 'bg-primary' : ''}`} onClick={closeMenu}>
                             <Link
                                 href="/dashboard/settings"
-                                className={`text-muted-foreground hover:text-foreground ${pathname === '/dashboard/settings' ? 'font-semibold text-white' : 'text-blue-400'}`}
+                                className={`text-muted-foreground hover:text-foreground ${pathname === '/dashboard/settings' ? 'font-semibold text-white' : 'text-blue-500'}`}
                             >
                                 <span>Configurações</span>
                                 <span className="sr-only">Configurações</span>
