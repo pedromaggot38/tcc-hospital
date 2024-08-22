@@ -36,7 +36,7 @@ export function SettingsGeneral() {
             username: '',
             password: '',
             role: 'journalist',
-            isBlocked: "false",
+            isBlocked: false,
         }
     })
 
