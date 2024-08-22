@@ -120,7 +120,7 @@ export function DashboardHeader() {
                         <DropdownMenuItem className={`${pathname === '/dashboard/settings' ? 'bg-primary' : ''}`} onClick={closeMenu}>
                             <Link
                                 href="/dashboard/settings"
-                                className={`text-muted-foreground hover:text-foreground ${pathname === '/dashboard/settings' ? 'font-semibold text-white' : 'text-blue-500'}`}
+                                className={`text-muted-foreground hover:text-foreground ${pathname === '/dashboard/settings' ? 'font-semibold text-white' : 'text-primary'}`}
                             >
                                 <span>Configurações</span>
                                 <span className="sr-only">Configurações</span>
@@ -129,7 +129,7 @@ export function DashboardHeader() {
                         <DropdownMenuItem className={`${pathname === '/dashboard/help' ? 'bg-yellow-400' : ''}`} onClick={closeMenu}>
                             <Link
                                 href="/dashboard/help"
-                                className={`text-muted-foreground hover:text-foreground ${pathname === '/dashboard/help' ? 'text-white font-semibold' : 'text-yellow-300'}`}
+                                className={`text-muted-foreground hover:text-foreground ${pathname === '/dashboard/help' ? 'text-white font-semibold' : 'text-yellow-600'}`}
                             >
                                 <span>Ajuda</span>
                                 <span className="sr-only">Ajuda</span>

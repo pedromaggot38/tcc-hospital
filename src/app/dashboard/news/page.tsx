@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-export default function News() {
+export default function NewsPage() {
     return (
         <main className="flex flex-col items-center">
             <div className="w-full max-w-6xl px-4">
