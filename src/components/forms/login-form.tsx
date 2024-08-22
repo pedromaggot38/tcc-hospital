@@ -17,6 +17,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { login } from "@/../actions/auth/login";
+import Link from "next/link";
 
 export const LoginForm = () => {
 
@@ -38,10 +39,10 @@ export const LoginForm = () => {
 
         startTransition(() => {
             login(values)
-            .then((data) => {
-                setError(data.error)
-                setSuccess(data.success)
-            })
+                .then((data) => {
+                    setError(data.error)
+                    setSuccess(data.success)
+                })
         })
     }
 
@@ -102,7 +103,7 @@ export const LoginForm = () => {
                                         )}
                                     />
                                 </div>
-                                <FormError message={error}	 />
+                                <FormError message={error} />
                                 <FormSuccess message={success} />
                                 <Button
                                     type="submit"
@@ -110,6 +111,11 @@ export const LoginForm = () => {
                                     disabled={isPending}
                                 >
                                     Login
+                                </Button>
+                            </div>
+                            <div>
+                                <Button>
+                                    <Link href={'/'}>Voltar</Link>
                                 </Button>
                             </div>
                         </form>
