@@ -36,7 +36,6 @@ const DashboardPage = async () => {
   return (
     <div>
       <section className="grid grid-cols-2 gap-2 lg:grid-cols-4 ">
-        {JSON.stringify(session)}
         {cardItems.map((item, index) => (
           <Card key={index} className="dark:bg-">
             <CardHeader>
@@ -60,6 +59,7 @@ const DashboardPage = async () => {
         <LastNews />
         <LastUsers />
       </section>
+      {JSON.stringify(session)}
     </div>
   );
 }
