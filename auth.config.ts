@@ -1,16 +1,35 @@
+import { getUserByUsername } from "@/../data/user";
+import Credentials from "next-auth/providers/credentials";
+import { LoginSchema } from "@/schemas/auth/user";
 import type { NextAuthConfig } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google'; // Exemplo com Google, pode adicionar outros
+import bcrypt from 'bcrypt'
 
 export const authConfig: NextAuthConfig = {
     providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-        }),
-        // Adicione outros provedores aqui, se necessário
+        Credentials({
+            async authorize(credentials) {
+                const validatedFields = LoginSchema.safeParse(credentials);
+
+                if (validatedFields.success) {
+                    const { username, password } = validatedFields.data;
+                    
+                    const user = await getUserByUsername(username);
+
+                    if (!user || !user.password) return null;
+
+                    const passwordsMatch = await bcrypt.compare(
+                        password,
+                        user.password,
+                    );
+
+                    if (passwordsMatch) return user;
+                }
+                return null
+            }
+        })
     ],
     pages: {
-        signIn: '/login', 
+        signIn: '/login',
     },
 
 };
