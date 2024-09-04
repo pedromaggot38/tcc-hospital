@@ -41,7 +41,6 @@ export function SettingsGeneral() {
     })
 
     const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-        console.log("Form is being submitted", values);
         setError('')
         setSuccess('')
 
