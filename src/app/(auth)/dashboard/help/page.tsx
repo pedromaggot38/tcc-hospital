@@ -23,23 +23,7 @@ const accordionItems = [
 const HelpPage = () => {
     return (
         <div className="flex flex-col items-center">
-            <div className="w-full max-w-6xl px-4">
-                <div className="flex justify-between">
-                    <h1 className="text-3xl font-semibold pb-6">Ajuda</h1>
-                </div>
-                <div className="grid grid-cols-4 gap-y-2 gap-x-10">
-                    {accordionItems.map((item, index) => (
-                        <Accordion key={index} type="single" collapsible>
-                            <AccordionItem value={`item-${index + 1}`} className="">
-                                <AccordionTrigger>{item.title}</AccordionTrigger>
-                                <AccordionContent>
-                                    {item.content}
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
-                    ))}
-                </div>
-            </div>
+            
         </div>
     )
 }
