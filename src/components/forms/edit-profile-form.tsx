@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "@/schemas/auth/user"
+import { EditProfileSchema } from "@/schemas/auth/user"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -17,23 +17,25 @@ export const EditProfileForm = () => {
     const [success, setSuccess] = useState<string | undefined>("")
     const [isPending, startTransition] = useTransition()
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const form = useForm<z.infer<typeof EditProfileSchema>>({
+        resolver: zodResolver(EditProfileSchema),
         defaultValues: {
             username: '',
             password: '',
         }
     })
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof EditProfileSchema>) => {
         setError('')
         setSuccess('')
 
         startTransition(() => {
             login(values)
                 .then((data) => {
+                    /* 
                     setError(data.error)
                     setSuccess(data.success)
+                    */
                 })
         })
     }
@@ -53,17 +55,18 @@ export const EditProfileForm = () => {
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                            Nome
-                        </Label>
-                        <Input id="name" name="name" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="username" className="text-right">
                             Username
                         </Label>
                         <Input id="username" name="username" className="col-span-3" />
                     </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                            Nome
+                        </Label>
+                        <Input id="name" name="name" className="col-span-3" />
+                    </div>
+
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="email" className="text-right">
                             E-mail

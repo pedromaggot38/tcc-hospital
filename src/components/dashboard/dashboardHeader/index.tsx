@@ -10,10 +10,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
-import Link from "next/link";
+import { Menu, Package2, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
+import { logout } from "@/actions/auth/logout";
+import AvatarDashboard from "../avatar";
 
 const menuItems = [
     {
@@ -39,11 +41,16 @@ const menuItems = [
 ];
 
 export function DashboardHeader() {
+
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
     const closeMenu = () => {
         setIsOpen(false);
+    };
+
+    const onClick = () => {
+        logout();
     };
 
     return (
@@ -75,7 +82,7 @@ export function DashboardHeader() {
                         className="shrink-0 md:hidden"
                     >
                         <Menu className="h-5 w-5" />
-                        <span className="sr-only">Toggle navigation menu</span>
+                        <span className="sr-only">Alternar menu de navegação</span>
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left">
@@ -85,7 +92,6 @@ export function DashboardHeader() {
                             className="flex items-center gap-2 text-lg font-semibold"
                         >
                             <Package2 className="h-6 w-6" />
-                            <span className="sr-only">Acme Inc</span>
                         </Link>
 
                         {menuItems.map((item) => (
@@ -115,7 +121,7 @@ export function DashboardHeader() {
                 <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="secondary" size="icon" className="rounded-full">
-                            <CircleUser className="h-5 w-5" />
+                            <AvatarDashboard />
                             <span className="sr-only">Botão do Usuário</span>
                         </Button>
                     </DropdownMenuTrigger>
@@ -143,7 +149,10 @@ export function DashboardHeader() {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             className="text-red-600"
-                            onClick={closeMenu}>
+                            onClick={() => {
+                                closeMenu();
+                                onClick();
+                            }}>
                             Logout
                         </DropdownMenuItem>
                     </DropdownMenuContent>
