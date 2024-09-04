@@ -1,14 +1,14 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import NextAuth from "next-auth"
 
-import { getUserById } from "@/data/user"
+import { getUserById, getUserIsBlocked } from "@/data/user"
 import { authConfig } from "./auth.config"
 import { db } from "@/lib/db"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async signIn({ user }) {
-      const existingUser = await getUserById(user.id);
+      const existingUser = await getUserIsBlocked(user.id);
 
       if (existingUser?.isBlocked) return false
       
