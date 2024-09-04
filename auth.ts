@@ -14,18 +14,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       
       return true;
     },
-
-    /* 
-    async signIn({ user }) {
-      const existingUser = await getUserById(user.id);
-
-      if (!existingUser || !existingUser.isBlocked){
-        return false
-      }
-
-      return true;
-    },
-    */
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
