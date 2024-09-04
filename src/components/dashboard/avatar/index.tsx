@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getUserByEmail } from "@/data/user";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import * as z from 'zod'
+import { CircleUser } from "lucide-react";
 
 /**
  * Renderiza o avatar do usuário atual.
@@ -8,27 +9,28 @@ import * as z from 'zod'
  * @returns Componente de Avatar
  */
 
-const getInitials = (name: string): string => {
+
+
+
+const getInitials = (name: string) => {
     const names = name.split(' ');
     const initials = names.map(n => n.charAt(0)).join('');
     return initials.toUpperCase();
 };
-const userSchema = z.object({
-    name: z.string().min(1).default(''),
-    image: z.string().url().optional()
-});
 
 export default function AvatarDashboard() {
     const user = useCurrentUser();
-    const validatedUser = userSchema.safeParse(user);
-    const userName = validatedUser.success ? validatedUser.data.name : '';
-    const userImage = validatedUser.success ? validatedUser.data.image : '';
+    const image = getUserByEmail(user?.name || '');
 
-    const initials = userName ? getInitials(userName) : '';
     return (
         <Avatar>
-            <AvatarImage src={ ""} />
-            <AvatarFallback></AvatarFallback>
+            <AvatarImage
+                src={user?.image || undefined}
+                alt="User Avatar"
+            />
+            <AvatarFallback>
+                {user?.name ? getInitials(user.name) : <CircleUser />}
+            </AvatarFallback>
         </Avatar>
     )
 }

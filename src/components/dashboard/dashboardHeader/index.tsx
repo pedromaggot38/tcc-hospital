@@ -15,8 +15,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { logout } from "@/actions/auth/logout";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import AvatarDashboard from "../avatar";
 
 const menuItems = [
@@ -43,7 +41,6 @@ const menuItems = [
 ];
 
 export function DashboardHeader() {
-    const user = useCurrentUser();
 
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
