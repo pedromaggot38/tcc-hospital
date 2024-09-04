@@ -2,8 +2,9 @@
 
 import { RegisterSchema } from "@/schemas/auth/user"
 import { db } from "@/lib/db"
-import bcrypt from 'bcrypt'
 import * as z from 'zod'
+
+const bcrypt = require('bcryptjs')
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
     console.log("teste" + values)

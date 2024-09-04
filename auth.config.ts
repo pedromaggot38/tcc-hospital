@@ -2,7 +2,8 @@ import { getUserByUsername } from "@/../data/user";
 import Credentials from "next-auth/providers/credentials";
 import { LoginSchema } from "@/schemas/auth/user";
 import type { NextAuthConfig } from 'next-auth';
-import bcrypt from 'bcrypt'
+
+const bcrypt = require('bcryptjs')
 
 export const authConfig: NextAuthConfig = {
     providers: [
@@ -12,7 +13,7 @@ export const authConfig: NextAuthConfig = {
 
                 if (validatedFields.success) {
                     const { username, password } = validatedFields.data;
-                    
+
                     const user = await getUserByUsername(username);
 
                     if (!user || !user.password) return null;
