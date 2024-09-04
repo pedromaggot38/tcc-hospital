@@ -7,33 +7,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  root
+  admin
+  journalist
+}
+
 model User {
-  id        String    @id @default(cuid())
-  username  String    @unique
+  id        String   @id @default(cuid())
+  username  String   @unique
   password  String
-  role      String
-  isBlocked Boolean   @default(false)
+  role      UserRole @default(journalist)
+  isBlocked Boolean  @default(false)
   name      String?
-  phone     String?   @unique
-  email     String?   @unique
+  phone     String?  @unique
+  email     String?  @unique
   image     String?
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
   posts     Post[]
 
   @@map("user")
 }
 
 model Post {
-  id        String    @id @default(cuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   title     String
   content   String?
-  published Boolean   @default(false)
-  slug      String    @unique
+  published Boolean  @default(false)
+  slug      String   @unique
   user      User     @relation(fields: [userId], references: [id], onDelete: Restrict)
   userId    String
 
-  @@map("post")
   @@index([userId, createdAt])
+  @@map("post")
 }
