@@ -16,7 +16,8 @@ import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
-import { login } from "@/../actions/auth/login";
+import { login } from "@/actions/auth/login";
+
 
 export const LoginForm = () => {
 
@@ -34,14 +35,11 @@ export const LoginForm = () => {
 
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
         setError('')
-        setSuccess('')
-
         startTransition(() => {
             login(values)
-            .then((data) => {
-                setError(data.error)
-                setSuccess(data.success)
-            })
+                .then((data) => {
+                    setError(data?.error)
+                })
         })
     }
 
@@ -102,7 +100,7 @@ export const LoginForm = () => {
                                         )}
                                     />
                                 </div>
-                                <FormError message={error}	 />
+                                <FormError message={error} />
                                 <FormSuccess message={success} />
                                 <Button
                                     type="submit"

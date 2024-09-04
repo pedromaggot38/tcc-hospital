@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import Link from "next/link";
 
 export default function NewsPage() {
     return (
@@ -8,7 +9,15 @@ export default function NewsPage() {
             <div className="w-full max-w-6xl px-4">
                 <div className="flex justify-between">
                     <h1 className="text-3xl font-semibold pb-6">Notícias</h1>
-                    <Button>Adicionar Post</Button>
+                    <Button>
+                        <Link
+                            key="Nova Publicação"
+                            href="/dashboard/news/new-post/"
+                        >
+                            <span>Novo Post</span>
+                            <span className="sr-only">Nova Publicação</span>
+                        </Link>
+                    </Button>
                 </div>
 
                 <Card className="w-full">

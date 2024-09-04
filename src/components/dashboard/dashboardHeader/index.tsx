@@ -31,6 +31,11 @@ const menuItems = [
         path: "/dashboard/news",
         accessibility: "Notícias",
     },
+    {
+        title: "Página Inicial",
+        path: "/",
+        accessibility: "Página Inicial",
+    },
 ];
 
 export function DashboardHeader() {

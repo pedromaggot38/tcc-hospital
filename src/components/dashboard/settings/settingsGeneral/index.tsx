@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useDialog } from "@/hooks/useDialog";
 import { useState, useTransition } from "react";
 import { RegisterSchema } from "@/schemas/auth/user"
-import { register } from "@/../actions/auth/register";
+import { register } from "@/actions/auth/register";
 import * as z from "zod"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,12 +36,11 @@ export function SettingsGeneral() {
             username: '',
             password: '',
             role: 'journalist',
-            isBlocked: "false",
+            isBlocked: false,
         }
     })
 
     const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-        console.log("Form is being submitted", values);
         setError('')
         setSuccess('')
 

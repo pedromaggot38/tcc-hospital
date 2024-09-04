@@ -1,7 +1,10 @@
+import { auth } from "@/../auth";
+
 import { LastNews } from "@/components/dashboard/lastnews";
 import { LastUsers } from "@/components/dashboard/lastusers";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
 
 // Exemplo de dados que poderiam ser buscados de um banco de dados.
 const cardItems = [
@@ -27,9 +30,11 @@ const cardItems = [
   }
 ];
 
-export default function Dashboard() {
+const DashboardPage = async () => {
+  const session = await auth();
+
   return (
-    <main className="">
+    <div>
       <section className="grid grid-cols-2 gap-2 lg:grid-cols-4 ">
         {cardItems.map((item, index) => (
           <Card key={index} className="dark:bg-">
@@ -54,6 +59,9 @@ export default function Dashboard() {
         <LastNews />
         <LastUsers />
       </section>
-    </main>
+      {JSON.stringify(session)}
+    </div>
   );
 }
+
+export default DashboardPage
