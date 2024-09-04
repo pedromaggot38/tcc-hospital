@@ -1,4 +1,4 @@
-import { getUserByUsername } from "@/../data/user";
+import { getUserByUsername } from "@/data/user";
 import Credentials from "next-auth/providers/credentials";
 import { LoginSchema } from "@/schemas/auth/user";
 import type { NextAuthConfig } from 'next-auth';
