@@ -9,15 +9,15 @@ export const getUserById = async (id: string) => {
     }
 }
 
-export const getUserIsBlocked = async (id: string | undefined) => {
+export const getUserIsBlocked = async (id: string | undefined): Promise<boolean | null> => {
     if (!id) {
         console.error("ID is undefined or empty");
         return null;
     }
     
     try {
-        const user = await db.user.findUnique({ where: { id } });
-        return user;
+        const user = await db.user.findUnique({ where: { id }, select: { isBlocked: true } });
+        return user?.isBlocked ?? null;
     } catch (error) {
         console.error("Error fetching user:", error);
         return null;
