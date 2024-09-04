@@ -7,6 +7,14 @@ import { db } from "@/lib/db"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
+    async signIn({ user }) {
+      const existingUser = await getUserById(user.id);
+
+      if (existingUser?.isBlocked) return false
+      
+      return true;
+    },
+
     /* 
     async signIn({ user }) {
       const existingUser = await getUserById(user.id);

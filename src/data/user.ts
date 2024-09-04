@@ -1,11 +1,17 @@
 import { db } from "@/lib/db";
 
-export const getUserById = async (id: string) => {
+export const getUserById = async (id: string | undefined) => {
+    if (!id) {
+        console.error("ID is undefined or empty");
+        return null;
+    }
+    
     try {
-        const user = await db.user.findUnique({ where: { id } })
-        return user
-    } catch {
-        return null
+        const user = await db.user.findUnique({ where: { id } });
+        return user;
+    } catch (error) {
+        console.error("Error fetching user:", error);
+        return null;
     }
 }
 
