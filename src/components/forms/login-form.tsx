@@ -17,6 +17,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { login } from "@/actions/auth/login";
+import Link from "next/link";
 
 
 export const LoginForm = () => {
@@ -100,15 +101,27 @@ export const LoginForm = () => {
                                         )}
                                     />
                                 </div>
-                                <FormError message={error} />
-                                <FormSuccess message={success} />
-                                <Button
-                                    type="submit"
-                                    className="w-full"
-                                    disabled={isPending}
-                                >
-                                    Login
-                                </Button>
+                                <div>
+                                    <div>
+                                        <FormError message={error} />
+                                        <FormSuccess message={success} />
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <Button
+                                            className="w-full bg-gray-100 hover:bg-gray-400 text-black"
+                                            disabled={isPending}
+                                        >
+                                            <Link href="/">Página Inicial</Link>
+                                        </Button>
+                                        <Button
+                                            type="submit"
+                                            className="w-full"
+                                            disabled={isPending}
+                                        >
+                                            Login
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </Form>

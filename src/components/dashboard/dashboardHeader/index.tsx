@@ -11,9 +11,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CircleUser, Menu, Package2, Search } from "lucide-react";
-import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
+import { logout } from "@/actions/auth/logout";
 
 const menuItems = [
     {
@@ -39,11 +41,17 @@ const menuItems = [
 ];
 
 export function DashboardHeader() {
+    const session = useSession();
+
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
     const closeMenu = () => {
         setIsOpen(false);
+    };
+
+    const onClick = () => {
+        logout();
     };
 
     return (
@@ -143,7 +151,10 @@ export function DashboardHeader() {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             className="text-red-600"
-                            onClick={closeMenu}>
+                            onClick={() => {
+                                closeMenu();
+                                onClick();
+                            }}>
                             Logout
                         </DropdownMenuItem>
                     </DropdownMenuContent>
