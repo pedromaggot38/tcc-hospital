@@ -10,12 +10,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { Menu, Package2, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { logout } from "@/actions/auth/logout";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AvatarDashboard from "../avatar";
 
 const menuItems = [
     {
@@ -41,7 +43,7 @@ const menuItems = [
 ];
 
 export function DashboardHeader() {
-    const session = useSession();
+    const user = useCurrentUser();
 
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
@@ -83,7 +85,7 @@ export function DashboardHeader() {
                         className="shrink-0 md:hidden"
                     >
                         <Menu className="h-5 w-5" />
-                        <span className="sr-only">Toggle navigation menu</span>
+                        <span className="sr-only">Alternar menu de navegação</span>
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left">
@@ -123,7 +125,7 @@ export function DashboardHeader() {
                 <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="secondary" size="icon" className="rounded-full">
-                            <CircleUser className="h-5 w-5" />
+                            <AvatarDashboard />
                             <span className="sr-only">Botão do Usuário</span>
                         </Button>
                     </DropdownMenuTrigger>

@@ -10,11 +10,13 @@ export default function Home() {
       <HomePage />
       <div className="flex gap-4">
         <Button
+          asChild
           size='sm'
         >
           <Link href={'/login'}>Login</Link>
         </Button>
         <Button
+          asChild
           size='sm'
         >
           <Link href={'/dashboard'}>Dashboard</Link>
