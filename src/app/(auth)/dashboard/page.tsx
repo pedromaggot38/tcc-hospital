@@ -59,7 +59,6 @@ const DashboardPage = async () => {
         <LastNews />
         <LastUsers />
       </section>
-      {JSON.stringify(session)}
     </div>
   );
 }

@@ -8,11 +8,17 @@ export default function Home() {
   return (
     <HomeLayout>
       <HomePage />
-      <div className="flex gap-5">
-        <Button>
+      <div className="flex gap-4">
+        <Button
+          asChild
+          size='sm'
+        >
           <Link href={'/login'}>Login</Link>
         </Button>
-        <Button>
+        <Button
+          asChild
+          size='sm'
+        >
           <Link href={'/dashboard'}>Dashboard</Link>
         </Button>
       </div>
