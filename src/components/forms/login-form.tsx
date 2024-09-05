@@ -89,7 +89,7 @@ export const LoginForm = () => {
                                                 <FormLabel>Senha</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="********"
+                                                        placeholder="••••••••••••••"
                                                         disabled={isPending}
                                                         type="password"
                                                         {...field}
