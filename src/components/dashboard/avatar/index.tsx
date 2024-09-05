@@ -8,10 +8,6 @@ import { CircleUser } from "lucide-react";
  *
  * @returns Componente de Avatar
  */
-
-
-
-
 const getInitials = (name: string) => {
     const names = name.split(' ');
     const initials = names.map(n => n.charAt(0)).join('');
