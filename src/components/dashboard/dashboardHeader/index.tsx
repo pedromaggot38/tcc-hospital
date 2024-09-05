@@ -125,7 +125,17 @@ export function DashboardHeader() {
                         </div>
                         <Separator orientation="vertical" className="mx-2 h-6" />
                         <div>
-                            <Badge variant="outline">{user?.role}</Badge>
+                            <Badge
+                                variant={
+                                    user?.role === "root"
+                                        ? "destructive"
+                                        : user?.role === "admin"
+                                            ? "default"
+                                            : "outline"
+                                }
+                            >
+                                {user?.role}
+                            </Badge>
                         </div>
                     </div>
                 </div>
