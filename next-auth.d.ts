@@ -4,6 +4,9 @@ import { UserRole } from "@prisma/client"
 
 export type ExtendedUser = DefaultSession["user"] & {
   role: UserRole
+  isBlocked: boolean
+  phone: string
+  username: string
 }
 
 declare module "next-auth" {
