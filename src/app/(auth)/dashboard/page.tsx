@@ -14,7 +14,7 @@ const DashboardPage = async () => {
       fetchCount: 12,
     },
     {
-      title: "Teste",
+      title: "Teste 2",
       description: "Lorem Ipsium",
       fetchCount: 20,
     },
