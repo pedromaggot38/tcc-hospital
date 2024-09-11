@@ -6,6 +6,9 @@ import Link from "next/link";
 
 const ArticlesTable = async () => {
     const articles = await db.article.findMany({
+        orderBy: {
+            createdAt: "desc",
+        },
         include: {
             user: true,
         },

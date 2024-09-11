@@ -6,7 +6,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const UsersTable = async () => {
-    const users = await db.user.findMany();
+    const users = await db.user.findMany({
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
 
     return (
         <Table>

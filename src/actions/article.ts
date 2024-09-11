@@ -35,19 +35,23 @@ export const createArticle = async (values: z.infer<typeof ArticleSchema>) => {
         }
     }
 
-    await db.article.create({
-        data: {
-            slug,
-            title,
-            content,
-            published,
-            user: {
-                connect: {
-                    id: session?.user.id
+    try {
+        await db.article.create({
+            data: {
+                slug,
+                title,
+                content,
+                published,
+                user: {
+                    connect: {
+                        id: session?.user.id
+                    }
                 }
             }
-        }
-    })
+        })
+    } catch (error) {
+        return { error: "Erro ao criar noticia" }
+    }
     revalidatePath('/dashboard/articles')
     return { success: "Notícia criada!" }
 }

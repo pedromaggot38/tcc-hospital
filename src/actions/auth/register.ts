@@ -21,7 +21,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         username, password, role, isBlocked, name, phone, email, image
     } = validatedFields.data
 
-    /*  Verificação dos dados únicos */
     const existingUser = await db.user.findFirst({
         where: {
             OR: [
@@ -46,19 +45,22 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
     const hashedPassword = await bcrypt.hash(password, 12)
 
-    await db.user.create({
-        data: {
-            username,
-            password: hashedPassword,
-            role,
-            isBlocked,
-            name,
-            phone,
-            email,
-            image
-        }
-    })
-    
+    try {
+        await db.user.create({
+            data: {
+                username,
+                password: hashedPassword,
+                role,
+                isBlocked,
+                name,
+                phone,
+                email,
+                image
+            }
+        })
+    } catch (error) {
+        return { error: "Erro ao criar o usuário" }
+    }
     revalidatePath('/dashboard/users')
     return { success: "Usuário criado!" }
 }
