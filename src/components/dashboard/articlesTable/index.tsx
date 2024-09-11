@@ -11,6 +11,10 @@ const ArticlesTable = async () => {
         },
     });
 
+    const getPreview = (content: string, maxLength: number) => {
+        return content.length > maxLength ? content.substring(0, maxLength) + "..." : content;
+    };
+
     return (
         <Table>
             <TableHeader>
@@ -31,7 +35,7 @@ const ArticlesTable = async () => {
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
                         </TableCell>
                         <TableCell className="relative">
-                            {article.content}
+                            {getPreview(article.content || "", 40)}
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
                         </TableCell>
                         <TableCell className="relative">
