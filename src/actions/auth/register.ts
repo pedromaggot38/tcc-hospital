@@ -3,6 +3,7 @@
 import { RegisterSchema } from "@/schemas/auth/user"
 import { db } from "@/lib/db"
 import * as z from 'zod'
+import { revalidatePath } from "next/cache"
 
 const bcrypt = require('bcryptjs')
 
@@ -57,5 +58,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             image
         }
     })
+    
+    revalidatePath('/dashboard/users')
     return { success: "Usuário criado!" }
 }

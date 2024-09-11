@@ -25,14 +25,16 @@ import { ArticleSchema } from "@/schemas/article";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
-import { createArticle } from "@/actions/createArticle";
+import { createArticle } from "@/actions/article";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import Link from "next/link";
 import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
+import { useRouter } from "next/navigation";
 
 
-const NewPost = () => {
+const NewArticle = () => {
+    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [success, setSuccess] = useState<string | undefined>("");
     const [error, setError] = useState<string | undefined>("");
@@ -57,13 +59,14 @@ const NewPost = () => {
                     setSuccess(data.success);
                     if (data.success) {
                         form.reset();
+                        router.push("/dashboard/articles");
                     } else if (data.error) {
                         setError(data.error);
                     }
                     setTimeout(() => {
                         setSuccess('');
                         setError('');
-                    }, 2000);
+                    }, 1000);
                 })
                 .catch((error) => {
                     console.error("Error during registration", error);
@@ -78,7 +81,7 @@ const NewPost = () => {
                 <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                     <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
                         <div className="flex items-center gap-4">
-                            <Link href="/dashboard/news">
+                            <Link href="/dashboard/articles">
                                 <Button variant="outline" size="icon" className="h-7 w-7">
                                     <ChevronLeft className="h-4 w-4" />
                                     <span className="sr-only">Voltar</span>
@@ -191,4 +194,4 @@ const NewPost = () => {
     );
 };
 
-export default NewPost;
+export default NewArticle;
