@@ -9,12 +9,12 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Package2, Search } from "lucide-react";
+import { Menu, Package2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { logout } from "@/actions/auth/logout";
-import AvatarDashboard from "../avatar";
+import AvatarDashboard from "../avatarDashboard";
 import { Badge } from "@/components/ui/badge";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { Separator } from "@/components/ui/separator";
@@ -43,9 +43,7 @@ const menuItems = [
 ];
 
 export function DashboardHeader() {
-
     const user = useCurrentUser();
-
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
@@ -97,7 +95,6 @@ export function DashboardHeader() {
                         >
                             <Package2 className="h-6 w-6" />
                         </Link>
-
                         {menuItems.map((item) => (
                             <Link
                                 key={item.title}
@@ -120,7 +117,6 @@ export function DashboardHeader() {
                                     ? `Bem-vindo, ${user.name}`
                                     : "Bem-vindo"}
                             </span>
-
                         </div>
                         <Separator orientation="vertical" className="mx-2 h-6" />
                         <div>
@@ -141,7 +137,7 @@ export function DashboardHeader() {
                 <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="secondary" size="icon" className="rounded-full">
-                            <AvatarDashboard />
+                            <AvatarDashboard user={user} /> {/* Passa o usuário para o AvatarDashboard */}
                             <span className="sr-only">Botão do Usuário</span>
                         </Button>
                     </DropdownMenuTrigger>
