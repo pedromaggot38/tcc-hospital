@@ -18,7 +18,7 @@ export default auth((req) => {
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   if (isApiAuthRoute) {
-    return NextResponse.next(); // Permite que as rotas da API de autenticação prossigam
+    return NextResponse.next();
   }
 
   if (isAuthRoute) {
