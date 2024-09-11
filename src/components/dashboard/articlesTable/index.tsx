@@ -1,56 +1,49 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
-import AvatarDashboard from "../avatarDashboard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-const UsersTable = async () => {
-    const users = await db.user.findMany();
+const ArticlesTable = async () => {
+    const articles = await db.article.findMany({
+        include: {
+            user: true,
+        },
+    });
 
     return (
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Avatar</TableHead>
-                    <TableHead>Nome</TableHead>
-                    <TableHead>Username</TableHead>
-                    <TableHead>Cargo</TableHead>
-                    <TableHead>E-mail</TableHead>
-                    <TableHead>Telefone</TableHead>
-                    <TableHead>Bloqueado</TableHead>
+                    <TableHead>Título</TableHead>
+                    <TableHead>Conteúdo</TableHead>
+                    <TableHead>Criado Por</TableHead>
+                    <TableHead>Publicado</TableHead>
+                    <TableHead>Criado em</TableHead>
                     <TableHead></TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {users.map((user) => (
-                    <TableRow key={user.id}>
+                {articles.map((article) => (
+                    <TableRow key={article.id}>
                         <TableCell className="relative">
-                            <AvatarDashboard user={user} />
+                            {article.title}
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
                         </TableCell>
                         <TableCell className="relative">
-                            {user.name}
+                            {article.content}
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
                         </TableCell>
                         <TableCell className="relative">
-                            {user.username}
+                            {article.user.name}
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
                         </TableCell>
                         <TableCell className="relative">
-                            {user.role}
+                            {article.published ? "Sim" : "Não"}
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
                         </TableCell>
                         <TableCell className="relative">
-                            {user.email || 'Não informado'}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
-                        </TableCell>
-                        <TableCell className="relative">
-                            {user.phone || 'Não informado'}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
-                        </TableCell>
-                        <TableCell className="relative">
-                            {user.isBlocked ? "Sim" : "Não"}
+                            {article.createdAt.toLocaleDateString()}
                         </TableCell>
                         <TableCell className="p-0">
                             <Button
@@ -59,7 +52,7 @@ const UsersTable = async () => {
                                 size="sm"
                                 className="p-4"
                             >
-                                <Link href={`/dashboard/users/${user.username}`}>Editar</Link>
+                                <Link href={`/dashboard/news/${article.slug}`}>Editar</Link>
                             </Button>
                         </TableCell>
                     </TableRow>
@@ -69,4 +62,4 @@ const UsersTable = async () => {
     );
 };
 
-export default UsersTable;
+export default ArticlesTable;

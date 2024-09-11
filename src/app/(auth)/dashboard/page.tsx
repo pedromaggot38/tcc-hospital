@@ -2,16 +2,7 @@ import { LastNews } from "@/components/dashboard/lastnews";
 import { LastUsers } from "@/components/dashboard/lastusers";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { db } from "@/lib/db";
-async function fetchDashboardData() {
-  // Buscar dados no banco de dados
-  const articlesCount = await db.article.count();
-  const usersCount = await db.user.count();
-  return {
-    articlesCount,
-    usersCount,
-  };
-}
+import { fetchDashboardData } from "@/lib/dataFetching";
 
 const DashboardPage = async () => {
   const data = await fetchDashboardData();

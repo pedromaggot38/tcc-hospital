@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
 
 export async function LastNews() {
@@ -34,14 +35,26 @@ export async function LastNews() {
             <TableBody>
               {lastNews.map((news) => (
                 <TableRow key={news.id}>
-                  <TableCell>{news.title || 'Título não informado'}</TableCell>
-                  <TableCell>{news.user.name ? (
-                    news.user.name
-                  ) : (
-                    <span className="text-blue-500">{news.user.id}</span>
-                  )}</TableCell>
-                  <TableCell>{news.published ? "Sim" : "Não"}</TableCell>
-                  <TableCell>{news.createdAt.toLocaleDateString()}</TableCell>
+                  <TableCell className="relative">
+                    {news.title || 'Título não informado'}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                  <TableCell className="relative">
+                    {news.user.name ? (
+                      news.user.name
+                    ) : (
+                      <span className="text-blue-500">{news.user.id}</span>
+                    )}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                  <TableCell className="relative">
+                    {news.published ? "Sim" : "Não"}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                  <TableCell className="relative">
+                    {news.createdAt.toLocaleDateString()}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

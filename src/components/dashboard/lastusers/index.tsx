@@ -1,14 +1,13 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { db } from "@/lib/db";  // Certifique-se de que o caminho esteja correto
+import { Separator } from "@/components/ui/separator";
+import { db } from "@/lib/db";
 import AvatarDashboard from "../avatarDashboard";
 
 export async function LastUsers() {
-  // Busca os últimos usuários do banco de dados, limitando a quantidade (por exemplo, 5 últimos usuários)
   const lastUsers = await db.user.findMany({
-    orderBy: { createdAt: 'desc' }, // Ordena por data de criação
-    take: 5, // Limita a 5 usuários
+    orderBy: { createdAt: 'desc' },
+    take: 5,
   });
 
   return (
@@ -35,13 +34,26 @@ export async function LastUsers() {
             <TableBody>
               {lastUsers.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell>
+                  <TableCell className="relative">
                     <AvatarDashboard user={user} />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
                   </TableCell>
-                  <TableCell>{user.name || 'Nome não informado'}</TableCell>
-                  <TableCell>{user.role}</TableCell>
-                  <TableCell>{user.isBlocked ? "Sim" : "Não"}</TableCell>
-                  <TableCell>{user.createdAt.toLocaleDateString()}</TableCell> {/* Ajuste a data conforme necessário */}
+                  <TableCell className="relative">
+                    {user.name || 'Nome não informado'}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                  <TableCell className="relative">
+                    {user.role}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                  <TableCell className="relative">
+                    {user.isBlocked ? "Sim" : "Não"}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                  <TableCell className="relative">
+                    {user.createdAt.toLocaleDateString()}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
