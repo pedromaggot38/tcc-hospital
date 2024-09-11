@@ -119,7 +119,6 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
-                            {/* Password Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormField
                                     control={form.control}
@@ -143,7 +142,6 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
-                            {/* isBlocked Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormLabel className="col-span-1 text-right">Bloqueado</FormLabel>
                                 <FormItem className="col-span-3">
@@ -174,7 +172,6 @@ export const RegisterForm = () => {
                                 </FormItem>
                             </div>
 
-                            {/* Role Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormLabel className="col-span-1 text-right">Cargo</FormLabel>
                                 <FormItem className="col-span-3">

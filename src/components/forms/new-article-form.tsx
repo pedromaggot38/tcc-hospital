@@ -27,11 +27,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { createArticle } from "@/actions/createArticle";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import Link from "next/link";
+import { FormSuccess } from "../form-success";
+import { FormError } from "../form-error";
 
 
 const NewPost = () => {
     const [isPending, startTransition] = useTransition();
     const [success, setSuccess] = useState<string | undefined>("");
+    const [error, setError] = useState<string | undefined>("");
 
     const form = useForm<z.infer<typeof ArticleSchema>>({
         resolver: zodResolver(ArticleSchema),
@@ -53,38 +57,36 @@ const NewPost = () => {
                     setSuccess(data.success);
                     if (data.success) {
                         form.reset();
+                    } else if (data.error) {
+                        setError(data.error);
                     }
-
                     setTimeout(() => {
                         setSuccess('');
+                        setError('');
                     }, 2000);
                 })
                 .catch((error) => {
                     console.error("Error during registration", error);
+                    setError("Erro ao criar a publicação.");
                 });
         });
     };
 
-    // Aqui está o JSX movido para o corpo principal do componente
     return (
         <div className="flex w-full flex-col">
             <div className="flex flex-col sm:gap-4 sm:pl-14">
                 <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                     <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
                         <div className="flex items-center gap-4">
-                            <Button variant="outline" size="icon" className="h-7 w-7">
-                                <ChevronLeft className="h-4 w-4" />
-                                <span className="sr-only">Voltar</span>
-                            </Button>
+                            <Link href="/dashboard/news">
+                                <Button variant="outline" size="icon" className="h-7 w-7">
+                                    <ChevronLeft className="h-4 w-4" />
+                                    <span className="sr-only">Voltar</span>
+                                </Button>
+                            </Link>
                             <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
                                 Nova Publicação
                             </h1>
-                            <div className="hidden items-center gap-2 md:ml-auto md:flex">
-                                <Button variant="outline" size="sm">
-                                    Discard
-                                </Button>
-                                <Button size="sm">Salvar Publicação</Button>
-                            </div>
                         </div>
                         <div className="grid gap-4 lg:gap-8">
                             <Form {...form}>
@@ -170,9 +172,14 @@ const NewPost = () => {
                                         </CardContent>
                                     </Card>
 
-                                    <div className="flex justify-end gap-4">
-                                        <Button variant="outline" type="reset">Descartar</Button>
-                                        <Button type="submit" disabled={isPending}>Salvar Publicação</Button>
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <FormSuccess message={success} />
+                                            <FormError message={error} />
+                                        </div>
+                                        <div>
+                                            <Button type="submit" disabled={isPending}>Salvar Publicação</Button>
+                                        </div>
                                     </div>
                                 </form>
                             </Form>

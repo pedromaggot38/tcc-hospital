@@ -27,10 +27,10 @@ export const createArticle = async (values: z.infer<typeof ArticleSchema>) => {
 
     if (existingArticle) {
         if (existingArticle.title === title) {
-            return { error: 'Título em uso!' }
+            return { error: 'Título já existe!' }
         }
         if (existingArticle.slug === slug) {
-            return { error: 'Slug em uso!' }
+            return { error: 'Slug já existe!' }
         }
     }
 
