@@ -8,7 +8,7 @@ export async function LastNews() {
       user: true,
     },
     orderBy: { createdAt: 'desc' },
-    take: 5,
+    take: 7,
   });
 
   return (
@@ -35,7 +35,11 @@ export async function LastNews() {
               {lastNews.map((news) => (
                 <TableRow key={news.id}>
                   <TableCell>{news.title || 'Título não informado'}</TableCell>
-                  <TableCell>{news.user.name}</TableCell>
+                  <TableCell>{news.user.name ? (
+                    news.user.name
+                  ) : (
+                    <span className="text-blue-500">{news.user.id}</span>
+                  )}</TableCell>
                   <TableCell>{news.published ? "Sim" : "Não"}</TableCell>
                   <TableCell>{news.createdAt.toLocaleDateString()}</TableCell>
                 </TableRow>
