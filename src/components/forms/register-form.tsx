@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@/schemas/auth/user";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Separator } from "../ui/separator";
@@ -20,7 +20,7 @@ export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
-    const [isDialogOpen, setDialogOpen] = useState(false); // Estado para controlar a abertura do Dialog
+    const [isDialogOpen, setDialogOpen] = useState(false);
 
     const { openDialog, handleConfirm, handleCancel } = useDialog(() => {
         form.handleSubmit(onSubmit)();

@@ -1,4 +1,4 @@
-import NewPost from "@/components/dashboard/newPost";
+import NewPost from "@/components/forms/new-article-form";
 
 export default function NewPostPage() {
     return (
