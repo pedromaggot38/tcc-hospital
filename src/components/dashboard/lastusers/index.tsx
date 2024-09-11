@@ -1,8 +1,16 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { db } from "@/lib/db";  // Certifique-se de que o caminho esteja correto
+import AvatarDashboard from "../avatarDashboard";
 
-export function LastUsers() {
+export async function LastUsers() {
+  // Busca os últimos usuários do banco de dados, limitando a quantidade (por exemplo, 5 últimos usuários)
+  const lastUsers = await db.user.findMany({
+    orderBy: { createdAt: 'desc' }, // Ordena por data de criação
+    take: 5, // Limita a 5 usuários
+  });
+
   return (
     <Card className="flex-1 min-h-[500px]">
       <CardHeader>
@@ -12,8 +20,7 @@ export function LastUsers() {
           </CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="font-bold text-cyan-500">
-        {/* TODO - Implementar lista de últimos usuários no banco de dados */}
+      <CardContent className="font-bold">
         <article>
           <Table>
             <TableHeader>
@@ -26,18 +33,17 @@ export function LastUsers() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <Avatar className="w-8 h-8">
-                    <AvatarImage src="https://github.com/pedromaggot38.png" />
-                    <AvatarFallback>PB</AvatarFallback>
-                  </Avatar>
-                </TableCell>
-                <TableCell>Pedro Sanches</TableCell>
-                <TableCell>Root</TableCell>
-                <TableCell>Não</TableCell>
-                <TableCell>24/07/2024</TableCell>
-              </TableRow>
+              {lastUsers.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell>
+                    <AvatarDashboard user={user} />
+                  </TableCell>
+                  <TableCell>{user.name || 'Nome não informado'}</TableCell>
+                  <TableCell>{user.role}</TableCell>
+                  <TableCell>{user.isBlocked ? "Sim" : "Não"}</TableCell>
+                  <TableCell>{user.createdAt.toLocaleDateString()}</TableCell> {/* Ajuste a data conforme necessário */}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </article>
