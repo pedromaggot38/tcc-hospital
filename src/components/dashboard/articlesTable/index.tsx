@@ -48,9 +48,9 @@ const ArticlesTable = async () => {
                         <TableCell className="p-0">
                             <Button
                                 asChild
-                                variant="destructive"
+                                variant="outline"
                                 size="sm"
-                                className="p-4"
+                                className="hover:bg-red-500 hover:text-white p-4"
                             >
                                 <Link href={`/dashboard/news/${article.slug}`}>Editar</Link>
                             </Button>

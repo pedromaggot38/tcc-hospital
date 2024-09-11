@@ -10,13 +10,15 @@ const News = () => {
                 <div className="flex justify-between">
                     <h1 className="text-3xl font-semibold pb-6">Notícias</h1>
                     <Button
-                    asChild
+                        asChild
+                        className="hover:bg-primary hover:text-white"
+                        variant="outline"
                     >
                         <Link
                             key="Nova Publicação"
                             href="/dashboard/news/new-post/"
                         >
-                            <span>Novo Post</span>
+                            <span>Nova Publicação</span>
                             <span className="sr-only">Nova Publicação</span>
                         </Link>
                     </Button>

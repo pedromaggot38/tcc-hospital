@@ -47,29 +47,23 @@ export const RegisterForm = () => {
                     console.log("Response received", data);
                     setError(data.error);
                     setSuccess(data.success);
-
-                    // Limpa os campos do formulário após a criação bem-sucedida
                     if (data.success) {
-                        form.reset(); // Limpa o formulário
-
-                        // Adiciona um delay antes de fechar o Dialog
+                        form.reset();
                         setTimeout(() => {
-                            setDialogOpen(false); // Fecha o Dialog
-                        }, 4000);
+                            setDialogOpen(false);
+                        }, 2000);
                     }
 
-                    // Limpa as mensagens de sucesso ou erro após 8 segundos
                     setTimeout(() => {
                         setSuccess('');
                         setError('');
-                    }, 8000);
+                    }, 2000);
                 })
                 .catch((error) => {
                     console.error("Error during registration", error);
                     setError("Houve um erro ao criar o usuário.");
 
-                    // Limpa a mensagem de erro após 3 segundos
-                    setTimeout(() => setError(''), 3000);
+                    setTimeout(() => setError(''), 2000);
                 });
         });
     };
@@ -82,7 +76,7 @@ export const RegisterForm = () => {
     return (
         <>
             <Button
-            className="hover:bg-primary hover:text-white"
+                className="hover:bg-primary hover:text-white"
                 variant="outline"
                 onClick={() => setDialogOpen(true)}
             >

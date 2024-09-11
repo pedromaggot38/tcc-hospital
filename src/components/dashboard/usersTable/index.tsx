@@ -55,9 +55,9 @@ const UsersTable = async () => {
                         <TableCell className="p-0">
                             <Button
                                 asChild
-                                variant="destructive"
+                                variant="outline"
                                 size="sm"
-                                className="p-4"
+                                className="hover:bg-red-500 hover:text-white p-4"
                             >
                                 <Link href={`/dashboard/users/${user.username}`}>Editar</Link>
                             </Button>
