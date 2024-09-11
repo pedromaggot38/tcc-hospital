@@ -26,6 +26,7 @@ model User {
   createdAt DateTime  @default(now())
   articles  Article[]
 
+  @@index([id, username])
   @@map("user")
 }
 
@@ -40,6 +41,6 @@ model Article {
   user      User     @relation(fields: [userId], references: [id], onDelete: Restrict)
   userId    String
 
-  @@index([userId, createdAt])
+  @@index([slug, userId, createdAt])
   @@map("article")
 }

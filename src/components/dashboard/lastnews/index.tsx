@@ -1,12 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { db } from "@/lib/db";  // Certifique-se de que o caminho esteja correto
+import { db } from "@/lib/db";
 
 export async function LastNews() {
-  // Busca os últimos posts do banco de dados, limitando a quantidade (por exemplo, 5 últimos posts)
   const lastNews = await db.article.findMany({
-    orderBy: { createdAt: 'desc' }, // Ordena por data de criação
-    take: 5, // Limita a 5 posts
+    include: {
+      user: true,
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 5,
   });
 
   return (
@@ -33,7 +35,7 @@ export async function LastNews() {
               {lastNews.map((news) => (
                 <TableRow key={news.id}>
                   <TableCell>{news.title || 'Título não informado'}</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>{news.user.name}</TableCell>
                   <TableCell>{news.published ? "Sim" : "Não"}</TableCell>
                   <TableCell>{news.createdAt.toLocaleDateString()}</TableCell>
                 </TableRow>

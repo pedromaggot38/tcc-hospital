@@ -1,4 +1,4 @@
-import UserTable from "@/components/dashboard/usersTable";
+import UsersTable from "@/components/dashboard/usersTable";
 import { RegisterForm } from "@/components/forms/register-form";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -13,9 +13,8 @@ const Users = () => {
                 </div>
                 <Card className="w-full">
                     <CardContent className="font-bold">
-                        {/* TODO - Implementar lista de últimos usuários no banco de dados */}
                         <article>
-                            <UserTable  />
+                            <UsersTable />
                         </article>
                     </CardContent>
                 </Card>

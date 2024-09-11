@@ -21,7 +21,7 @@ export default function NewsPage() {
                 </div>
 
                 <Card className="w-full">
-                    <CardContent className="font-bold text-cyan-500">
+                    <CardContent className="font-bold">
                         {/* TODO - Implementar lista de últimos usuários no banco de dados */}
                         <article>
                             <Table>
