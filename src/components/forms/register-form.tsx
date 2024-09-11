@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@/schemas/auth/user";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Separator } from "../ui/separator";
@@ -20,7 +20,7 @@ export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
-    const [isDialogOpen, setDialogOpen] = useState(false); // Estado para controlar a abertura do Dialog
+    const [isDialogOpen, setDialogOpen] = useState(false);
 
     const { openDialog, handleConfirm, handleCancel } = useDialog(() => {
         form.handleSubmit(onSubmit)();
@@ -47,29 +47,23 @@ export const RegisterForm = () => {
                     console.log("Response received", data);
                     setError(data.error);
                     setSuccess(data.success);
-
-                    // Limpa os campos do formulário após a criação bem-sucedida
                     if (data.success) {
-                        form.reset(); // Limpa o formulário
-
-                        // Adiciona um delay antes de fechar o Dialog
+                        form.reset();
                         setTimeout(() => {
-                            setDialogOpen(false); // Fecha o Dialog
-                        }, 4000);
+                            setDialogOpen(false);
+                        }, 2000);
                     }
 
-                    // Limpa as mensagens de sucesso ou erro após 8 segundos
                     setTimeout(() => {
                         setSuccess('');
                         setError('');
-                    }, 8000);
+                    }, 2000);
                 })
                 .catch((error) => {
                     console.error("Error during registration", error);
                     setError("Houve um erro ao criar o usuário.");
 
-                    // Limpa a mensagem de erro após 3 segundos
-                    setTimeout(() => setError(''), 3000);
+                    setTimeout(() => setError(''), 2000);
                 });
         });
     };
@@ -82,7 +76,7 @@ export const RegisterForm = () => {
     return (
         <>
             <Button
-            className="hover:bg-primary hover:text-white"
+                className="hover:bg-primary hover:text-white"
                 variant="outline"
                 onClick={() => setDialogOpen(true)}
             >
@@ -125,7 +119,6 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
-                            {/* Password Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormField
                                     control={form.control}
@@ -149,7 +142,6 @@ export const RegisterForm = () => {
                                 />
                             </div>
 
-                            {/* isBlocked Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormLabel className="col-span-1 text-right">Bloqueado</FormLabel>
                                 <FormItem className="col-span-3">
@@ -180,7 +172,6 @@ export const RegisterForm = () => {
                                 </FormItem>
                             </div>
 
-                            {/* Role Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <FormLabel className="col-span-1 text-right">Cargo</FormLabel>
                                 <FormItem className="col-span-3">

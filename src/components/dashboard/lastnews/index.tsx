@@ -1,7 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Separator } from "@/components/ui/separator";
+import { db } from "@/lib/db";
 
-export function LastNews() {
+export async function LastNews() {
+  const lastNews = await db.article.findMany({
+    include: {
+      user: true,
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 7,
+  });
+
   return (
     <Card className="flex-1 min-h-[500px]">
       <CardHeader>
@@ -11,8 +21,7 @@ export function LastNews() {
           </CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="font-bold text-cyan-500">
-        {/* TODO - Implementar lista de últimas notícias postadas no banco de dados */}
+      <CardContent className="font-bold">
         <article>
           <Table>
             <TableHeader>
@@ -24,16 +33,34 @@ export function LastNews() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>Lorem Ipsium</TableCell>
-                <TableCell>Pedro Sanches</TableCell>
-                <TableCell>Sim</TableCell>
-                <TableCell>19/08/2024</TableCell>
-              </TableRow>
+              {lastNews.map((news) => (
+                <TableRow key={news.id}>
+                  <TableCell className="relative">
+                    {news.title || 'Título não informado'}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                  <TableCell className="relative">
+                    {news.user.name ? (
+                      news.user.name
+                    ) : (
+                      <span className="text-blue-500">{news.user.id}</span>
+                    )}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                  <TableCell className="relative">
+                    {news.published ? "Sim" : "Não"}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                  <TableCell className="relative">
+                    {news.createdAt.toLocaleDateString()}
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </article>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -8,14 +8,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Package2, Search } from "lucide-react";
+import { Menu, Package2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { logout } from "@/actions/auth/logout";
-import AvatarDashboard from "../avatar";
+import AvatarDashboard from "../avatarDashboard";
+import { Badge } from "@/components/ui/badge";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { Separator } from "@/components/ui/separator";
 
 const menuItems = [
     {
@@ -41,7 +43,7 @@ const menuItems = [
 ];
 
 export function DashboardHeader() {
-
+    const user = useCurrentUser();
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
@@ -93,7 +95,6 @@ export function DashboardHeader() {
                         >
                             <Package2 className="h-6 w-6" />
                         </Link>
-
                         {menuItems.map((item) => (
                             <Link
                                 key={item.title}
@@ -108,20 +109,35 @@ export function DashboardHeader() {
                 </SheetContent>
             </Sheet>
             <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-                <form className="ml-auto flex-1 sm:flex-initial">
-                    <div className="relative">
-                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                        <Input
-                            type="search"
-                            placeholder="Search products..."
-                            className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-                        />
+                <div className="ml-auto flex-1 sm:flex-initial">
+                    <div className="relative flex gap-2 items-center">
+                        <div className="text-sm">
+                            <span>
+                                {user?.name
+                                    ? `Bem-vindo, ${user.name}`
+                                    : "Bem-vindo"}
+                            </span>
+                        </div>
+                        <Separator orientation="vertical" className="mx-2 h-6" />
+                        <div>
+                            <Badge
+                                variant={
+                                    user?.role === "root"
+                                        ? "destructive"
+                                        : user?.role === "admin"
+                                            ? "default"
+                                            : "secondary"
+                                }
+                            >
+                                {user?.role}
+                            </Badge>
+                        </div>
                     </div>
-                </form>
+                </div>
                 <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="secondary" size="icon" className="rounded-full">
-                            <AvatarDashboard />
+                            <AvatarDashboard user={user} /> {/* Passa o usuário para o AvatarDashboard */}
                             <span className="sr-only">Botão do Usuário</span>
                         </Button>
                     </DropdownMenuTrigger>

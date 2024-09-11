@@ -14,23 +14,24 @@ enum UserRole {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  username  String   @unique
+  id        String    @id @default(cuid())
+  username  String    @unique
   password  String
-  role      UserRole @default(journalist)
-  isBlocked Boolean  @default(false)
+  role      UserRole  @default(journalist)
+  isBlocked Boolean   @default(false)
   name      String?
-  phone     String?  @unique
-  email     String?  @unique
+  phone     String?   @unique
+  email     String?   @unique
   image     String?
-  createdAt DateTime @default(now())
-  posts     Post[]
+  createdAt DateTime  @default(now())
+  articles  Article[]
 
+  @@index([id, username])
   @@map("user")
 }
 
-model Post {
-  id        String   @id @default(cuid())
+model Article {
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String
@@ -40,6 +41,6 @@ model Post {
   user      User     @relation(fields: [userId], references: [id], onDelete: Restrict)
   userId    String
 
-  @@index([userId, createdAt])
-  @@map("post")
+  @@index([slug, userId, createdAt])
+  @@map("article")
 }
