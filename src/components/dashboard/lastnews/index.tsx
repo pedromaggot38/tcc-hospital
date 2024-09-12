@@ -37,7 +37,7 @@ export async function LastNews() {
                 <TableRow key={news.id}>
                   <TableCell className="relative">
                     {news.title || 'Título não informado'}
-                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
                     {news.user.name ? (
@@ -45,15 +45,15 @@ export async function LastNews() {
                     ) : (
                       <span className="text-blue-500">{news.user.id}</span>
                     )}
-                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
                     {news.published ? "Sim" : "Não"}
-                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
                     {news.createdAt.toLocaleDateString()}
-                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                 </TableRow>
               ))}

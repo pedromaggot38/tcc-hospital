@@ -19,7 +19,7 @@ const ArticlesTable = async () => {
     };
 
     return (
-        <Table>
+        <Table className="overflow-hidden">
             <TableHeader>
                 <TableRow>
                     <TableHead>Título</TableHead>
@@ -34,20 +34,20 @@ const ArticlesTable = async () => {
                 {articles.map((article) => (
                     <TableRow key={article.id}>
                         <TableCell className="relative">
-                            {article.title}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <span className="text-sm">{article.title}</span>
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {getPreview(article.content || "", 40)}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {article.user.name}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {article.published ? "Sim" : "Não"}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {article.createdAt.toLocaleDateString()}
