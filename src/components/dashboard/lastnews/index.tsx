@@ -23,7 +23,7 @@ export async function LastNews() {
       </CardHeader>
       <CardContent className="font-bold">
         <article>
-          <Table>
+          <Table className="overflow-hidden">
             <TableHeader>
               <TableRow>
                 <TableHead>Título</TableHead>

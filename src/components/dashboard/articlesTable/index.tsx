@@ -34,7 +34,9 @@ const ArticlesTable = async () => {
                 {articles.map((article) => (
                     <TableRow key={article.id}>
                         <TableCell className="relative">
-                            <span className="text-sm">{article.title}</span>
+                            <Link href={`/dashboard/articles/${article.slug}`} className="text-sm hover:underline">
+                                {article.title}
+                            </Link>
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
@@ -42,7 +44,12 @@ const ArticlesTable = async () => {
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
-                            {article.user.name}
+                            <Link
+                                href={`/dashboard/users/${article.user.username}`}
+                                className={article.user.name ? "hover:underline" : "text-blue-500 hover:underline"}
+                            >
+                                {getPreview(article.user.name ? article.user.name : article.user.id, 15)}
+                            </Link>
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
@@ -59,7 +66,7 @@ const ArticlesTable = async () => {
                                 size="sm"
                                 className="hover:bg-red-500 hover:text-white p-4"
                             >
-                                <Link href={`/dashboard/news/${article.slug}`}>Editar</Link>
+                                <Link href={`/dashboard/articles/${article.slug}`}>Editar</Link>
                             </Button>
                         </TableCell>
                     </TableRow>

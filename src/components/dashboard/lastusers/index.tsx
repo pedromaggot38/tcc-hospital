@@ -21,7 +21,7 @@ export async function LastUsers() {
       </CardHeader>
       <CardContent className="font-bold">
         <article>
-          <Table>
+          <Table className="overflow-hidden">
             <TableHeader>
               <TableRow>
                 <TableHead>Avatar</TableHead>
