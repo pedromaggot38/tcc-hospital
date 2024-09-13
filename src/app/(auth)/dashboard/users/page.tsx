@@ -1,7 +1,6 @@
 
 import UsersTable from "@/components/dashboard/dataTable";
 import { RegisterForm } from "@/components/forms/register-form";
-import { Card, CardContent } from "@/components/ui/card";
 
 const Users = () => {
 
@@ -12,13 +11,7 @@ const Users = () => {
                     <h1 className="text-3xl font-semibold pb-6">Usuários</h1>
                     <RegisterForm />
                 </div>
-                <Card className="w-full">
-                    <CardContent className="font-bold">
-                        <article>
-                            <UsersTable />
-                        </article>
-                    </CardContent>
-                </Card>
+                <UsersTable />
             </div>
         </div>
     )

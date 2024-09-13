@@ -1,8 +1,22 @@
 'use client'
-import { ColumnDef } from "@tanstack/react-table"
-import { z } from "zod";
-import AvatarDashboard from "../avatarDashboard";
 
+import { ColumnDef } from "@tanstack/react-table"
+import AvatarDashboard from "../avatarDashboard";
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { MoreHorizontal } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { redirect } from "next/navigation";
+import ActionMenu from "../actionMenu";
 export const userSchema = z.object({
     id: z.string().cuid(),
     username: z.string().min(3),
@@ -14,7 +28,6 @@ export const userSchema = z.object({
     phone: z.string().regex(/^\d{10,11}$/).optional(),
 });
 
-// Tipo inferido a partir do schema do Zod
 export type Users = z.infer<typeof userSchema>;
 
 export const columns: ColumnDef<Users>[] = [
@@ -22,9 +35,11 @@ export const columns: ColumnDef<Users>[] = [
         accessorKey: "image",
         header: "Avatar",
         cell: ({ row }) => {
+            const user = row.original
+
             return (
                 <div>
-                    <AvatarDashboard user={row.original.image} />
+                    <AvatarDashboard user={user} />
                 </div>
             );
         }
@@ -33,8 +48,10 @@ export const columns: ColumnDef<Users>[] = [
         accessorKey: "name",
         header: "Name",
         cell: ({ row }) => {
+            const user = row.original
+
             return (
-                <span className={row.original.name ? "" : "text-gray-500"}>
+                <span className={user.name ? "" : "text-gray-500"}>
                     {row.original.name || "Não informado"}
                 </span>
             );
@@ -48,9 +65,11 @@ export const columns: ColumnDef<Users>[] = [
         accessorKey: "email",
         header: "E-mail",
         cell: ({ row }) => {
+            const user = row.original;
+
             return (
-                <span className={row.original.email ? "" : "text-gray-500"}>
-                    {row.original.email || "Não informado"}
+                <span className={`${user.email ? "" : "text-gray-500"} select-none`}>
+                    {user.email || "Não informado"}
                 </span>
             );
         }
@@ -59,8 +78,10 @@ export const columns: ColumnDef<Users>[] = [
         accessorKey: "phone",
         header: "Telefone",
         cell: ({ row }) => {
+            const user = row.original
+
             return (
-                <span className={row.original.phone ? "" : "text-gray-500"}>
+                <span className={user.phone ? "" : "text-gray-500"}>
                     {row.original.phone || "Não informado"}
                 </span>
             );
@@ -69,17 +90,45 @@ export const columns: ColumnDef<Users>[] = [
     {
         accessorKey: "role",
         header: "Cargo",
+        cell: ({ row }) => {
+            const user = row.original
+
+            return (
+                <Badge
+                    variant={
+                        user?.role === "root"
+                            ? "destructive"
+                            : user?.role === "admin"
+                                ? "default"
+                                : "secondary"
+                    }
+                >
+                    {user?.role}
+                </Badge>
+            );
+        }
     },
     {
         accessorKey: "isBlocked",
         header: "Bloqueado",
         cell: ({ row }) => {
+            const user = row.original
+
             return (
-                < span className={row.original.isBlocked ? "text-red-500" : ""} >
+                < span className={user.isBlocked ? "text-red-500" : ""} >
                     {row.original.isBlocked ? "Sim" : "Não"}
                 </span >
             );
         }
+    },
+    {
+        id: "actions",
+        cell: ({ row }) => {
+            const user = row.original
 
+            return (
+                <ActionMenu user={user} />
+            )
+        },
     },
 ];

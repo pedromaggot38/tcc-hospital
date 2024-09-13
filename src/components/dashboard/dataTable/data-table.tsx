@@ -30,9 +30,9 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
-
+  
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border container bg-card">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
