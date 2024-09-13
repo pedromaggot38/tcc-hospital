@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import AvatarDashboard from "../avatarDashboard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
+import { auth } from "@/../auth";
 const UsersTable = async () => {
     const users = await db.user.findMany({
         orderBy: {
