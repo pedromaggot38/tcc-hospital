@@ -49,12 +49,9 @@ const ArticlesTable = async () => {
                         <TableCell className="relative">
                             <HoverCard>
                                 <HoverCardTrigger>
-                                    <Link
-                                        href={`/dashboard/users/${article.user.username}`}
-                                        className={article.user.name ? "hover:underline" : "text-blue-500 hover:underline"}
-                                    >
+                                    <span className={article.user.name ? "" : "text-blue-500"}>
                                         {getPreview(article.user.name ? article.user.name : article.user.id, 15)}
-                                    </Link>
+                                    </span>
                                 </HoverCardTrigger>
                                 <HoverCardContent className="w-80">
                                     <div className="flex justify-between space-x-4">

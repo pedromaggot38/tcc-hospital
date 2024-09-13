@@ -44,12 +44,9 @@ export async function LastUsers() {
                   <TableCell className="relative">
                     <HoverCard>
                       <HoverCardTrigger>
-                        <Link
-                          href={`/dashboard/users/${user.username}`}
-                          className={user.name ? "hover:underline" : "text-gray-500 hover:underline"}
-                        >
+                        <span className={user.name ? "" : "text-gray-500"}>
                           {user.name || "Não informado"}
-                        </Link>
+                        </span>
                       </HoverCardTrigger>
                       <HoverCardContent className="w-80">
                         <div className="flex justify-between space-x-4">
