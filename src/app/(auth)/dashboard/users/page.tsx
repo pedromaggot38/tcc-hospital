@@ -8,7 +8,7 @@ const Users = () => {
         <div className="flex flex-col items-center">
             <div className="w-full max-w-6xl px-4">
                 <div className="flex justify-between">
-                    <h1 className="text-3xl font-semibold pb-6">Usuários</h1>
+                    <h1 className="text-3xl font-semibold">Usuários</h1>
                     <RegisterForm />
                 </div>
                 <UsersTable />
