@@ -34,3 +34,6 @@ export const authConfig: NextAuthConfig = {
     },
 
 };
+export const config = {
+    runtime: 'nodejs',
+};
