@@ -2,20 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import AvatarDashboard from "../avatarDashboard";
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { redirect } from "next/navigation";
 import ActionMenu from "../actionMenu";
 export const userSchema = z.object({
     id: z.string().cuid(),
@@ -46,7 +36,7 @@ export const columns: ColumnDef<Users>[] = [
     },
     {
         accessorKey: "name",
-        header: "Name",
+        header: "Nome",
         cell: ({ row }) => {
             const user = row.original
 
@@ -63,7 +53,17 @@ export const columns: ColumnDef<Users>[] = [
     },
     {
         accessorKey: "email",
-        header: "E-mail",
+        header: ({ column }) => {
+            return (
+              <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              >
+                Email
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            )
+          },
         cell: ({ row }) => {
             const user = row.original;
 
@@ -76,7 +76,17 @@ export const columns: ColumnDef<Users>[] = [
     },
     {
         accessorKey: "phone",
-        header: "Telefone",
+        header: ({ column }) => {
+            return (
+              <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              >
+                Telefone
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            )
+          },
         cell: ({ row }) => {
             const user = row.original
 
@@ -89,7 +99,17 @@ export const columns: ColumnDef<Users>[] = [
     },
     {
         accessorKey: "role",
-        header: "Cargo",
+        header: ({ column }) => {
+            return (
+              <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              >
+                Cargo
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            )
+          },
         cell: ({ row }) => {
             const user = row.original
 
@@ -110,7 +130,17 @@ export const columns: ColumnDef<Users>[] = [
     },
     {
         accessorKey: "isBlocked",
-        header: "Bloqueado",
+        header: ({ column }) => {
+            return (
+              <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              >
+                Bloqueado
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            )
+          },
         cell: ({ row }) => {
             const user = row.original
 
