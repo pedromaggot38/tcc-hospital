@@ -37,7 +37,9 @@ const UsersTable = async () => {
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
-                            {user.name}
+                            <span className={user.name ? "" : "text-gray-500"}>
+                                {user.name || "Não informado"}
+                            </span>
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
@@ -49,15 +51,21 @@ const UsersTable = async () => {
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
-                            {user.email || 'Não informado'}
+                            <span className={user.email ? "" : "text-gray-500"}>
+                                {user.email || "Não informado"}
+                            </span>
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
-                            {user.phone || 'Não informado'}
+                            <span className={user.phone ? "" : "text-gray-500"}>
+                                {user.phone || "Não informado"}
+                            </span>
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
-                            {user.isBlocked ? "Sim" : "Não"}
+                            <span className={user.isBlocked ? "text-red-500" : ""}>
+                                {user.isBlocked ? "Sim" : "Não"}
+                            </span>
                         </TableCell>
                         <TableCell className="p-0">
                             {currentRole !== 'journalist' && (

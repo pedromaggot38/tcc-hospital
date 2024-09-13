@@ -46,9 +46,9 @@ export async function LastUsers() {
                       <HoverCardTrigger>
                         <Link
                           href={`/dashboard/users/${user.username}`}
-                          className={user.name ? "hover:underline" : "text-blue-500 hover:underline"}
+                          className={user.name ? "hover:underline" : "text-gray-500 hover:underline"}
                         >
-                          {user.name || "------"}
+                          {user.name || "Não informado"}
                         </Link>
                       </HoverCardTrigger>
                       <HoverCardContent className="w-80">
@@ -88,7 +88,9 @@ export async function LastUsers() {
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
-                    {user.isBlocked ? "Sim" : "Não"}
+                    <span className={user.isBlocked ? "text-red-500" : ""}>
+                      {user.isBlocked ? "Sim" : "Não"}
+                    </span>
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
