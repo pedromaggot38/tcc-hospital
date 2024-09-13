@@ -52,8 +52,8 @@ export function SettingsGeneral() {
                     setSuccess(data.success)
                 })
                 .catch((error) => {
-                    console.error("Error during login", error);
-                    setError("Houve um erro ao criar o usuário.");
+                    console.error("Error during update", error);
+                    setError("Houve um erro ao atualizar os dados.");
                 });
         })
     }

@@ -34,20 +34,15 @@ export const RegisterSchema = z.object({
     image: z.string().optional(),
 });
 
-export const EditProfileSchema = z.object({
+export const SelfProfileEditSchema = z.object({
     username: z.string().min(6, {
         message: "Nome de usuário é obrigatório"
     }).regex(/^\S*$/, {
         message: "Usuário não pode conter espaços"
     }),
-    password: z.string().min(6, {
-        message: "Mínimo de 6 caracteres"
-    }),
-    role: z.enum(['root', 'admin', 'journalist']),
-    isBlocked: z.boolean(),
     name: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
-    }).optional(),
+    }),
     phone: z.string().max(12).min(8, {
         message: "Mínimo de 8 caracteres"
     }).optional(),
@@ -57,7 +52,7 @@ export const EditProfileSchema = z.object({
     image: z.string().optional(),
 });
 
-export const ConfigProfileSchema = z.object({
+export const ProfileEditSchema = z.object({
     name: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
     }).optional(),

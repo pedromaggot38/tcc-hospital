@@ -63,7 +63,3 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     revalidatePath('/dashboard/users')
     return { success: "Usuário criado!" }
 }
-
-export const config = {
-    runtime: 'nodejs',
-};

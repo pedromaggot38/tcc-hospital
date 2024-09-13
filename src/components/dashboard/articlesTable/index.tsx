@@ -3,6 +3,9 @@ import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import AvatarDashboard from "../avatarDashboard";
+import { Badge } from "@/components/ui/badge";
 
 const ArticlesTable = async () => {
     const articles = await db.article.findMany({
@@ -44,12 +47,45 @@ const ArticlesTable = async () => {
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
-                            <Link
-                                href={`/dashboard/users/${article.user.username}`}
-                                className={article.user.name ? "hover:underline" : "text-blue-500 hover:underline"}
-                            >
-                                {getPreview(article.user.name ? article.user.name : article.user.id, 15)}
-                            </Link>
+                            <HoverCard>
+                                <HoverCardTrigger>
+                                    <Link
+                                        href={`/dashboard/users/${article.user.username}`}
+                                        className={article.user.name ? "hover:underline" : "text-blue-500 hover:underline"}
+                                    >
+                                        {getPreview(article.user.name ? article.user.name : article.user.id, 15)}
+                                    </Link>
+                                </HoverCardTrigger>
+                                <HoverCardContent className="w-80">
+                                    <div className="flex justify-between space-x-4">
+                                        <AvatarDashboard user={article.user} />
+                                        <div className="space-y-1">
+                                            <div className="flex justify-between">
+                                                <h4 className="text-sm font-semibold">@{article.user.username}</h4>
+                                                <Badge
+                                                    variant={
+                                                        article.user.role === "root"
+                                                            ? "destructive"
+                                                            : article.user.role === "admin"
+                                                                ? "default"
+                                                                : "secondary"
+                                                    }
+                                                >
+                                                    {article.user.role}
+                                                </Badge>
+                                            </div>
+                                            <p className="text-sm">
+                                                The React Framework – created and maintained by @vercel.
+                                            </p>
+                                            <div className="flex items-center pt-2">
+                                                <span className="text-xs text-muted-foreground">
+                                                    Joined December 2021
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </HoverCardContent>
+                            </HoverCard>
                             <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
