@@ -12,7 +12,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
 import {
     Select,
     SelectContent,
@@ -22,9 +21,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ArticleSchema } from "@/schemas/article";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { createArticle } from "@/actions/article";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import Link from "next/link";
@@ -32,6 +31,17 @@ import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
 import { useRouter } from "next/navigation";
 
+const createSlug = (title: string) => {
+    return title
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+};
 
 const NewArticle = () => {
     const router = useRouter();
@@ -48,6 +58,13 @@ const NewArticle = () => {
             content: ''
         }
     });
+    const title = useWatch({ control: form.control, name: 'title' });
+
+    useEffect(() => {
+        if (title) {
+            form.setValue('slug', createSlug(title));
+        }
+    }, [title, form]);
 
     const onSubmit = (values: z.infer<typeof ArticleSchema>) => {
         console.log("Form is being submitted", values);
