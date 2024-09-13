@@ -4,8 +4,11 @@ import { db } from "@/lib/db";
 import AvatarDashboard from "../avatarDashboard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { auth } from "@/../auth";
+import { currentUserRole } from "@/lib/auth";
 const UsersTable = async () => {
+
+    const currentRole = await currentUserRole();
+
     const users = await db.user.findMany({
         orderBy: {
             createdAt: "desc",
@@ -57,14 +60,16 @@ const UsersTable = async () => {
                             {user.isBlocked ? "Sim" : "Não"}
                         </TableCell>
                         <TableCell className="p-0">
-                            <Button
-                                asChild
-                                variant="outline"
-                                size="sm"
-                                className="hover:bg-red-500 hover:text-white p-4"
-                            >
-                                <Link href={`/dashboard/users/${user.username}`}>Editar</Link>
-                            </Button>
+                            {currentRole !== 'journalist' && (
+                                <Button
+                                    asChild
+                                    variant="outline"
+                                    size="sm"
+                                    className="hover:bg-red-500 hover:text-white p-4"
+                                >
+                                    <Link href={`/dashboard/users/${user.username}`}>Editar</Link>
+                                </Button>
+                            )}
                         </TableCell>
                     </TableRow>
                 ))}

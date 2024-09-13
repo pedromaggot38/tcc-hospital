@@ -1,6 +1,7 @@
+import { currentUserRole } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextPage } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 interface Params {
     username: string;
@@ -13,6 +14,13 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
         },
     });
 
+    const currentRole = await currentUserRole();
+
+    if (currentRole === 'journalist') {
+        return redirect('/dashboard/users');
+    }
+
+    console.log('ROLE: ', currentRole);
     if (!user) {
         return notFound();
     }
