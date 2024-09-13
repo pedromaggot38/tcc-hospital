@@ -6,21 +6,20 @@ import * as z from 'zod'
 import { revalidatePath } from "next/cache"
 
 const bcrypt = require('bcryptjs')
-
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
     console.log("teste" + values)
-
+    
     const validatedFields = RegisterSchema.safeParse(values)
-
+    
     if (!validatedFields.success) {
         return { error: "Erro ao validar os campos" }
     }
-
+    
     /*  Recebe os dados nas variáveis */
     const {
         username, password, role, isBlocked, name, phone, email, image
     } = validatedFields.data
-
+    
     const existingUser = await db.user.findFirst({
         where: {
             OR: [
@@ -30,7 +29,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             ]
         }
     });
-
+    
     if (existingUser) {
         if (existingUser.username === username) {
             return { error: 'Nome de usuário em uso!' }
@@ -42,9 +41,9 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             return { error: 'E-mail em uso!' }
         }
     }
-
+    
     const hashedPassword = await bcrypt.hash(password, 12)
-
+    
     try {
         await db.user.create({
             data: {
@@ -64,3 +63,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     revalidatePath('/dashboard/users')
     return { success: "Usuário criado!" }
 }
+
+export const config = {
+    runtime: 'nodejs',
+};
