@@ -1,4 +1,5 @@
-import UsersTable from "@/components/dashboard/usersTable";
+
+import UsersTable from "@/components/dashboard/dataTable";
 import { RegisterForm } from "@/components/forms/register-form";
 import { Card, CardContent } from "@/components/ui/card";
 
