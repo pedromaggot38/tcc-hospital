@@ -6,10 +6,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const UsersTable = async () => {
-    const users = await db.user.findMany();
+    const users = await db.user.findMany({
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
 
     return (
-        <Table>
+        <Table className="overflow-hidden">
             <TableHeader>
                 <TableRow>
                     <TableHead>Avatar</TableHead>
@@ -27,27 +31,27 @@ const UsersTable = async () => {
                     <TableRow key={user.id}>
                         <TableCell className="relative">
                             <AvatarDashboard user={user} />
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {user.name}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {user.username}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {user.role}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {user.email || 'Não informado'}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {user.phone || 'Não informado'}
-                            <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                            <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                         </TableCell>
                         <TableCell className="relative">
                             {user.isBlocked ? "Sim" : "Não"}

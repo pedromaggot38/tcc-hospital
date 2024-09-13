@@ -32,7 +32,7 @@ const menuItems = [
     },
     {
         title: "Notícias",
-        path: "/dashboard/news",
+        path: "/dashboard/articles",
         accessibility: "Notícias",
     },
     {

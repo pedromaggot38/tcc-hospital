@@ -51,13 +51,13 @@ export const RegisterForm = () => {
                         form.reset();
                         setTimeout(() => {
                             setDialogOpen(false);
-                        }, 2000);
+                        }, 1000);
                     }
 
                     setTimeout(() => {
                         setSuccess('');
                         setError('');
-                    }, 2000);
+                    }, 1000);
                 })
                 .catch((error) => {
                     console.error("Error during registration", error);

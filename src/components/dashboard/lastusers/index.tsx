@@ -21,7 +21,7 @@ export async function LastUsers() {
       </CardHeader>
       <CardContent className="font-bold">
         <article>
-          <Table>
+          <Table className="overflow-hidden">
             <TableHeader>
               <TableRow>
                 <TableHead>Avatar</TableHead>
@@ -36,23 +36,23 @@ export async function LastUsers() {
                 <TableRow key={user.id}>
                   <TableCell className="relative">
                     <AvatarDashboard user={user} />
-                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
                     {user.name || 'Nome não informado'}
-                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
                     {user.role}
-                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
                     {user.isBlocked ? "Sim" : "Não"}
-                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
                     {user.createdAt.toLocaleDateString()}
-                    <Separator orientation="vertical" className="absolute right-0 h-full top-0" />
+                    <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                 </TableRow>
               ))}

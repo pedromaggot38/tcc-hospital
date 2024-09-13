@@ -16,7 +16,7 @@ const News = () => {
                     >
                         <Link
                             key="Nova Publicação"
-                            href="/dashboard/news/new-post/"
+                            href="/dashboard/articles/new-article/"
                         >
                             <span>Nova Publicação</span>
                             <span className="sr-only">Nova Publicação</span>
