@@ -102,7 +102,7 @@ export const LoginForm = () => {
                                     />
                                 </div>
                                 <div>
-                                    <div>
+                                    <div className="mb-3">
                                         <FormError message={error} />
                                         <FormSuccess message={success} />
                                     </div>

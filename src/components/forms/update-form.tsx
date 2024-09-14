@@ -57,7 +57,7 @@ export const UpdateForm = () => {
                 })
                 .catch((error) => {
                     console.error("Error during update", error);
-                    setError("Houve um erro ao autualizar os dados.");
+                    setError("Houve um erro ao atualizar os dados.");
 
                     setTimeout(() => setError(''), 2000);
                 });

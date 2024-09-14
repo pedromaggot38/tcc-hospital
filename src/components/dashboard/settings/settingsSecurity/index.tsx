@@ -1,5 +1,6 @@
 'use client'
-import { AlertDialog,
+import {
+    AlertDialog,
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
@@ -7,7 +8,8 @@ import { AlertDialog,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger } from "@/components/ui/alert-dialog";
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -26,10 +28,6 @@ export function SettingsSecurity() {
                 <CardContent>
 
                     <form>
-                        {/*
-                  TODO
-                  CRUD
-                */}
                         <Input placeholder="********" />
                     </form>
                 </CardContent>
@@ -53,7 +51,7 @@ export function SettingsSecurity() {
                     </form>
                 </CardContent>
                 <CardFooter className="border-t px-6 py-4">
-                <AlertDialog>
+                    <AlertDialog>
                         <AlertDialogTrigger className="hover:bg-primary" asChild>
                             <Button variant="outline">Salvar</Button>
                         </AlertDialogTrigger>

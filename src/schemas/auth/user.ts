@@ -65,7 +65,7 @@ export const SettingsEditSchema = z.object({
     }).optional(),
 });
 
-export const PasswordEditSchema = z.object({
+export const PasswordUpdateSchema = z.object({
     password: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
     }),
@@ -75,4 +75,7 @@ export const PasswordEditSchema = z.object({
     confirmPassword: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
     }),
-})
+}).refine((data) => data.newPassword === data.confirmPassword, {
+    message: "As senhas não se correspondem",
+    path: ['confirmPassword'],
+});

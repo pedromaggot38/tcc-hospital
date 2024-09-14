@@ -1,11 +1,11 @@
-import { SettingsSecurity } from "@/components/dashboard/settings/settingsSecurity";
 import SettingsSidebar from "@/components/dashboard/settings/settingsSidebar";
+import { PasswordUpdateForm } from "@/components/forms/pass-update-form";
 
 
 const SettingsSecurityPage = () => {
   return (
     <SettingsSidebar>
-        <SettingsSecurity />
+        <PasswordUpdateForm />
     </SettingsSidebar>
   );
 }
