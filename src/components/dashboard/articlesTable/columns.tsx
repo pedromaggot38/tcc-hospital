@@ -14,6 +14,11 @@ export const articleSchema = z.object({
     content: z.string().optional(),
 });
 
+const contentPreview = (text: string | undefined, length: number = 20): string => {
+    if (!text) return '';
+    return text.length > length ? `${text.substring(0, length)}...` : text;
+};
+
 export type Articles = z.infer<typeof articleSchema>;
 
 export const columns: ColumnDef<Articles>[] = [
@@ -28,6 +33,11 @@ export const columns: ColumnDef<Articles>[] = [
     {
         accessorKey: "content",
         header: "Conteúdo",
+        cell: info => contentPreview(info.getValue<string>(), 20),
+    },
+    {
+        accessorKey: "user.name",
+        header: "Autor"
     },
     {
         accessorKey: "published",

@@ -12,7 +12,11 @@ async function getData(): Promise<Articles[]> {
             slug: true,
             createdAt: true,
             updatedAt: true,
-            user: true,
+            user: {
+                select: {
+                    name: true,
+                },
+            },
         },
         orderBy: {
             createdAt: "desc",
@@ -31,7 +35,7 @@ async function getData(): Promise<Articles[]> {
 }
 const ArticlesTable = async () => {
     const data = await getData()
-    
+
     return (
         <div>
             <DataTable columns={columns} data={data} />
