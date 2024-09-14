@@ -42,9 +42,8 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div>
       <div>
-        <Table>
+        <Table className="min-w-full divide-y divide-gray-200">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -85,6 +84,5 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-    </div>
   )
 }

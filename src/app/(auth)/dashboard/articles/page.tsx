@@ -25,7 +25,7 @@ const News = () => {
                 </div>
 
                 <Card className="w-full">
-                    <CardContent className="font-bold">
+                    <CardContent>
                         <article>
                             <ArticlesTable />
                         </article>

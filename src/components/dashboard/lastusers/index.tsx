@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import AvatarDashboard from "../avatarDashboard";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import UserHoverCard from "../userHoverCard";
 
 export async function LastUsers() {
   const lastUsers = await db.user.findMany({
@@ -42,42 +43,7 @@ export async function LastUsers() {
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
-                    <HoverCard>
-                      <HoverCardTrigger>
-                        <span className={user.name ? "" : "text-gray-500"}>
-                          {user.name || "Não informado"}
-                        </span>
-                      </HoverCardTrigger>
-                      <HoverCardContent className="w-80">
-                        <div className="flex justify-between space-x-4">
-                          <AvatarDashboard user={user} />
-                          <div className="space-y-1">
-                            <div className="flex justify-between">
-                              <h4 className="text-sm font-semibold">@{user.username}</h4>
-                              <Badge
-                                variant={
-                                  user.role === "root"
-                                    ? "destructive"
-                                    : user.role === "admin"
-                                      ? "default"
-                                      : "secondary"
-                                }
-                              >
-                                {user.role}
-                              </Badge>
-                            </div>
-                            <p className="text-sm">
-                              The React Framework – created and maintained by @vercel.
-                            </p>
-                            <div className="flex items-center pt-2">
-                              <span className="text-xs text-muted-foreground">
-                                Joined December 2021
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </HoverCardContent>
-                    </HoverCard>
+                    <UserHoverCard user={user}/>
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
