@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import ActionMenu from "../actionMenu";
 export const userSchema = z.object({
     id: z.string().cuid(),
-    username: z.string().min(3),
+    username: z.string(),
     name: z.string().optional(),
     image: z.string().optional(),
     isBlocked: z.boolean().default(false),
@@ -42,7 +42,7 @@ export const columns: ColumnDef<Users>[] = [
 
             return (
                 <span className={user.name ? "" : "text-gray-500"}>
-                    {row.original.name || "Não informado"}
+                    {user.name || "Não informado"}
                 </span>
             );
         }

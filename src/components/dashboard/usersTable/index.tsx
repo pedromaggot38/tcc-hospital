@@ -13,7 +13,11 @@ async function getData(): Promise<Users[]> {
             phone: true,
             username: true,
             isBlocked: true,
+            createdAt: true
         },
+        orderBy: {
+            createdAt: "desc"
+        }
     });
     return users.map((user) => ({
         id: user.id,
