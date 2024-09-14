@@ -1,13 +1,13 @@
-import { SettingsGeneral } from "@/components/dashboard/settings/settingsGeneral";
 import SettingsSidebar from "@/components/dashboard/settings/settingsSidebar";
+import { UpdateForm } from "@/components/forms/update-form";
 
 
 const SettingsPage = () => {
   return (
     <div>
       <SettingsSidebar>
-        <SettingsGeneral />
-    </SettingsSidebar>
+        <UpdateForm />
+      </SettingsSidebar>
     </div>
   );
 }

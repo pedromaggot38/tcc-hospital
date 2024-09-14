@@ -15,7 +15,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         return { error: "Erro ao validar os campos" }
     }
     
-    /*  Recebe os dados nas variáveis */
     const {
         username, password, role, isBlocked, name, phone, email, image
     } = validatedFields.data

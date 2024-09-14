@@ -1,5 +1,5 @@
 
-import UsersTable from "@/components/dashboard/dataTable";
+import UsersTable from "@/components/dashboard/usersTable";
 import { RegisterForm } from "@/components/forms/register-form";
 
 const Users = () => {

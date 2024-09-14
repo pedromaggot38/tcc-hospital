@@ -34,7 +34,7 @@ export const RegisterSchema = z.object({
     image: z.string().optional(),
 });
 
-export const SelfProfileEditSchema = z.object({
+export const UserEditSchema = z.object({
     username: z.string().min(6, {
         message: "Nome de usuário é obrigatório"
     }).regex(/^\S*$/, {
@@ -52,7 +52,7 @@ export const SelfProfileEditSchema = z.object({
     image: z.string().optional(),
 });
 
-export const ProfileEditSchema = z.object({
+export const SettingsEditSchema = z.object({
     name: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
     }).optional(),
@@ -63,7 +63,16 @@ export const ProfileEditSchema = z.object({
     phone: z.string().max(12).min(8, {
         message: "Mínimo de 8 caracteres"
     }).optional(),
+});
+
+export const PasswordEditSchema = z.object({
     password: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
     }),
-});
+    newPassword: z.string().min(6, {
+        message: "Mínimo de 6 caracteres"
+    }),
+    confirmPassword: z.string().min(6, {
+        message: "Mínimo de 6 caracteres"
+    }),
+})
