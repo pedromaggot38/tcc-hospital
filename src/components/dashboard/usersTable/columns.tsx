@@ -2,11 +2,11 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import AvatarDashboard from "../avatarDashboard";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import ActionMenu from "../actionMenu";
+import ActionMenu from "./actionMenu";
+import { z } from "zod";
 export const userSchema = z.object({
     id: z.string().cuid(),
     username: z.string(),

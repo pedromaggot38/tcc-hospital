@@ -2,9 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
-import ActionMenu from "../actionMenu";
+import ActionMenu from "./actionMenu";
 
 export const articleSchema = z.object({
     id: z.string().cuid(),
@@ -61,6 +59,16 @@ export const columns: ColumnDef<Articles>[] = [
                     {isPublished ? "Sim" : "Não"}
                 </span>
             );
+        },
+    },
+    {
+        id: "actions",
+        cell: ({ row }) => {
+            const article = row.original
+
+            return (
+                <ActionMenu article={article} />
+            )
         },
     },
 ];

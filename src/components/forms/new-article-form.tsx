@@ -93,7 +93,6 @@ const NewArticle = () => {
     };
 
     return (
-        <div className="flex w-full flex-col">
             <div className="flex flex-col sm:gap-4 sm:pl-14">
                 <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                     <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
@@ -207,7 +206,6 @@ const NewArticle = () => {
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 

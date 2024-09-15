@@ -75,7 +75,6 @@ export const UpdateForm = () => {
                 className="grid gap-4 py-4"
                 onSubmit={handleFormSubmit}
             >
-                {/* Nome */}
                 <Card>
                     <CardHeader>
                         <CardTitle>Seu Nome</CardTitle>
@@ -101,7 +100,6 @@ export const UpdateForm = () => {
                     </CardContent>
                 </Card>
 
-                {/* Email */}
                 <Card>
                     <CardHeader>
                         <CardTitle>Seu E-mail</CardTitle>
@@ -155,7 +153,7 @@ export const UpdateForm = () => {
                 <Separator 
                     className="my-2"
                 />
-                {/* Foto de Perfil */}
+
                 <Card>
                     <CardHeader>
                         <CardTitle>Foto de Perfil</CardTitle>
@@ -181,7 +179,6 @@ export const UpdateForm = () => {
                     </CardContent>
                 </Card>
 
-                {/* Botões de Ação */}
                 <div className="flex items-center justify-between mt-4">
                     <div className="flex gap-4 items-center">
                         <FormError message={error} />

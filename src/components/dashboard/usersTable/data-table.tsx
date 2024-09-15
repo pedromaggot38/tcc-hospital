@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import React, { useState } from "react"
 import { usersPageSize } from "@/lib/vars"
+import { RegisterForm } from "@/components/forms/register-form"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -62,15 +63,19 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Procure por um username..."
-          value={(table.getColumn("username")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("username")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+      <div className="flex items-center justify-between py-4">
+        <h1 className="text-3xl font-semibold">Usuários</h1>
+        <div className="flex space-x-2">
+          <Input
+            placeholder="Procure por um username..."
+            value={(table.getColumn("username")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("username")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+          <RegisterForm />
+        </div>
       </div>
       <div className="rounded-md border container bg-card">
         <Table>
@@ -109,7 +114,7 @@ export function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  Sem resultados
                 </TableCell>
               </TableRow>
             )}
@@ -140,6 +145,5 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
     </div>
-
   )
 }

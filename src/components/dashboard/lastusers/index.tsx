@@ -1,11 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
 import AvatarDashboard from "../avatarDashboard";
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import UserHoverCard from "../userHoverCard";
 
 export async function LastUsers() {
