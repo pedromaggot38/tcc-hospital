@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import AvatarDashboard from "../avatarDashboard";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, CheckCircle, XCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import ActionMenu from "./actionMenu";
 import { z } from "zod";
@@ -92,7 +92,7 @@ export const columns: ColumnDef<Users>[] = [
 
             return (
                 <span className={user.phone ? "" : "text-gray-500"}>
-                    {row.original.phone || "Não informado"}
+                    {user.phone || "Não informado"}
                 </span>
             );
         }
@@ -147,9 +147,15 @@ export const columns: ColumnDef<Users>[] = [
 
             return (
                 <div className="text-center">
-                    <span className={user.isBlocked ? "text-red-500" : ""} >
-                        {row.original.isBlocked ? "Sim" : "Não"}
-                    </span >
+                    {user.isBlocked ? (
+                        <div className="flex items-center justify-center text-green-500">
+                            <CheckCircle className="w-5 h-5" />
+                        </div>
+                    ) : (
+                        <div className="flex items-center justify-center text-red-500">
+                            <XCircle className="w-5 h-5" />
+                        </div>
+                    )}
                 </div>
             );
         }

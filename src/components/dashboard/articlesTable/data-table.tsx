@@ -36,6 +36,9 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -49,9 +52,12 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
       pagination,
+      columnFilters,
     },
     onPaginationChange: setPagination,
   })
@@ -63,10 +69,10 @@ export function DataTable<TData, TValue>({
           <h1 className="text-3xl font-semibold">Notícias</h1>
           <div className="flex space-x-2">
             <Input
-              placeholder="Procure por um username..."
-              value={(table.getColumn("username")?.getFilterValue() as string) ?? ""}
+              placeholder="Procure por um título..."
+              value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
               onChange={(event) =>
-                table.getColumn("username")?.setFilterValue(event.target.value)
+                table.getColumn("title")?.setFilterValue(event.target.value)
               }
               className="max-w-sm"
             />
