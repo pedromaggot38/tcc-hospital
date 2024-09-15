@@ -5,7 +5,17 @@ import { z } from "zod";
 import ActionMenu from "./actionMenu";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, CheckCircle, XCircle } from "lucide-react";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import AvatarDashboard from "../avatarDashboard";
+import { Badge } from "@/components/ui/badge";
 
+
+interface User {
+    name?: string;
+    username: string;
+    role: "root" | "admin" | "journalist";
+    image?: string;
+}
 export const articleSchema = z.object({
     id: z.string().cuid(),
     title: z.string(),
@@ -15,6 +25,8 @@ export const articleSchema = z.object({
     user: z.object({
         name: z.string().optional(),
         username: z.string(),
+        role: z.enum(['root', 'admin', 'journalist']),
+        image: z.string().optional(),
     }),
 });
 
@@ -54,23 +66,50 @@ export const columns: ColumnDef<Articles>[] = [
         accessorKey: "user.name",
         header: "Autor",
         cell: info => {
-            const user = info.row.original.user
+            const user = info.row.original.user as User;
 
-            if (user.name) {
-                return user.name;
-            } else if (user.username) {
-                return (
-                    <span className="text-blue-500">
-                        @{user.username}
-                    </span>
-                );
-            } else {
-                return 'Autor não disponível';
-            }
+            return (
+                <HoverCard>
+                    <HoverCardTrigger>
+                        <span className={user.name ? "" : "text-gray-500"}>
+                            {user.name || `@${user.username}`}
+                        </span>
+                    </HoverCardTrigger>
+                    <HoverCardContent className="w-80">
+                        <div className="flex justify-between space-x-4">
+                            <AvatarDashboard user={user} />
+                            <div className="space-y-1">
+                                <div className="flex justify-between">
+                                    <h4 className="text-sm font-semibold">@{user.username}</h4>
+                                    <Badge
+                                        variant={
+                                            user.role === "root"
+                                                ? "destructive"
+                                                : user.role === "admin"
+                                                    ? "default"
+                                                    : "secondary"
+                                        }
+                                    >
+                                        {user.role}
+                                    </Badge>
+                                </div>
+                                <p className="text-sm">
+                                    The React Framework – created and maintained by @vercel.
+                                </p>
+                                <div className="flex items-center pt-2">
+                                    <span className="text-xs text-muted-foreground">
+                                        Joined December 2021
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </HoverCardContent>
+                </HoverCard>
+            );
         },
     },
-{
-    accessorKey: "createdAt",
+    {
+        accessorKey: "createdAt",
         header: ({ column }) => {
             return (
                 <div className="text-center">
@@ -84,13 +123,13 @@ export const columns: ColumnDef<Articles>[] = [
                 </div>
             )
         },
-            cell: info => {
-                const formattedDate = formatDate(info.getValue<Date>());
-                return <div className="text-center">{formattedDate}</div>;
-            }
-},
-{
-    accessorKey: "published",
+        cell: info => {
+            const formattedDate = formatDate(info.getValue<Date>());
+            return <div className="text-center">{formattedDate}</div>;
+        }
+    },
+    {
+        accessorKey: "published",
         header: ({ column }) => {
             return (
                 <div className="flex justify-center">
@@ -104,25 +143,25 @@ export const columns: ColumnDef<Articles>[] = [
                 </div>
             )
         },
-            cell: info => {
-                const isPublished = info.getValue<boolean>();
-                return (
-                    <div className="text-center">
-                        {isPublished ? (
-                            <div className="flex items-center justify-center text-green-500">
-                                <CheckCircle className="w-5 h-5" />
-                            </div>
-                        ) : (
-                            <div className="flex items-center justify-center text-red-500">
-                                <XCircle className="w-5 h-5" />
-                            </div>
-                        )}
-                    </div>
-                );
-            },
+        cell: info => {
+            const isPublished = info.getValue<boolean>();
+            return (
+                <div className="text-center">
+                    {isPublished ? (
+                        <div className="flex items-center justify-center text-green-500">
+                            <CheckCircle className="w-5 h-5" />
+                        </div>
+                    ) : (
+                        <div className="flex items-center justify-center text-red-500">
+                            <XCircle className="w-5 h-5" />
+                        </div>
+                    )}
+                </div>
+            );
+        },
     },
-{
-    id: "actions",
+    {
+        id: "actions",
         cell: ({ row }) => {
             const article = row.original
 

@@ -16,6 +16,8 @@ async function getData(): Promise<Articles[]> {
                 select: {
                     name: true,
                     username: true,
+                    role: true,
+                    image: true,
                 },
             },
         },
@@ -33,7 +35,9 @@ async function getData(): Promise<Articles[]> {
         updatedAt: article.updatedAt,
         user: {
             name: article.user.name ?? "",
-            username: article.user.username
+            username: article.user.username,
+            role: article.user.role,
+            image: article.user.image ?? ""
         },
     }));
 }
