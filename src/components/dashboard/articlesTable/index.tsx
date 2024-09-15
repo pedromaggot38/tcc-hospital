@@ -15,6 +15,7 @@ async function getData(): Promise<Articles[]> {
             user: {
                 select: {
                     name: true,
+                    username: true,
                 },
             },
         },
@@ -30,7 +31,10 @@ async function getData(): Promise<Articles[]> {
         slug: article.slug,
         createdAt: article.createdAt,
         updatedAt: article.updatedAt,
-        user: article.user,
+        user: {
+            name: article.user.name ?? "",
+            username: article.user.username
+        },
     }));
 }
 const ArticlesTable = async () => {
