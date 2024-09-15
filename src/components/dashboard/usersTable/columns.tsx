@@ -55,15 +55,15 @@ export const columns: ColumnDef<Users>[] = [
         accessorKey: "email",
         header: ({ column }) => {
             return (
-              <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-              >
-                Email
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Email
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
             )
-          },
+        },
         cell: ({ row }) => {
             const user = row.original;
 
@@ -78,15 +78,15 @@ export const columns: ColumnDef<Users>[] = [
         accessorKey: "phone",
         header: ({ column }) => {
             return (
-              <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-              >
-                Telefone
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Telefone
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
             )
-          },
+        },
         cell: ({ row }) => {
             const user = row.original
 
@@ -101,20 +101,21 @@ export const columns: ColumnDef<Users>[] = [
         accessorKey: "role",
         header: ({ column }) => {
             return (
-              <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-              >
-                Cargo
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Cargo
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
             )
-          },
+        },
         cell: ({ row }) => {
             const user = row.original
 
             return (
                 <Badge
+                    className="flex items-center justify-center"
                     variant={
                         user?.role === "root"
                             ? "destructive"
@@ -132,22 +133,24 @@ export const columns: ColumnDef<Users>[] = [
         accessorKey: "isBlocked",
         header: ({ column }) => {
             return (
-              <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-              >
-                Bloqueado
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Bloqueado
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
             )
-          },
+        },
         cell: ({ row }) => {
             const user = row.original
 
             return (
-                < span className={user.isBlocked ? "text-red-500" : ""} >
-                    {row.original.isBlocked ? "Sim" : "Não"}
-                </span >
+                <div className="text-center">
+                    <span className={user.isBlocked ? "text-red-500" : ""} >
+                        {row.original.isBlocked ? "Sim" : "Não"}
+                    </span >
+                </div>
             );
         }
     },

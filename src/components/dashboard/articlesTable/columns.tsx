@@ -3,6 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
 import ActionMenu from "./actionMenu";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown, CheckCircle, XCircle } from "lucide-react";
 
 export const articleSchema = z.object({
     id: z.string().cuid(),
@@ -46,18 +48,48 @@ export const columns: ColumnDef<Articles>[] = [
     },
     {
         accessorKey: "createdAt",
-        header: "Criado em",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Criado em
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
         cell: info => formatDate(info.getValue<Date>()),
     },
     {
         accessorKey: "published",
-        header: "Publicado",
+        header: ({ column }) => {
+            return (
+                <div className="flex justify-center">
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Publicado
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                </div>
+            )
+        },
         cell: info => {
             const isPublished = info.getValue<boolean>();
             return (
-                <span className={isPublished ? "" : "text-red-500"}>
-                    {isPublished ? "Sim" : "Não"}
-                </span>
+                <div className="text-center">
+                    {isPublished ? (
+                        <div className="flex items-center justify-center text-green-500">
+                            <CheckCircle className="w-5 h-5" />
+                        </div>
+                    ) : (
+                        <div className="flex items-center justify-center text-red-500">
+                            <XCircle className="w-5 h-5" />
+                        </div>
+                    )}
+                </div>
             );
         },
     },

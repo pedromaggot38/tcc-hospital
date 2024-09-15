@@ -122,7 +122,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div>
-        <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="flex items-center justify-end space-x-2 py-2">
           Página {table.getState().pagination.pageIndex + 1} de {" "}
           {table.getPageCount()}
           <Button
