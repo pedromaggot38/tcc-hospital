@@ -22,12 +22,8 @@ export const RegisterSchema = z.object({
     }),
     role: z.enum(['root', 'admin', 'journalist']),
     isBlocked: z.boolean(),
-    name: z.string().min(6, {
-        message: "Mínimo de 6 caracteres"
-    }).optional(),
-    phone: z.string().max(12).min(8, {
-        message: "Mínimo de 8 caracteres"
-    }).optional(),
+    name: z.string().optional(),
+    phone: z.string().optional(),
     email: z.string().email({
         message: "Digite um e-mail válido"
     }).optional(),

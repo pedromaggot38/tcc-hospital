@@ -167,7 +167,7 @@ export const UpdateForm = () => {
                                 <FormItem>
                                     <FormControl>
                                         <Input
-                                            placeholder="URL da imagem"
+                                            placeholder="https://github.com/username.png"
                                             disabled={isPending}
                                             {...field}
                                         />

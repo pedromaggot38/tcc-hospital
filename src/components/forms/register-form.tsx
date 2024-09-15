@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import { useState, useTransition } from "react";
@@ -33,6 +34,10 @@ export const RegisterForm = () => {
             password: '',
             role: 'journalist',
             isBlocked: false,
+            name: '',  // Campo opcional
+            email: '',  // Campo opcional
+            phone: '',  // Campo opcional
+            image: ''  // Campo opcional
         }
     });
 
@@ -150,9 +155,8 @@ export const RegisterForm = () => {
                                             control={form.control}
                                             render={({ field }) => (
                                                 <Select
-                                                    {...field}
-                                                    value={field.value ? 'true' : 'false'} // Converte o valor booleano para string
-                                                    onValueChange={(value) => field.onChange(value === 'true')} // Converte a string de volta para booleano
+                                                    value={field.value ? 'true' : 'false'}
+                                                    onValueChange={(value) => field.onChange(value === 'true')}
                                                 >
                                                     <SelectTrigger className="w-full">
                                                         <SelectValue placeholder="Selecione" />
@@ -180,7 +184,6 @@ export const RegisterForm = () => {
                                             control={form.control}
                                             render={({ field }) => (
                                                 <Select
-                                                    {...field}
                                                     value={field.value ?? ''}
                                                     onValueChange={(value) => field.onChange(value)}
                                                 >
@@ -281,7 +284,7 @@ export const RegisterForm = () => {
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="URL da imagem"
+                                                        placeholder="https://github.com/username.png"
                                                         disabled={isPending}
                                                         {...field}
                                                     />

@@ -115,7 +115,7 @@ export const columns: ColumnDef<Users>[] = [
 
             return (
                 <Badge
-                    className="flex items-center justify-center"
+                    className="flex items-center justify-center select-none"
                     variant={
                         user?.role === "root"
                             ? "destructive"

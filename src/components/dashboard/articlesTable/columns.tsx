@@ -15,6 +15,7 @@ interface User {
     username: string;
     role: "root" | "admin" | "journalist";
     image?: string;
+    createdAt: Date;
 }
 export const articleSchema = z.object({
     id: z.string().cuid(),
@@ -27,8 +28,16 @@ export const articleSchema = z.object({
         username: z.string(),
         role: z.enum(['root', 'admin', 'journalist']),
         image: z.string().optional(),
+        createdAt: z.date()
     }),
 });
+
+const formatJoinDate = (date: Date | string): string => {
+    const d = new Date(date);
+    const month = d.toLocaleString('pt-BR', { month: 'long' }); // Nome completo do mês em português
+    const year = d.getFullYear();
+    return `Juntou-se em ${month} de ${year}`;
+};
 
 const formatDate = (date: Date | string): string => {
     const d = new Date(date);
@@ -71,7 +80,7 @@ export const columns: ColumnDef<Articles>[] = [
             return (
                 <HoverCard>
                     <HoverCardTrigger>
-                        <span className={user.name ? "" : "text-gray-500"}>
+                        <span className={user.name ? "select-none" : "select-none text-blue-500"}>
                             {user.name || `@${user.username}`}
                         </span>
                     </HoverCardTrigger>
@@ -98,7 +107,7 @@ export const columns: ColumnDef<Articles>[] = [
                                 </p>
                                 <div className="flex items-center pt-2">
                                     <span className="text-xs text-muted-foreground">
-                                        Joined December 2021
+                                        {formatJoinDate(user.createdAt)}
                                     </span>
                                 </div>
                             </div>

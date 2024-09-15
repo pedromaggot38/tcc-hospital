@@ -18,6 +18,7 @@ async function getData(): Promise<Articles[]> {
                     username: true,
                     role: true,
                     image: true,
+                    createdAt: true,
                 },
             },
         },
@@ -37,7 +38,8 @@ async function getData(): Promise<Articles[]> {
             name: article.user.name ?? "",
             username: article.user.username,
             role: article.user.role,
-            image: article.user.image ?? ""
+            image: article.user.image ?? "",
+            createdAt: article.user.createdAt
         },
     }));
 }
