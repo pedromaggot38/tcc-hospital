@@ -24,9 +24,7 @@ export const RegisterSchema = z.object({
     isBlocked: z.boolean(),
     name: z.string().optional(),
     phone: z.string().optional(),
-    email: z.string().email({
-        message: "Digite um e-mail válido"
-    }).optional(),
+    email: z.string().email({ message: "Digite um e-mail válido" }).optional().or(z.literal('')),
     image: z.string().optional(),
 });
 

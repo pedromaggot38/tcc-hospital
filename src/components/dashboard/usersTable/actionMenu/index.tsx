@@ -37,17 +37,21 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ user }) => {
                 >
                     Copiar E-mail
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+
                 {role !== 'journalist' && (
-                    <DropdownMenuItem
-                        onClick={() => {
-                            router.push(`/dashboard/users/${user.username}`);
-                        }}
-                    >
-                        Editar usuário
-                    </DropdownMenuItem>
+                    <div>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                            onClick={() => {
+                                router.push(`/dashboard/users/${user.username}`);
+                            }}
+                        >
+                            Editar usuário
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>View payment details</DropdownMenuItem>
+                    </div>
                 )}
-                <DropdownMenuItem>View payment details</DropdownMenuItem>
+
             </DropdownMenuContent>
         </DropdownMenu>
     );

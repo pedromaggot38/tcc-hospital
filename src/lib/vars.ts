@@ -1,2 +1,2 @@
-export const usersPageSize = 6;
-export const articlesPageSize = 7;
+export const usersPageSize = 10;
+export const articlesPageSize = 12;

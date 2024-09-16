@@ -34,10 +34,8 @@ export const RegisterForm = () => {
             password: '',
             role: 'journalist',
             isBlocked: false,
-            name: '',  // Campo opcional
-            email: '',  // Campo opcional
-            phone: '',  // Campo opcional
-            image: ''  // Campo opcional
+            name: '',
+            email: '',
         }
     });
 
@@ -107,7 +105,7 @@ export const RegisterForm = () => {
                                     name="username"
                                     render={({ field }) => (
                                         <>
-                                            <FormLabel className="col-span-1 text-right">Username</FormLabel>
+                                            <FormLabel className="col-span-1 text-right"><span className="text-red-500">*</span>Username</FormLabel>
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
@@ -129,7 +127,7 @@ export const RegisterForm = () => {
                                     name="password"
                                     render={({ field }) => (
                                         <>
-                                            <FormLabel className="col-span-1 text-right">Senha</FormLabel>
+                                            <FormLabel className="col-span-1 text-right"><span className="text-red-500">*</span>Senha</FormLabel>
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
@@ -147,7 +145,7 @@ export const RegisterForm = () => {
                             </div>
 
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <FormLabel className="col-span-1 text-right">Bloqueado</FormLabel>
+                                <FormLabel className="col-span-1 text-right"><span className="text-red-500">*</span>Bloqueado</FormLabel>
                                 <FormItem className="col-span-3">
                                     <FormControl>
                                         <Controller
@@ -176,7 +174,7 @@ export const RegisterForm = () => {
                             </div>
 
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <FormLabel className="col-span-1 text-right">Cargo</FormLabel>
+                                <FormLabel className="col-span-1 text-right"><span className="text-red-500">*</span>Cargo</FormLabel>
                                 <FormItem className="col-span-3">
                                     <FormControl>
                                         <Controller
@@ -243,6 +241,7 @@ export const RegisterForm = () => {
                                                         placeholder="E-mail"
                                                         disabled={isPending}
                                                         {...field}
+                                                        value={field.value ?? ''}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />

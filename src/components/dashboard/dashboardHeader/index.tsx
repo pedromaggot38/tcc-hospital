@@ -174,7 +174,7 @@ export function DashboardHeader() {
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                            className="text-red-600"
+                            className="text-red-600 cursor-pointer"
                             onClick={() => {
                                 closeMenu();
                                 onClick();
