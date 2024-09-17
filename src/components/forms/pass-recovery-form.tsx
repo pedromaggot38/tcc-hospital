@@ -15,6 +15,7 @@ import { FormSuccess } from "../form-success";
 import { Button } from "../ui/button";
 import { PasswordResetSchema, TokenVerificationSchema } from "@/schemas/auth/user";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
+import { Separator } from "../ui/separator";
 
 export const PasswordRecoveryForm = () => {
     const [success, setSuccess] = useState<string | undefined>("");
@@ -51,7 +52,7 @@ export const PasswordRecoveryForm = () => {
                 .then((data) => {
                     if (data.success) {
                         setUsername(values.username); // Armazena o username para uso posterior
-                        setSuccess('Token verificado com sucesso. Insira sua nova senha abaixo.');
+                        setSuccess('Token verificado com sucesso!');
                         tokenForm.reset();
                         setIsVerified(true);
                     } else {
@@ -93,7 +94,7 @@ export const PasswordRecoveryForm = () => {
     return (
         <div className="min-h-screen flex items-center">
             <Card className="mx-auto max-w-sm">
-                <CardHeader>
+                <CardHeader className="p-4 text-center">
                     <CardTitle className="text-2xl">Redefinir Senha</CardTitle>
                     <CardDescription>
                         {!isVerified
@@ -177,6 +178,7 @@ export const PasswordRecoveryForm = () => {
                             >
                                 <div className="grid gap-4">
                                     <div className="grid gap-2">
+                                        <Separator />
                                         <FormField
                                             control={passwordForm.control}
                                             name="newPassword"
@@ -197,6 +199,7 @@ export const PasswordRecoveryForm = () => {
                                             )}
                                         />
                                     </div>
+                                    <Separator />
                                     <div className="grid gap-2">
                                         <FormField
                                             control={passwordForm.control}
@@ -217,14 +220,11 @@ export const PasswordRecoveryForm = () => {
                                                 </FormItem>
                                             )}
                                         />
+                                        <Separator className="my-3"/>
+                                        <FormError message={error} />
+                                        <FormSuccess message={success} />
                                     </div>
                                     <div className="flex flex-col items-center gap-4">
-                                        <div className="w-full max-w-xs">
-                                            <div className="flex flex-col gap-2">
-                                                <FormError message={error} />
-                                                <FormSuccess message={success} />
-                                            </div>
-                                        </div>
                                         <AlertDialog>
                                             <AlertDialogTrigger asChild>
                                                 <Button className="w-full" variant="outline">Atualizar Senha</Button>
