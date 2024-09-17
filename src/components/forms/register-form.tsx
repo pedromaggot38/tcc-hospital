@@ -34,8 +34,6 @@ export const RegisterForm = () => {
             password: '',
             role: 'journalist',
             isBlocked: false,
-            name: '',
-            email: '',
         }
     });
 
@@ -219,6 +217,7 @@ export const RegisterForm = () => {
                                                         placeholder="Nome e Sobrenome"
                                                         disabled={isPending}
                                                         {...field}
+                                                        value={field.value || ''}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -264,6 +263,7 @@ export const RegisterForm = () => {
                                                         placeholder="Telefone"
                                                         disabled={isPending}
                                                         {...field}
+                                                        value={field.value || ''}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -286,6 +286,7 @@ export const RegisterForm = () => {
                                                         placeholder="https://github.com/username.png"
                                                         disabled={isPending}
                                                         {...field}
+                                                        value={field.value || ''}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
