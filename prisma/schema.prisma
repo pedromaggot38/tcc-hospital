@@ -44,3 +44,12 @@ model Article {
   @@index([slug, userId, createdAt])
   @@map("article")
 }
+
+model Token {
+  id       String @id @default(uuid())
+  username String
+  token    String @unique
+
+  @@unique([username, token])
+  @@map("token")
+}

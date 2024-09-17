@@ -124,9 +124,13 @@ export const LoginForm = () => {
                                         </Button>
                                     </div>
                                 </div>
+                                <div className="text-sm text-center">
+                                    <Link href="/password-recovery">Esqueceu sua senha?</Link>
+                                </div>
                             </div>
                         </form>
                     </Form>
+
                 </CardContent>
             </Card>
         </div>

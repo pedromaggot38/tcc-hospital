@@ -45,7 +45,7 @@ export const UserEditSchema = z.object({
     email: z.string().email({
         message: "Digite um e-mail válido"
     }).optional(),
-        image: z.string().optional(),
+    image: z.string().optional(),
 });
 
 export const SettingsEditSchema = z.object({
@@ -74,14 +74,23 @@ export const PasswordUpdateSchema = z.object({
     path: ['confirmPassword'],  // Para qual input a mensagem erro irá aparecer, caso retorne false
 });
 
+export const TokenVerificationSchema = z.object({
+    username: z.string().min(6, {
+        message: "Usuário deve conter ao menos 6 caracteres"
+    }).regex(/^\S*$/, {
+        message: "Usuário não pode conter espaços"
+    }),
+    token: z.string(),
+});
+
 export const PasswordResetSchema = z.object({
-    password: z.string().min(6, {
+    newPassword: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
     }),
-    confirmPassword: z.string().min(6, {
+    confirmNewPassword: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
     }),
-}).refine((data) => data.password === data.confirmPassword, {
+}).refine((data) => data.newPassword === data.confirmNewPassword, {
     message: "As senhas não se correspondem",
     path: ['confirmPassword'],
 });

@@ -4,6 +4,7 @@ import { RegisterSchema } from "@/schemas/auth/user"
 import { db } from "@/lib/db"
 import * as z from 'zod'
 import { revalidatePath } from "next/cache"
+import { generateVerificationToken } from "@/lib/tokenGenerate"
 
 const bcrypt = require('bcryptjs')
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
@@ -58,6 +59,9 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     } catch (error) {
         return { error: "Erro ao criar o usuário" }
     }
+
+    const verificationToken = await generateVerificationToken(username)
+
     revalidatePath('/dashboard/users')
     return { success: "Usuário criado!" }
 }
