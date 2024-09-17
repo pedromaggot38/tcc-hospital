@@ -31,7 +31,7 @@ export const passwordReset = async (values: { username: string; newPassword: str
 
     const isNewPasswordSameAsCurrent = await bcrypt.compare(newPassword, user.password);
     if (isNewPasswordSameAsCurrent) {
-        return { error: "A nova senha não pode ser a mesma que a senha atual" }
+        return { error: "Não pode ser a mesma que a senha atual" }
     }
 
     const hashedNewPassword = await bcrypt.hash(newPassword, 12);

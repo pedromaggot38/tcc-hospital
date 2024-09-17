@@ -16,6 +16,8 @@ import { Button } from "../ui/button";
 import { PasswordResetSchema, TokenVerificationSchema } from "@/schemas/auth/user";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
 import { Separator } from "../ui/separator";
+import { useRouter } from "next/navigation";
+
 
 export const PasswordRecoveryForm = () => {
     const [success, setSuccess] = useState<string | undefined>("");
@@ -24,6 +26,7 @@ export const PasswordRecoveryForm = () => {
     const [isVerified, setIsVerified] = useState(false);
     const [username, setUsername] = useState("");
     const [isDialogOpen, setDialogOpen] = useState(false);
+    const router = useRouter();
 
     const { openDialog, handleConfirm, handleCancel } = useDialog(() => {
         passwordForm.handleSubmit(onPasswordResetSubmit)();
@@ -55,6 +58,9 @@ export const PasswordRecoveryForm = () => {
                         setSuccess('Token verificado com sucesso!');
                         tokenForm.reset();
                         setIsVerified(true);
+                        setTimeout(() => {
+                            setSuccess('');
+                        }, 1500);
                     } else {
                         setError(data.error || "Erro ao verificar token.");
                     }
@@ -76,6 +82,13 @@ export const PasswordRecoveryForm = () => {
                     if (data.success) {
                         setDialogOpen(false);
                         setSuccess('Senha alterada com sucesso.');
+                        setTimeout(() => {
+                            setSuccess('');
+                            router.push('/login');
+                        }, 1500);
+                    }
+                    else {
+                        setError(data.error || 'Erro ao alterar a senha.');
                     }
                     setTimeout(() => {
                         setSuccess('');
@@ -85,7 +98,6 @@ export const PasswordRecoveryForm = () => {
                 .catch((error) => {
                     console.error("Erro ao alterar senha", error);
                     setError("Houve um erro ao alterar a senha.");
-
                     setTimeout(() => setError(''), 2000);
                 });
         });
@@ -94,7 +106,7 @@ export const PasswordRecoveryForm = () => {
     return (
         <div className="min-h-screen flex items-center">
             <Card className="mx-auto max-w-sm">
-                <CardHeader className="p-4 text-center">
+                <CardHeader className="p-4">
                     <CardTitle className="text-2xl">Redefinir Senha</CardTitle>
                     <CardDescription>
                         {!isVerified
@@ -178,13 +190,13 @@ export const PasswordRecoveryForm = () => {
                             >
                                 <div className="grid gap-4">
                                     <div className="grid gap-2">
-                                        <Separator />
+                                        <FormLabel>Nova Senha</FormLabel>
                                         <FormField
                                             control={passwordForm.control}
                                             name="newPassword"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Nova Senha</FormLabel>
+
                                                     <FormControl>
                                                         <Input
                                                             type="password"
@@ -199,14 +211,13 @@ export const PasswordRecoveryForm = () => {
                                             )}
                                         />
                                     </div>
-                                    <Separator />
+                                    <FormLabel>Confirme a Nova Senha</FormLabel>
                                     <div className="grid gap-2">
                                         <FormField
                                             control={passwordForm.control}
                                             name="confirmNewPassword"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Confirme a Nova Senha</FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             type="password"
@@ -220,7 +231,6 @@ export const PasswordRecoveryForm = () => {
                                                 </FormItem>
                                             )}
                                         />
-                                        <Separator className="my-3"/>
                                         <FormError message={error} />
                                         <FormSuccess message={success} />
                                     </div>

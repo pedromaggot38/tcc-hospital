@@ -92,5 +92,5 @@ export const PasswordResetSchema = z.object({
     }),
 }).refine((data) => data.newPassword === data.confirmNewPassword, {
     message: "As senhas não se correspondem",
-    path: ['confirmPassword'],
+    path: ['confirmNewPassword'],
 });
