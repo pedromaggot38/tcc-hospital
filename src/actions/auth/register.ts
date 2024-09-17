@@ -7,7 +7,6 @@ import { revalidatePath } from "next/cache"
 
 const bcrypt = require('bcryptjs')
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
-    console.log("teste" + values)
     
     const validatedFields = RegisterSchema.safeParse(values)
     

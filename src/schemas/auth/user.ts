@@ -2,7 +2,7 @@ import * as z from 'zod'
 
 const phoneRegex = new RegExp(
     /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
-  );
+);
 
 export const LoginSchema = z.object({
     username: z.string().min(6, {
@@ -41,13 +41,11 @@ export const UserEditSchema = z.object({
     name: z.string().min(6, {
         message: "Mínimo de 6 caracteres"
     }),
-    phone: z.string().max(12).min(8, {
-        message: "Mínimo de 8 caracteres"
-    }).optional(),
+    phone: z.string().regex(phoneRegex, 'Número de telefone inválido!').optional(),
     email: z.string().email({
         message: "Digite um e-mail válido"
     }).optional(),
-    image: z.string().optional(),
+        image: z.string().optional(),
 });
 
 export const SettingsEditSchema = z.object({
@@ -58,9 +56,7 @@ export const SettingsEditSchema = z.object({
     email: z.string().email({
         message: "Digite um e-mail válido"
     }).optional(),
-    phone: z.string().max(12).min(8, {
-        message: "Mínimo de 8 caracteres"
-    }).optional(),
+    phone: z.string().regex(phoneRegex, 'Número de telefone inválido!').optional()
 });
 
 export const PasswordUpdateSchema = z.object({
@@ -74,6 +70,18 @@ export const PasswordUpdateSchema = z.object({
         message: "Mínimo de 6 caracteres"
     }),
 }).refine((data) => data.newPassword === data.confirmPassword, {
+    message: "As senhas não se correspondem",
+    path: ['confirmPassword'],  // Para qual input a mensagem erro irá aparecer, caso retorne false
+});
+
+export const PasswordResetSchema = z.object({
+    password: z.string().min(6, {
+        message: "Mínimo de 6 caracteres"
+    }),
+    confirmPassword: z.string().min(6, {
+        message: "Mínimo de 6 caracteres"
+    }),
+}).refine((data) => data.password === data.confirmPassword, {
     message: "As senhas não se correspondem",
     path: ['confirmPassword'],
 });

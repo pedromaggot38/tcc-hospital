@@ -8,7 +8,7 @@ import UserHoverCard from "../userHoverCard";
 export async function LastUsers() {
   const lastUsers = await db.user.findMany({
     orderBy: { createdAt: 'desc' },
-    take: 5,
+    take: 8,
   });
 
   return (

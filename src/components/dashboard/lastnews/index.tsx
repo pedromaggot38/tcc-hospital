@@ -9,7 +9,7 @@ export async function LastNews() {
       user: true,
     },
     orderBy: { createdAt: 'desc' },
-    take: 7,
+    take: 11,
   });
 
   return (
