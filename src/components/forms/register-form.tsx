@@ -237,7 +237,7 @@ export const RegisterForm = () => {
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="E-mail"
+                                                        placeholder="you@example.com"
                                                         disabled={isPending}
                                                         {...field}
                                                         value={field.value ?? ''}
@@ -260,7 +260,7 @@ export const RegisterForm = () => {
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Telefone"
+                                                        placeholder="(99)99999-9999"
                                                         disabled={isPending}
                                                         {...field}
                                                         value={field.value || ''}

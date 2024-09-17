@@ -1,5 +1,9 @@
 import * as z from 'zod'
 
+const phoneRegex = new RegExp(
+    /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+  );
+
 export const LoginSchema = z.object({
     username: z.string().min(6, {
         message: "Usuário deve conter ao menos 6 caracteres"
@@ -23,7 +27,7 @@ export const RegisterSchema = z.object({
     role: z.enum(['root', 'admin', 'journalist']),
     isBlocked: z.boolean(),
     name: z.string().optional(),
-    phone: z.string().optional(),
+    phone: z.string().regex(phoneRegex, 'Número de telefone inválido!').optional(),
     email: z.string().email({ message: "Digite um e-mail válido" }).optional(),
     image: z.string().optional(),
 });
