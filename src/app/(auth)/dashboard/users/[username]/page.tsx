@@ -25,7 +25,7 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select"; // Assumindo que você tem um Select na biblioteca UI
+} from "@/components/ui/select";
 
 interface Params {
     username: string;
@@ -67,7 +67,7 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
                         </CardHeader>
                         <CardContent className="space-y-2">
                             <div className="space-y-1">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">Nome</Label>
                                 <Input id="name" defaultValue={user.name || ''} />
                             </div>
                             <div className="space-y-1">
@@ -76,7 +76,7 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
                             </div>
 
                             <div className="space-y-1">
-                                <Label htmlFor="role">Role</Label>
+                                <Label htmlFor="role">Cargo</Label>
                                 <Select defaultValue={user.role || 'journalist'}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select a role" />
@@ -90,7 +90,7 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
                             </div>
 
                             <div className="space-y-1">
-                                <Label htmlFor="isBlocked">Is Blocked</Label>
+                                <Label htmlFor="isBlocked">Bloqueado</Label>
                                 <Select defaultValue={user.isBlocked ? 'yes' : 'no'}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Blocked?" />
@@ -103,15 +103,15 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
                             </div>
 
                             <div className="space-y-1">
-                                <Label htmlFor="phone">Phone</Label>
+                                <Label htmlFor="phone">Telefone</Label>
                                 <Input id="phone" defaultValue={user.phone || ''} />
                             </div>
                             <div className="space-y-1">
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email">E-mail</Label>
                                 <Input id="email" defaultValue={user.email || ''} />
                             </div>
                             <div className="space-y-1">
-                                <Label htmlFor="image">Image URL</Label>
+                                <Label htmlFor="image">Imagem URL</Label>
                                 <Input id="image" defaultValue={user.image || ''} />
                             </div>
                         </CardContent>
@@ -131,12 +131,12 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
                         </CardHeader>
                         <CardContent className="space-y-2">
                             <div className="space-y-1">
-                                <Label htmlFor="current">Current password</Label>
-                                <Input id="current" type="password" />
+                                <Label htmlFor="current">Nova Senha</Label>
+                                <Input id="newPassword" type="password" />
                             </div>
                             <div className="space-y-1">
-                                <Label htmlFor="new">New password</Label>
-                                <Input id="new" type="password" />
+                                <Label htmlFor="new">Confirmar nova senha</Label>
+                                <Input id="confirmnewPassword" type="password" />
                             </div>
                         </CardContent>
                         <CardFooter>
