@@ -94,3 +94,20 @@ export const PasswordResetSchema = z.object({
     message: "As senhas não se correspondem",
     path: ['confirmNewPassword'],
 });
+
+export const AccountEditSchema = z.object({
+    username: z.string().min(6, {
+        message: "Nome de usuário é obrigatório"
+    }).regex(/^\S*$/, {
+        message: "Usuário não pode conter espaços"
+    }),
+    password: z.string().min(6, {
+        message: "Mínimo de 6 caracteres"
+    }),
+    role: z.enum(['root', 'admin', 'journalist']),
+    isBlocked: z.boolean(),
+    name: z.string().optional(),
+    phone: z.string().regex(phoneRegex, 'Número de telefone inválido!').optional(),
+    email: z.string().email({ message: "Digite um e-mail válido" }).optional(),
+    image: z.string().optional(),
+})
