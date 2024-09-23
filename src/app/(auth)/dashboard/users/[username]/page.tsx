@@ -2,7 +2,12 @@ import { currentUserRole } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextPage } from 'next';
 import { notFound, redirect } from 'next/navigation';
-import { Button } from "@/components/ui/button";
+import {
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from "@/components/ui/tabs";
 import {
     Card,
     CardContent,
@@ -13,19 +18,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "@/components/ui/tabs";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+import AccountTabContent from "@/components/dashboard/usersTable/accountTab";
+import PasswordTabContent from "@/components/dashboard/usersTable/passwordTab";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 interface Params {
     username: string;
@@ -56,13 +52,19 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
                     <TabsTrigger value="password">Senha</TabsTrigger>
                 </TabsList>
 
-                {/* Aba de informações da conta */}
                 <TabsContent value="account">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Conta</CardTitle>
+                            <CardTitle className="flex justify-between">
+                                <div>
+                                    Senha
+                                </div>
+                                <div className="text-sm">
+                                    Current Role: {currentRole}
+                                </div>
+                            </CardTitle>
                             <CardDescription>
-                                Faça as mudanças do usuário aqui
+                                Faça as mudanças do usuário <span className="text-blue-500">@{user.username}</span> aqui
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">
@@ -72,9 +74,8 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="username">Username</Label>
-                                <Input id="username" defaultValue={user.username || ''} />
+                                <Input id="username" defaultValue={user.username || ''} disabled={currentRole !== 'root'} />
                             </div>
-
                             <div className="space-y-1">
                                 <Label htmlFor="role">Cargo</Label>
                                 <Select defaultValue={user.role || 'journalist'}>
@@ -91,13 +92,13 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
 
                             <div className="space-y-1">
                                 <Label htmlFor="isBlocked">Bloqueado</Label>
-                                <Select defaultValue={user.isBlocked ? 'yes' : 'no'}>
+                                <Select defaultValue={user.isBlocked ? 'true' : 'false'}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Blocked?" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="yes">Yes</SelectItem>
-                                        <SelectItem value="no">No</SelectItem>
+                                        <SelectItem value="true">Sim</SelectItem>
+                                        <SelectItem value="false">Não</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -122,27 +123,7 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
                 </TabsContent>
 
                 <TabsContent value="password">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Senha</CardTitle>
-                            <CardDescription>
-                                Configurações de senha
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-2">
-                            <div className="space-y-1">
-                                <Label htmlFor="current">Nova Senha</Label>
-                                <Input id="newPassword" type="password" />
-                            </div>
-                            <div className="space-y-1">
-                                <Label htmlFor="new">Confirmar nova senha</Label>
-                                <Input id="confirmnewPassword" type="password" />
-                            </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Button>Salvar senha</Button>
-                        </CardFooter>
-                    </Card>
+                    <PasswordTabContent user={user} currentRole={currentRole} />
                 </TabsContent>
             </Tabs>
         </div>
