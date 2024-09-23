@@ -40,7 +40,7 @@ const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => 
             <CardHeader>
                 <CardTitle className="flex justify-between">
                     <div>
-                        Senha
+                        Conta
                     </div>
                     <div className="text-sm">
                         Current Role: {currentRole}
@@ -58,9 +58,6 @@ const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => 
                 <div className="space-y-1">
                     <Label htmlFor="username">Username</Label>
                     <Input id="username" defaultValue={user.username || ''} disabled={!isRoot} />
-                </div>
-                <div>
-                    <span> ROLE: {currentRole}</span>
                 </div>
                 <div className="space-y-1">
                     <Label htmlFor="role">Cargo</Label>
