@@ -70,13 +70,13 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
                             variant="outline"
                             className="hover:bg-red-500 hover:text-white"
                         >
-                            Gerar novo token
+                            Gerar token
                         </Button>
                         <Button
                             variant="default"
                             className="hover:bg-blue-400 hover:text-black"
                         >
-                            Salvar senha
+                            Salvar
                         </Button>
                     </>
                 )}

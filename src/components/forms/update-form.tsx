@@ -150,7 +150,7 @@ export const UpdateForm = () => {
                     </CardContent>
                 </Card>
 
-                <Separator 
+                <Separator
                     className="my-2"
                 />
 

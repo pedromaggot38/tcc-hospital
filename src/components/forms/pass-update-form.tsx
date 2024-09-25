@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -52,7 +52,7 @@ export const PasswordUpdateForm = () => {
                         setError(response.error);
                     } else {
                         setSuccess(response.success);
-                        setDialogOpen(false); // Fechar o diálogo após sucesso
+                        setDialogOpen(false);
                     }
                 })
                 .catch((error) => {
@@ -69,6 +69,20 @@ export const PasswordUpdateForm = () => {
 
     return (
         <div className="flex flex-col">
+            <Card x-chunk="dashboard-04-chunk-1">
+                <CardHeader>
+                    <CardTitle>Token</CardTitle>
+                    <CardDescription>
+                        Copie aqui seu Token de recuperação de senha e guarde-o em um local seguro.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Input
+                        
+                    />
+                </CardContent>
+            </Card>
+            <Separator className="my-4" />
             <Card x-chunk="dashboard-04-chunk-1">
                 <CardHeader>
                     <CardTitle>Alterar Senha</CardTitle>
