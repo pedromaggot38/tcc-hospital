@@ -1,11 +1,11 @@
 'use server'
 
+import { UserEditSchema } from '@/schemas/auth/user';
 import { db } from "@/lib/db"
-import { AccountEditSchema } from "@/schemas/auth/user"
 import * as z from 'zod'
 
-export const userEditUpdate = async (username: string, values: z.infer<typeof AccountEditSchema>) => {
-    const validatedFields = AccountEditSchema.safeParse(values);
+export const userEditUpdate = async (username: string, values: z.infer<typeof UserEditSchema>) => {
+    const validatedFields = UserEditSchema.safeParse(values);
 
     if (!validatedFields.success) {
         return { error: "Erro ao validar os campos" };
@@ -13,12 +13,21 @@ export const userEditUpdate = async (username: string, values: z.infer<typeof Ac
 
     const { name, role, email, phone, image, isBlocked } = validatedFields.data;
 
+    const currentUser = await db.user.findUnique({
+        where: { username }
+    });
+
+    if (!currentUser) {
+        return { error: "Usuário não encontrado." };
+    }
+
     const existingUser = await db.user.findFirst({
         where: {
             OR: [
                 { phone: phone },
                 { email: email },
-            ]
+            ],
+            NOT: { id: currentUser.id }
         }
     });
 
