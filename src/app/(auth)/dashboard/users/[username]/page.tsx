@@ -1,4 +1,4 @@
-import { currentUserRole } from "@/lib/auth";
+import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextPage } from 'next';
 import { notFound, redirect } from 'next/navigation';
@@ -16,9 +16,9 @@ interface Params {
 }
 
 const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
-    // Verificação se o usuário é Journalist, pois não pode ter acesso
-    const currentRole = await currentUserRole();
-    if (currentRole === 'journalist') {
+
+    const currentUserData = await currentUser();
+    if (currentUserData?.role === 'journalist') {
         return redirect('/dashboard/users');
     }
 
@@ -32,6 +32,14 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
         return notFound();
     }
 
+    if (currentUserData?.username === user.username) {
+        return redirect('/dashboard/users');
+    }
+
+    if (currentUserData?.role === 'admin' && user.role === 'root') {
+        return redirect('/dashboard/users');
+    }
+
     return (
         <div className="flex flex-col items-center">
             <Tabs defaultValue="account" className="w-[400px]">
@@ -41,11 +49,11 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
                 </TabsList>
 
                 <TabsContent value="account">
-                    <AccountTabContent user={user} currentRole={currentRole} />
+                    <AccountTabContent user={user} currentRole={currentUserData?.role} />
                 </TabsContent>
 
                 <TabsContent value="password">
-                    <PasswordTabContent user={user} currentRole={currentRole} />
+                    <PasswordTabContent user={user} currentRole={currentUserData?.role} />
                 </TabsContent>
             </Tabs>
         </div>

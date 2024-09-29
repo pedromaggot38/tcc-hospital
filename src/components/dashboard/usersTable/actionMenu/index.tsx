@@ -10,17 +10,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { useCurrentRole } from '@/hooks/use-current-role';
+import { useCurrentUser } from '@/hooks/use-current-user';
 
 interface ActionMenuProps {
     user: {
         username: string;
         email?: string;
+        role: string;  // Adicionei a role aqui para checar o papel do usuário sendo visualizado
     };
 }
 
 const ActionMenu: React.FC<ActionMenuProps> = ({ user }) => {
+    const currentUser = useCurrentUser();
     const role = useCurrentRole();
     const router = useRouter();
+
+    const canEditUser = currentUser?.username !== user.username && !(role === 'admin' && user.role === 'root');
 
     return (
         <DropdownMenu>
@@ -38,7 +43,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ user }) => {
                     Copiar E-mail
                 </DropdownMenuItem>
 
-                {role !== 'journalist' && (
+                {role !== 'journalist' && canEditUser && (
                     <div>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
@@ -48,7 +53,6 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ user }) => {
                         >
                             Editar usuário
                         </DropdownMenuItem>
-                        <DropdownMenuItem>View payment details</DropdownMenuItem>
                     </div>
                 )}
 
