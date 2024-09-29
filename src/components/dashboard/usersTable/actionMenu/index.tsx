@@ -16,7 +16,7 @@ interface ActionMenuProps {
     user: {
         username: string;
         email?: string;
-        role: string;  // Adicionei a role aqui para checar o papel do usuário sendo visualizado
+        role: string;
     };
 }
 

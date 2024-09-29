@@ -16,6 +16,7 @@ interface User {
     role: "root" | "admin" | "journalist";
     image?: string;
     createdAt: Date;
+    articleCount: number;
 }
 export const articleSchema = z.object({
     id: z.string().cuid(),
@@ -34,7 +35,7 @@ export const articleSchema = z.object({
 
 const formatJoinDate = (date: Date | string): string => {
     const d = new Date(date);
-    const month = d.toLocaleString('pt-BR', { month: 'long' }); // Nome completo do mês em português
+    const month = d.toLocaleString('pt-BR', { month: 'long' });
     const year = d.getFullYear();
     return `Juntou-se em ${month} de ${year}`;
 };
@@ -103,7 +104,7 @@ export const columns: ColumnDef<Articles>[] = [
                                     </Badge>
                                 </div>
                                 <p className="text-sm">
-                                    The React Framework – created and maintained by @vercel.
+                                    Quantidade de notícias publicadas: {user.articleCount}
                                 </p>
                                 <div className="flex items-center pt-2">
                                     <span className="text-xs text-muted-foreground">

@@ -19,6 +19,9 @@ async function getData(): Promise<Articles[]> {
                     role: true,
                     image: true,
                     createdAt: true,
+                    _count: {
+                        select: { articles: true },
+                    },
                 },
             },
         },
@@ -39,7 +42,8 @@ async function getData(): Promise<Articles[]> {
             username: article.user.username,
             role: article.user.role,
             image: article.user.image ?? "",
-            createdAt: article.user.createdAt
+            createdAt: article.user.createdAt,
+            articleCount: article.user._count.articles,
         },
     }));
 }

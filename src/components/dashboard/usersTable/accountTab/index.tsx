@@ -50,7 +50,7 @@ interface AccountTabProps {
 type FormData = z.infer<typeof UserEditSchema>;
 
 const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => {
-    const router = useRouter(); // Cria uma instância do router
+    const router = useRouter();
     const [error, setError] = useState<string | undefined>(""); 
     const [success, setSuccess] = useState<string | undefined>(""); 
     const [isPending, startTransition] = useTransition();
@@ -91,7 +91,6 @@ const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => 
                         setError(response.error);
                     } else {
                         setSuccess(response.success);
-                        // Redireciona para a página /dashboard/users após sucesso
                         router.push('/dashboard/users'); 
                     }
                 })

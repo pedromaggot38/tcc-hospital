@@ -43,7 +43,7 @@ export async function LastNews() {
                     {news.user.name ? (
                       news.user.name
                     ) : (
-                      <span className="text-blue-500">{news.user.id}</span>
+                      <span className="text-blue-500">@{news.user.username}</span>
                     )}
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
