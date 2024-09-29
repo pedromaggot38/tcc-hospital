@@ -3,6 +3,7 @@
 import { UserEditSchema } from '@/schemas/auth/user';
 import { db } from "@/lib/db"
 import * as z from 'zod'
+import { revalidatePath } from 'next/cache';
 
 export const userEditUpdate = async (username: string, values: z.infer<typeof UserEditSchema>) => {
     const validatedFields = UserEditSchema.safeParse(values);
@@ -57,5 +58,6 @@ export const userEditUpdate = async (username: string, values: z.infer<typeof Us
     } catch (error) {
         return { error: "Erro ao atualizar os dados" };
     }
+    revalidatePath('/dashboard/users')
     return { success: "Dados atualizados!" };
 };

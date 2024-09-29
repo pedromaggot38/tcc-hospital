@@ -65,12 +65,12 @@ const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => 
     const form = useForm<FormData>({
         resolver: zodResolver(UserEditSchema),
         defaultValues: {
-            name: user.name || '',
+            name: user.name || undefined,
             role: user.role,
-            isBlocked: user.isBlocked,
-            phone: user.phone || '',
-            email: user.email || '',
-            image: user.image || '',
+            isBlocked: user.isBlocked ?? false,
+            phone: user.phone || undefined,
+            email: user.email || undefined,
+            image: user.image || undefined,
         },
     });
 
