@@ -4,11 +4,12 @@ import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
 import AvatarDashboard from "../avatarDashboard";
 import UserHoverCard from "../userHoverCard";
+import { lastUsersCount } from "@/lib/vars";
 
 export async function LastUsers() {
   const lastUsers = await db.user.findMany({
     orderBy: { createdAt: 'desc' },
-    take: 8,
+    take: lastUsersCount,
   });
 
   return (
