@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import * as z from "zod";
 import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from 'next/navigation'; // Importa useRouter
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -14,7 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 import {
     Select,
@@ -49,8 +50,9 @@ interface AccountTabProps {
 type FormData = z.infer<typeof UserEditSchema>;
 
 const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => {
-    const [error, setError] = useState<string | undefined>("");
-    const [success, setSuccess] = useState<string | undefined>("");
+    const router = useRouter(); // Cria uma instância do router
+    const [error, setError] = useState<string | undefined>(""); 
+    const [success, setSuccess] = useState<string | undefined>(""); 
     const [isPending, startTransition] = useTransition();
 
     const { openDialog, handleConfirm, handleCancel } = useDialog(() => {
@@ -89,12 +91,13 @@ const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => 
                         setError(response.error);
                     } else {
                         setSuccess(response.success);
+                        // Redireciona para a página /dashboard/users após sucesso
+                        router.push('/dashboard/users'); 
                     }
                 })
                 .catch((error) => {
                     console.error("Error during update", error);
                     setError("Houve um erro ao atualizar os dados.");
-
                     setTimeout(() => setError(''), 2000);
                 });
         });
@@ -274,7 +277,6 @@ const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => 
                         <div>
                             <FormError message={error} />
                             <FormSuccess message={success} />
-
                         </div>
                         <div>
                             <AlertDialog>
@@ -283,12 +285,15 @@ const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => 
                                 </AlertDialogTrigger>
                                 <AlertDialogContent>
                                     <AlertDialogHeader>
-                                        <AlertDialogTitle>Confirmar Atualização</AlertDialogTitle>
-                                        <AlertDialogFooter>
-                                            <AlertDialogCancel onClick={handleCancel}>Cancelar</AlertDialogCancel>
-                                            <AlertDialogAction onClick={handleConfirm}>Confirmar</AlertDialogAction>
-                                        </AlertDialogFooter>
+                                        <AlertDialogTitle>Confirmar atualização</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            Tem certeza de que deseja atualizar os dados do usuário?
+                                        </AlertDialogDescription>
                                     </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel onClick={handleCancel}>Cancelar</AlertDialogCancel>
+                                        <AlertDialogAction onClick={handleConfirm}>Atualizar</AlertDialogAction>
+                                    </AlertDialogFooter>
                                 </AlertDialogContent>
                             </AlertDialog>
                         </div>

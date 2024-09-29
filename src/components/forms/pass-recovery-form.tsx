@@ -15,7 +15,6 @@ import { FormSuccess } from "../form-success";
 import { Button } from "../ui/button";
 import { PasswordResetSchema, TokenVerificationSchema } from "@/schemas/auth/user";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
-import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
 
 
