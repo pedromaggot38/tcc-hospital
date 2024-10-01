@@ -5,7 +5,7 @@ export const getTokenByToken = async (token: string) => {
         const verificationToken = await db.token.findUnique({ where: { token } })
         return verificationToken
     } catch {
-        return null
+        return 'Error during searching token or username not found'
     }
 }
 
@@ -14,6 +14,6 @@ export const getTokenByUsername = async (username: string) => {
         const verificationToken = await db.token.findFirst({ where: { username } })
         return verificationToken
     } catch {
-        return null
+        return 'Error during searching token or username not found'
     }
 }

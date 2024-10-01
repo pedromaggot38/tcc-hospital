@@ -20,6 +20,7 @@ import { FormSuccess } from "@/components/form-success";
 import { useDialog } from "@/hooks/useDialog";
 import { PasswordResetSchema } from "@/schemas/auth/user";
 import { passwordReset } from "@/actions/auth/passReset";
+import { useRouter } from "next/navigation";
 
 interface User {
     username: string;
@@ -33,6 +34,7 @@ interface PasswordTabContentProps {
 type FormData = z.infer<typeof PasswordResetSchema>;
 
 const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRole }) => {
+    const router = useRouter();
     const isRoot = currentRole === 'root';
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
@@ -65,6 +67,7 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
                         setError(response.error);
                     } else {
                         setSuccess(response.success);
+                        router.push('/dashboard/users'); 
                     }
                 })
                 .catch((error) => {
@@ -149,7 +152,7 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
                         {isRoot && (
                             <>
                                 <Button variant="outline" className="hover:bg-red-500 hover:text-white">
-                                    Gerar token
+                                    Resetar token
                                 </Button>
                                 <AlertDialog>
                                     <AlertDialogTrigger className="hover:bg-primary hover:text-white" asChild>

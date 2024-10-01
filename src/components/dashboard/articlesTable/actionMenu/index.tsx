@@ -33,7 +33,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ article }) => {
                 <DropdownMenuItem
                     onClick={() => null}
                 >
-                    Teste
+                    Random Button
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                     <DropdownMenuItem
