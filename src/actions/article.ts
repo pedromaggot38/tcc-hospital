@@ -15,7 +15,7 @@ export const createArticle = async (values: z.infer<typeof ArticleSchema>) => {
         return { error: "Erro ao validar os campos" }
     }
 
-    const { title, slug, author, published, content } = validatedFields.data
+    const { title, subtitle, slug, author, published, content } = validatedFields.data
 
     const existingArticle = await db.article.findFirst({
         where: {
@@ -40,6 +40,7 @@ export const createArticle = async (values: z.infer<typeof ArticleSchema>) => {
             data: {
                 slug,
                 title,
+                subtitle,
                 content,
                 published,
                 author,
@@ -51,13 +52,14 @@ export const createArticle = async (values: z.infer<typeof ArticleSchema>) => {
             }
         })
     } catch (error) {
+        console.error(error);
         return { error: "Erro ao criar noticia" }
     }
     revalidatePath('/dashboard/articles')
     return { success: "Notícia criada!" }
 }
 
-export const updateArticle = async (values: z.infer<typeof ArticleSchema> & { id: string }) => {
+export const updateArticle = async (values: z.infer<typeof ArticleSchema> & { slug: string }, originalSlug: string) => {
     const session = await auth();
     const validatedFields = ArticleSchema.safeParse(values);
 
@@ -65,34 +67,39 @@ export const updateArticle = async (values: z.infer<typeof ArticleSchema> & { id
         return { error: "Erro ao validar os campos" };
     }
 
-    const { title, slug, published, content } = validatedFields.data;
+    const { title, subtitle, slug, published, content } = validatedFields.data;
 
-    // Verificar se já existe um artigo com o mesmo título ou slug, mas não o mesmo id
-    const existingArticle = await db.article.findFirst({
+    const existingArticle = await db.article.findUnique({
         where: {
-            OR: [
-                { title: title },
-                { slug: slug }
-            ]
+            slug: originalSlug
         }
     });
 
-    if (existingArticle) {
-        if (existingArticle.title === title) {
-            return { error: 'Título já existe!' };
+    if (!existingArticle) {
+        return { error: "Artigo não encontrado." };
+    }
+
+    const conflictingArticle = await db.article.findFirst({
+        where: {
+            slug: slug,
+            NOT: { id: existingArticle.id }
         }
-        if (existingArticle.slug === slug) {
+    });
+
+    if (conflictingArticle) {
+        if (conflictingArticle.slug === slug) {
             return { error: 'Slug já existe!' };
         }
     }
 
     await db.article.update({
         where: {
-            slug: slug
+            id: existingArticle.id,
         },
         data: {
-            slug,
+            slug: slug,
             title,
+            subtitle,
             content,
             published,
             user: {

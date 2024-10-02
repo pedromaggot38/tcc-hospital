@@ -3,7 +3,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
 import AvatarDashboard from "../avatarDashboard";
-import UserHoverCard from "../userHoverCard";
 import { lastUsersCount } from "@/lib/vars";
 
 export async function LastUsers() {
@@ -41,7 +40,9 @@ export async function LastUsers() {
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
-                    <UserHoverCard user={user}/>
+                    <span className={user.name ? "" : "text-gray-500"}>
+                      {user.name || "Não informado"}
+                    </span>
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">

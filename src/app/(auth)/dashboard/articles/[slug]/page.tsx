@@ -1,3 +1,5 @@
+
+import EditArticleForm from "@/components/forms/edit-article-form";
 import { db } from "@/lib/db";
 import { NextPage } from 'next';
 import { notFound } from 'next/navigation';
@@ -8,11 +10,11 @@ interface Params {
 
 const ArticlePage: NextPage<{ params: Params }> = async ({ params }) => {
     const article = await db.article.findUnique({
-        include: {
-            user: true,
-        },
         where: {
             slug: params.slug,
+        },
+        include: {
+            user: true,
         },
     });
 
@@ -22,10 +24,7 @@ const ArticlePage: NextPage<{ params: Params }> = async ({ params }) => {
 
     return (
         <div className="flex flex-col items-center">
-            <h1>Título: {article.title}</h1>
-            <p>Conteúdo: {article.content}</p>
-            <p>Publicado: {article.published ? "Sim" : "Não"}</p>
-            <p>Autor: {article.user.name}</p>
+            <EditArticleForm article={article} originalSlug={article.slug} />
         </div>
     );
 };

@@ -7,6 +7,7 @@ async function getData(): Promise<Articles[]> {
         select: {
             id: true,
             title: true,
+            subtitle: true,
             content: true,
             published: true,
             slug: true,
@@ -33,6 +34,7 @@ async function getData(): Promise<Articles[]> {
     return articles.map((article) => ({
         id: article.id,
         title: article.title,
+        subtitle: article.subtitle,
         content: article.content ?? undefined,
         published: article.published,
         author: article.author,

@@ -38,7 +38,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ article }) => {
                 <DropdownMenuSeparator />
                     <DropdownMenuItem
                         onClick={() => {
-                            router.push(`/dashboard/articles/${article.slug}/edit`);
+                            router.push(`/dashboard/articles/${article.slug}/`);
                         }}
                     >
                         Editar publicação

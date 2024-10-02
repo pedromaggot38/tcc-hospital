@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { ChevronLeft } from "lucide-react";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -19,29 +19,30 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ArticleSchema } from "@/schemas/article";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition, useEffect } from "react";
-import { createArticle } from "@/actions/article";
+import { useState, useEffect, useTransition } from "react";
+import { updateArticle } from "@/actions/article";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import Link from "next/link";
 import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
 import { useRouter } from "next/navigation";
 
-const createSlug = (title: string) => {
-    return title
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/[^\w\-]+/g, '')
-        .replace(/\-\-+/g, '-')
-        .replace(/^-+/, '')
-        .replace(/-+$/, '');
-};
+interface Article {
+    title: string;
+    subtitle: string | null;
+    slug: string;
+    published: boolean;
+    author: string;
+    content: string | null;
+}
+interface EditArticleProps {
+    article: Article;
+    originalSlug: string;
+}
 
-const NewArticle = () => {
+const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) => {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [success, setSuccess] = useState<string | undefined>("");
@@ -50,38 +51,46 @@ const NewArticle = () => {
     const form = useForm<z.infer<typeof ArticleSchema>>({
         resolver: zodResolver(ArticleSchema),
         defaultValues: {
-            title: '',
-            subtitle: '',
-            slug: '',
-            published: false,
-            author: '',
-            content: ''
+            title: article.title,
+            subtitle: article.subtitle || '',
+            slug: article.slug,
+            published: article.published,
+            author: article.author,
+            content: article.content || '',
         }
     });
-    const title = useWatch({ control: form.control, name: 'title' });
 
     useEffect(() => {
-        if (title) {
-            form.setValue('slug', createSlug(title));
-        }
-    }, [title, form]);
+        form.reset({
+            title: article.title,
+            subtitle: article.subtitle || '',
+            slug: article.slug,
+            published: article.published,
+            author: article.author,
+            content: article.content || '',
+        });
+    }, [article, form]);
 
     const onSubmit = (values: z.infer<typeof ArticleSchema>) => {
         setSuccess('');
         setError('');
         startTransition(() => {
-            createArticle(values)
+            updateArticle({ ...values, slug: values.slug }, originalSlug)
                 .then((data) => {
                     if (data.success) {
                         setSuccess(data.success);
-                        form.reset();
-                        router.push("/dashboard/articles");
-                    } else if (data.error) {
+                        router.refresh(); // Atualiza a página atual para garantir que as mudanças apareçam
+                        router.push("/dashboard/articles"); // Navega para a página de artigos
+                        // A chamada abaixo garante que a nova página também carregue os dados atualizados
+                        router.refresh();
+                    }
+                    else if (data.error) {
                         setError(data.error);
                     }
                 })
                 .catch(() => {
-                    setError("Erro ao criar a publicação.");
+                    setError("Erro ao atualizar a publicação.");
+                    setTimeout(() => setError(''), 2000);
                 });
         });
     };
@@ -99,7 +108,7 @@ const NewArticle = () => {
                                 </Button>
                             </Link>
                             <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight">
-                                Nova Publicação
+                                Editar Publicação
                             </h1>
                         </div>
                         <div className="grid gap-4 lg:gap-8">
@@ -107,11 +116,10 @@ const NewArticle = () => {
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
                                     <Card>
                                         <CardHeader>
-
                                             <div className="flex">
                                                 <div className="flex-grow">
                                                     <CardTitle>Detalhes da Publicação</CardTitle>
-                                                    <CardDescription>Preencha os campos abaixo para criar uma nova publicação</CardDescription>
+                                                    <CardDescription>Edite os campos abaixo para atualizar a publicação</CardDescription>
                                                 </div>
                                                 <div>
                                                     <FormField
@@ -169,7 +177,7 @@ const NewArticle = () => {
                                                             <FormItem>
                                                                 <FormLabel>Sub-título</FormLabel>
                                                                 <FormControl>
-                                                                    <Input placeholder="Título da publicação" {...field} />
+                                                                    <Input placeholder="Sub-título da publicação" {...field} />
                                                                 </FormControl>
                                                                 <FormMessage />
                                                             </FormItem>
@@ -235,8 +243,7 @@ const NewArticle = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 
-export default NewArticle;
+export default EditArticleForm;

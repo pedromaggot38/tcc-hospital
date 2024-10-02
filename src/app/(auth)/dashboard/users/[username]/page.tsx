@@ -16,7 +16,6 @@ interface Params {
 }
 
 const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
-
     const currentUserData = await currentUser();
     if (currentUserData?.role === 'journalist') {
         return redirect('/dashboard/users');

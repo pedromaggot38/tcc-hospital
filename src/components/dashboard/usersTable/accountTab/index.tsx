@@ -90,7 +90,7 @@ const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => 
                         setError(response.error);
                     } else {
                         setSuccess(response.success);
-                        router.push('/dashboard/users'); 
+                        router.replace('/dashboard/users'); 
                     }
                 })
                 .catch((error) => {
