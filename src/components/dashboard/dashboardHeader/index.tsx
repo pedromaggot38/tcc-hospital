@@ -45,6 +45,7 @@ const menuItems = [
 export function DashboardHeader() {
     const user = useCurrentUser();
     const [isOpen, setIsOpen] = useState(false);
+    const [isSheetOpen, setSheetIsOpen] = useState(false);
     const pathname = usePathname();
 
     const closeMenu = () => {
@@ -53,6 +54,14 @@ export function DashboardHeader() {
 
     const onClick = () => {
         logout();
+    };
+
+    const handleLinkClick = () => {
+        setIsOpen(false);
+    };
+
+    const handleSheetLinkClick = () => {
+        setSheetIsOpen(false);
     };
 
     return (
@@ -76,7 +85,7 @@ export function DashboardHeader() {
                     </Link>
                 ))}
             </nav>
-            <Sheet>
+            <Sheet open={isSheetOpen} onOpenChange={setSheetIsOpen}>
                 <SheetTrigger asChild>
                     <Button
                         variant="outline"
@@ -100,6 +109,7 @@ export function DashboardHeader() {
                                 key={item.title}
                                 href={item.path}
                                 className={`text-muted-foreground transition-colors hover:text-foreground ${pathname === item.path ? 'text-primary font-semibold' : ''}`}
+                                onClick={handleSheetLinkClick}
                             >
                                 <span>{item.title}</span>
                                 <span className="sr-only">, {item.accessibility}</span>
@@ -110,16 +120,16 @@ export function DashboardHeader() {
             </Sheet>
             <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
                 <div className="ml-auto flex-1 sm:flex-initial">
-                    <div className="relative flex gap-2 items-center">
-                        <div className="text-sm">
-                            <span>
-                                {user?.name
-                                    ? `Bem-vindo, ${user.name}`
-                                    : "Bem-vindo"}
-                            </span>
+                    <div className="relative flex gap-2 items-center justify-end sm:justify-start">
+                        <div className="hidden sm:flex items-center gap-2">
+                            <div className="text-sm">
+                                <span>
+                                    {user?.name ? `Bem-vindo, ${user.name}` : "Bem-vindo"}
+                                </span>
+                            </div>
+                            <Separator orientation="vertical" className="mx-2 h-6" />
                         </div>
-                        <Separator orientation="vertical" className="mx-2 h-6" />
-                        <div>
+                        <div className="ml-auto sm:ml-0">
                             <Badge
                                 variant={
                                     user?.role === "root"
@@ -137,7 +147,7 @@ export function DashboardHeader() {
                 <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="secondary" size="icon" className="rounded-full">
-                            <AvatarDashboard user={user} /> {/* Passa o usuário para o AvatarDashboard */}
+                            <AvatarDashboard user={user} />
                             <span className="sr-only">Botão do Usuário</span>
                         </Button>
                     </DropdownMenuTrigger>
@@ -164,7 +174,7 @@ export function DashboardHeader() {
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                            className="text-red-600"
+                            className="text-red-600 cursor-pointer"
                             onClick={() => {
                                 closeMenu();
                                 onClick();

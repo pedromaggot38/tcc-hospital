@@ -31,16 +31,26 @@ model User {
 }
 
 model Article {
-  id        String   @id @default(uuid())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String
   content   String?
   published Boolean  @default(false)
   slug      String   @unique
+  author    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Restrict)
   userId    String
 
   @@index([slug, userId, createdAt])
   @@map("article")
+}
+
+model Token {
+  id       Int    @id @default(autoincrement())
+  username String
+  token    String @unique
+
+  @@unique([username, token])
+  @@map("token")
 }

@@ -7,8 +7,8 @@ export default function Home() {
   const pass = 'kNGLmqUEz0pUxMM0'
   return (
     <HomeLayout>
-      <HomePage />
-      <div className="flex gap-4">
+      
+      <div className="flex gap-4 min-h-screen justify-center items-center ">
         <Button
           asChild
           size='sm'

@@ -15,7 +15,7 @@ export const createArticle = async (values: z.infer<typeof ArticleSchema>) => {
         return { error: "Erro ao validar os campos" }
     }
 
-    const { title, slug, published, content } = validatedFields.data
+    const { title, slug, author, published, content } = validatedFields.data
 
     const existingArticle = await db.article.findFirst({
         where: {
@@ -42,6 +42,7 @@ export const createArticle = async (values: z.infer<typeof ArticleSchema>) => {
                 title,
                 content,
                 published,
+                author,
                 user: {
                     connect: {
                         id: session?.user.id

@@ -4,10 +4,10 @@ import { RegisterSchema } from "@/schemas/auth/user"
 import { db } from "@/lib/db"
 import * as z from 'zod'
 import { revalidatePath } from "next/cache"
+import { generateVerificationToken } from "@/lib/tokenGenerate"
 
 const bcrypt = require('bcryptjs')
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
-    console.log("teste" + values)
     
     const validatedFields = RegisterSchema.safeParse(values)
     
@@ -15,7 +15,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         return { error: "Erro ao validar os campos" }
     }
     
-    /*  Recebe os dados nas variáveis */
     const {
         username, password, role, isBlocked, name, phone, email, image
     } = validatedFields.data
@@ -60,10 +59,9 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     } catch (error) {
         return { error: "Erro ao criar o usuário" }
     }
+
+    const verificationToken = await generateVerificationToken(username)
+
     revalidatePath('/dashboard/users')
     return { success: "Usuário criado!" }
 }
-
-export const config = {
-    runtime: 'nodejs',
-};

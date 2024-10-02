@@ -35,7 +35,7 @@ export default auth((req) => {
   }
   
   console.log("Middleware is running");
-  console.log("Is logged in:", isLoggedIn);
+  console.log("IS LOGGED IN:", isLoggedIn);
   return NextResponse.next();
 });
 
@@ -47,4 +47,3 @@ export const config = {
     '/(api|trpc)(.*)',
   ],
 };
-

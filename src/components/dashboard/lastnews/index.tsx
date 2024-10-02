@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
+import { lastNewsCount } from "@/lib/vars";
 
 export async function LastNews() {
   const lastNews = await db.article.findMany({
@@ -9,7 +10,7 @@ export async function LastNews() {
       user: true,
     },
     orderBy: { createdAt: 'desc' },
-    take: 7,
+    take: lastNewsCount,
   });
 
   return (
@@ -43,7 +44,7 @@ export async function LastNews() {
                     {news.user.name ? (
                       news.user.name
                     ) : (
-                      <span className="text-blue-500">{news.user.id}</span>
+                      <span className="text-blue-500">@{news.user.username}</span>
                     )}
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>

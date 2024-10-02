@@ -3,11 +3,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
 import AvatarDashboard from "../avatarDashboard";
+import UserHoverCard from "../userHoverCard";
+import { lastUsersCount } from "@/lib/vars";
 
 export async function LastUsers() {
   const lastUsers = await db.user.findMany({
     orderBy: { createdAt: 'desc' },
-    take: 5,
+    take: lastUsersCount,
   });
 
   return (
@@ -39,7 +41,7 @@ export async function LastUsers() {
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
-                    {user.name || 'Nome não informado'}
+                    <UserHoverCard user={user}/>
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
@@ -47,7 +49,9 @@ export async function LastUsers() {
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">
-                    {user.isBlocked ? "Sim" : "Não"}
+                    <span className={user.isBlocked ? "text-red-500" : ""}>
+                      {user.isBlocked ? "Sim" : "Não"}
+                    </span>
                     <Separator orientation="vertical" className="absolute right-0 h-full top-0 my-2" />
                   </TableCell>
                   <TableCell className="relative">

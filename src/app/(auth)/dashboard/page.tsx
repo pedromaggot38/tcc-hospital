@@ -9,12 +9,12 @@ const DashboardPage = async () => {
 
   const cardItems = [
     {
-      title: "Teste",
+      title: "Out",
       description: "Lorem Ipsium",
       fetchCount: 12,
     },
     {
-      title: "Teste 2",
+      title: "In",
       description: "Lorem Ipsium",
       fetchCount: 20,
     },

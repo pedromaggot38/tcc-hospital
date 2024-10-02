@@ -12,7 +12,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
 import {
     Select,
     SelectContent,
@@ -22,9 +21,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ArticleSchema } from "@/schemas/article";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { createArticle } from "@/actions/article";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import Link from "next/link";
@@ -32,6 +31,17 @@ import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
 import { useRouter } from "next/navigation";
 
+const createSlug = (title: string) => {
+    return title
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+};
 
 const NewArticle = () => {
     const router = useRouter();
@@ -45,9 +55,17 @@ const NewArticle = () => {
             title: '',
             slug: '',
             published: false,
+            author: '',
             content: ''
         }
     });
+    const title = useWatch({ control: form.control, name: 'title' });
+
+    useEffect(() => {
+        if (title) {
+            form.setValue('slug', createSlug(title));
+        }
+    }, [title, form]);
 
     const onSubmit = (values: z.infer<typeof ArticleSchema>) => {
         console.log("Form is being submitted", values);
@@ -76,10 +94,10 @@ const NewArticle = () => {
     };
 
     return (
-        <div className="flex w-full flex-col">
-            <div className="flex flex-col sm:gap-4 sm:pl-14">
-                <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-                    <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
+        <div className="flex flex-col sm:gap-4 sm:pl-14 w-full">
+            <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+                <div className="w-full flex-1 flex justify-center">
+                    <div className="w-[60%] max-w-[60%]">
                         <div className="flex items-center gap-4">
                             <Link href="/dashboard/articles">
                                 <Button variant="outline" size="icon" className="h-7 w-7">
@@ -87,7 +105,7 @@ const NewArticle = () => {
                                     <span className="sr-only">Voltar</span>
                                 </Button>
                             </Link>
-                            <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
+                            <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight">
                                 Nova Publicação
                             </h1>
                         </div>
@@ -127,37 +145,51 @@ const NewArticle = () => {
                                                         </FormItem>
                                                     )}
                                                 />
-
-                                                <FormField
-                                                    control={form.control}
-                                                    name="published"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Status</FormLabel>
-                                                            <FormControl>
-                                                                <Controller
-                                                                    control={form.control}
-                                                                    name="published"
-                                                                    render={({ field }) => (
-                                                                        <Select
-                                                                            value={field.value ? 'true' : 'false'}
-                                                                            onValueChange={(value) => field.onChange(value === 'true')}
-                                                                        >
-                                                                            <SelectTrigger>
-                                                                                <SelectValue placeholder="Selecione o status" />
-                                                                            </SelectTrigger>
-                                                                            <SelectContent>
-                                                                                <SelectItem value="true">Publicado</SelectItem>
-                                                                                <SelectItem value="false">Rascunho</SelectItem>
-                                                                            </SelectContent>
-                                                                        </Select>
-                                                                    )}
-                                                                />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
+                                                <div className="flex ">
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="author"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Autor</FormLabel>
+                                                                <FormControl>
+                                                                    <Input placeholder="Autor da publicação" {...field} />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="published"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Status</FormLabel>
+                                                                <FormControl>
+                                                                    <Controller
+                                                                        control={form.control}
+                                                                        name="published"
+                                                                        render={({ field }) => (
+                                                                            <Select
+                                                                                value={field.value ? 'true' : 'false'}
+                                                                                onValueChange={(value) => field.onChange(value === 'true')}
+                                                                            >
+                                                                                <SelectTrigger>
+                                                                                    <SelectValue placeholder="Selecione o status" />
+                                                                                </SelectTrigger>
+                                                                                <SelectContent>
+                                                                                    <SelectItem value="true">Publicado</SelectItem>
+                                                                                    <SelectItem value="false">Rascunho</SelectItem>
+                                                                                </SelectContent>
+                                                                            </Select>
+                                                                        )}
+                                                                    />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </div>
                                                 <FormField
                                                     control={form.control}
                                                     name="content"
@@ -191,6 +223,7 @@ const NewArticle = () => {
                 </div>
             </div>
         </div>
+
     );
 };
 

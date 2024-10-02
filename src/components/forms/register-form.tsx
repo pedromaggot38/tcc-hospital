@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import { useState, useTransition } from "react";
@@ -44,7 +45,6 @@ export const RegisterForm = () => {
         startTransition(() => {
             register(values)
                 .then((data) => {
-                    console.log("Response received", data);
                     setError(data.error);
                     setSuccess(data.success);
                     if (data.success) {
@@ -103,7 +103,7 @@ export const RegisterForm = () => {
                                     name="username"
                                     render={({ field }) => (
                                         <>
-                                            <FormLabel className="col-span-1 text-right">Username</FormLabel>
+                                            <FormLabel className="col-span-1 text-right"><span className="text-red-500">*</span>Username</FormLabel>
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
@@ -125,7 +125,7 @@ export const RegisterForm = () => {
                                     name="password"
                                     render={({ field }) => (
                                         <>
-                                            <FormLabel className="col-span-1 text-right">Senha</FormLabel>
+                                            <FormLabel className="col-span-1 text-right"><span className="text-red-500">*</span>Senha</FormLabel>
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
@@ -143,7 +143,7 @@ export const RegisterForm = () => {
                             </div>
 
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <FormLabel className="col-span-1 text-right">Bloqueado</FormLabel>
+                                <FormLabel className="col-span-1 text-right"><span className="text-red-500">*</span>Bloqueado</FormLabel>
                                 <FormItem className="col-span-3">
                                     <FormControl>
                                         <Controller
@@ -151,9 +151,8 @@ export const RegisterForm = () => {
                                             control={form.control}
                                             render={({ field }) => (
                                                 <Select
-                                                    {...field}
-                                                    value={field.value ? 'true' : 'false'} // Converte o valor booleano para string
-                                                    onValueChange={(value) => field.onChange(value === 'true')} // Converte a string de volta para booleano
+                                                    value={field.value ? 'true' : 'false'}
+                                                    onValueChange={(value) => field.onChange(value === 'true')}
                                                 >
                                                     <SelectTrigger className="w-full">
                                                         <SelectValue placeholder="Selecione" />
@@ -173,7 +172,7 @@ export const RegisterForm = () => {
                             </div>
 
                             <div className="grid grid-cols-4 items-center gap-4">
-                                <FormLabel className="col-span-1 text-right">Cargo</FormLabel>
+                                <FormLabel className="col-span-1 text-right"><span className="text-red-500">*</span>Cargo</FormLabel>
                                 <FormItem className="col-span-3">
                                     <FormControl>
                                         <Controller
@@ -181,7 +180,6 @@ export const RegisterForm = () => {
                                             control={form.control}
                                             render={({ field }) => (
                                                 <Select
-                                                    {...field}
                                                     value={field.value ?? ''}
                                                     onValueChange={(value) => field.onChange(value)}
                                                 >
@@ -219,6 +217,7 @@ export const RegisterForm = () => {
                                                         placeholder="Nome e Sobrenome"
                                                         disabled={isPending}
                                                         {...field}
+                                                        value={field.value || ''}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -238,9 +237,10 @@ export const RegisterForm = () => {
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="E-mail"
+                                                        placeholder="you@example.com"
                                                         disabled={isPending}
                                                         {...field}
+                                                        value={field.value ?? ''}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -260,9 +260,10 @@ export const RegisterForm = () => {
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Telefone"
+                                                        placeholder="(99)99999-9999"
                                                         disabled={isPending}
                                                         {...field}
+                                                        value={field.value || ''}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -282,9 +283,10 @@ export const RegisterForm = () => {
                                             <FormItem className="col-span-3">
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="URL da imagem"
+                                                        placeholder="https://github.com/username.png"
                                                         disabled={isPending}
                                                         {...field}
+                                                        value={field.value || ''}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
