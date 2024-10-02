@@ -12,7 +12,7 @@ import { MoreHorizontal } from "lucide-react";
 
 interface ActionMenuProps {
     article: {
-        id: string;
+        id: number;
         slug: string;
     };
 }

@@ -19,7 +19,7 @@ interface User {
     articleCount: number;
 }
 export const articleSchema = z.object({
-    id: z.string().cuid(),
+    id: z.number(),
     title: z.string(),
     slug: z.string(),
     published: z.boolean().default(false),
@@ -63,7 +63,7 @@ export const columns: ColumnDef<Articles>[] = [
     {
         accessorKey: "content",
         header: "Conteúdo",
-        meta: { className: "w-1/2" },
+        meta: { className: "w-2/2" },
         cell: info => {
             const value = info.getValue<string>();
             const displayContent = value ? contentPreview(value, 30) : 'Nada Informado';
@@ -73,8 +73,12 @@ export const columns: ColumnDef<Articles>[] = [
         },
     },
     {
-        accessorKey: "user.name",
+        accessorKey: "author",
         header: "Autor",
+    },
+    {
+        accessorKey: "user.name",
+        header: "Criado por",
         cell: info => {
             const user = info.row.original.user as User;
 

@@ -10,6 +10,7 @@ async function getData(): Promise<Articles[]> {
             content: true,
             published: true,
             slug: true,
+            author: true,
             createdAt: true,
             updatedAt: true,
             user: {
@@ -34,6 +35,7 @@ async function getData(): Promise<Articles[]> {
         title: article.title,
         content: article.content ?? undefined,
         published: article.published,
+        author: article.author,
         slug: article.slug,
         createdAt: article.createdAt,
         updatedAt: article.updatedAt,
