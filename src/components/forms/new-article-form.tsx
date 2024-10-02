@@ -1,7 +1,5 @@
 'use client'
-import {
-    ChevronLeft
-} from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -68,26 +66,20 @@ const NewArticle = () => {
     }, [title, form]);
 
     const onSubmit = (values: z.infer<typeof ArticleSchema>) => {
-        console.log("Form is being submitted", values);
         setSuccess('');
+        setError('');
         startTransition(() => {
             createArticle(values)
                 .then((data) => {
-                    console.log("Response received", data);
-                    setSuccess(data.success);
                     if (data.success) {
+                        setSuccess(data.success);
                         form.reset();
                         router.push("/dashboard/articles");
                     } else if (data.error) {
                         setError(data.error);
                     }
-                    setTimeout(() => {
-                        setSuccess('');
-                        setError('');
-                    }, 1000);
                 })
-                .catch((error) => {
-                    console.error("Error during registration", error);
+                .catch(() => {
                     setError("Erro ao criar a publicação.");
                 });
         });
@@ -98,7 +90,7 @@ const NewArticle = () => {
             <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                 <div className="w-full flex-1 flex justify-center">
                     <div className="w-[60%] max-w-[60%]">
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4 mb-4">
                             <Link href="/dashboard/articles">
                                 <Button variant="outline" size="icon" className="h-7 w-7">
                                     <ChevronLeft className="h-4 w-4" />
@@ -119,33 +111,35 @@ const NewArticle = () => {
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid gap-6">
-                                                <FormField
-                                                    control={form.control}
-                                                    name="title"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Título</FormLabel>
-                                                            <FormControl>
-                                                                <Input placeholder="Título da publicação" {...field} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                                <FormField
-                                                    control={form.control}
-                                                    name="slug"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Slug</FormLabel>
-                                                            <FormControl>
-                                                                <Input placeholder="Slug da publicação" {...field} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                                <div className="flex ">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="title"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Título</FormLabel>
+                                                                <FormControl>
+                                                                    <Input placeholder="Título da publicação" {...field} />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="slug"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Slug</FormLabel>
+                                                                <FormControl>
+                                                                    <Input placeholder="Slug da publicação" {...field} />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </div>
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                                     <FormField
                                                         control={form.control}
                                                         name="author"
@@ -197,7 +191,7 @@ const NewArticle = () => {
                                                         <FormItem>
                                                             <FormLabel>Conteúdo</FormLabel>
                                                             <FormControl>
-                                                                <Textarea placeholder="Conteúdo da publicação" {...field} />
+                                                                <Textarea placeholder="Conteúdo da publicação" {...field} rows={12} />
                                                             </FormControl>
                                                             <FormMessage />
                                                         </FormItem>
@@ -209,8 +203,8 @@ const NewArticle = () => {
 
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <FormSuccess message={success} />
-                                            <FormError message={error} />
+                                            {success && <FormSuccess message={success} />}
+                                            {error && <FormError message={error} />}
                                         </div>
                                         <div>
                                             <Button type="submit" disabled={isPending}>Salvar Publicação</Button>
