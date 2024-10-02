@@ -1,8 +1,8 @@
 'use client'
 
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import {  useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,21 +15,19 @@ import { PasswordUpdateSchema } from "@/schemas/auth/user";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { Separator } from "@/components/ui/separator";
 import { useDialog } from "@/hooks/useDialog";
-import { getTokenByUsername } from "@/data/token";
 
 export const PasswordUpdateForm = () => {
     const currentUser = useCurrentUser();
-    const currentToken = getTokenByUsername(currentUser?.username || '')
-    const [error, setError] = useState<string | undefined>("")
-    const [success, setSuccess] = useState<string | undefined>("")
-    const [isPending, startTransition] = useTransition()
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
+    const [isPending, startTransition] = useTransition();
     const [isDialogOpen, setDialogOpen] = useState(false);
 
     const { openDialog, handleConfirm, handleCancel } = useDialog(() => {
         handleSubmit(onSubmit)();
     });
 
-    const { handleSubmit, register, formState: { errors } } = useForm<z.infer<typeof PasswordUpdateSchema>>({
+    const { handleSubmit, register, setValue, formState: { errors } } = useForm<z.infer<typeof PasswordUpdateSchema>>({
         resolver: zodResolver(PasswordUpdateSchema),
         defaultValues: {
             password: '',
@@ -80,7 +78,8 @@ export const PasswordUpdateForm = () => {
                 </CardHeader>
                 <CardContent>
                     <Input
-                        
+                        placeholder="Seu Token"
+                        readOnly
                     />
                 </CardContent>
             </Card>
