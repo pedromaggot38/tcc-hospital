@@ -74,16 +74,23 @@ export function DashboardHeader() {
                     <Package2 className="h-6 w-6" />
                     <span className="sr-only">Logo</span>
                 </Link>
-                {menuItems.map((item) => (
-                    <Link   
-                        key={item.title}
-                        href={item.path}
-                        className={`text-muted-foreground transition-colors hover:text-foreground ${pathname === item.path ? 'text-primary font-semibold' : ''}`}
-                    >
-                        <span>{item.title}</span>
-                        <span className="sr-only">, {item.accessibility}</span>
-                    </Link>
-                ))}
+                {menuItems.map((item) => {
+                    // Verifica se a URL está ativa
+                    const isActive =
+                        (pathname === item.path) ||
+                        (pathname.startsWith(item.path + '/') && item.path !== '/dashboard');
+
+                    return (
+                        <Link
+                            key={item.title}
+                            href={item.path}
+                            className={`text-muted-foreground transition-colors hover:text-foreground ${isActive ? 'text-primary font-semibold' : ''}`}
+                        >
+                            <span>{item.title}</span>
+                            <span className="sr-only">, {item.accessibility}</span>
+                        </Link>
+                    );
+                })}
             </nav>
             <Sheet open={isSheetOpen} onOpenChange={setSheetIsOpen}>
                 <SheetTrigger asChild>
