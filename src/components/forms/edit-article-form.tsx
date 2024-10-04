@@ -17,7 +17,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { ArticleSchema } from "@/schemas/article";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +26,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import Link from "next/link";
 import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
+
+import 'quill/dist/quill.snow.css'
 import { useRouter } from "next/navigation";
 
 interface Article {
@@ -47,6 +48,7 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
     const [isPending, startTransition] = useTransition();
     const [success, setSuccess] = useState<string | undefined>("");
     const [error, setError] = useState<string | undefined>("");
+
 
     const form = useForm<z.infer<typeof ArticleSchema>>({
         resolver: zodResolver(ArticleSchema),
@@ -217,7 +219,7 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
                                                         <FormItem>
                                                             <FormLabel>Conteúdo</FormLabel>
                                                             <FormControl>
-                                                                <Textarea placeholder="Conteúdo da publicação" {...field} />
+                                                               
                                                             </FormControl>
                                                             <FormMessage />
                                                         </FormItem>

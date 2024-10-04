@@ -17,7 +17,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { ArticleSchema } from "@/schemas/article";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,6 +27,9 @@ import Link from "next/link";
 import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
 import { useRouter } from "next/navigation";
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css';
+import { toolbarOptions } from "@/lib/vars";
 
 const createSlug = (title: string) => {
     return title
@@ -65,6 +67,29 @@ const NewArticle = () => {
             form.setValue('slug', createSlug(title));
         }
     }, [title, form]);
+
+    {/***************** Quill Editor**************** */ }
+    const { quill } = useQuill();
+    const moduleType = {
+        toolbar: toolbarOptions,
+    }
+    useEffect(() => {
+        if (quill) {
+            const handleTextChange = () => {
+                const content = quill.root.innerHTML;
+                form.setValue("content", content);
+            };
+
+            quill.on("text-change", handleTextChange);
+
+            return () => {
+                quill.off("text-change", handleTextChange);
+            };
+        }
+    }, [quill, form]);
+
+    const { quillRef } = useQuill({ modules: moduleType });
+    {/***************** Quill Editor**************** */ }
 
     const onSubmit = (values: z.infer<typeof ArticleSchema>) => {
         setSuccess('');
@@ -209,7 +234,9 @@ const NewArticle = () => {
                                                         <FormItem>
                                                             <FormLabel>Conteúdo</FormLabel>
                                                             <FormControl>
-                                                                <Textarea placeholder="Conteúdo da publicação" {...field} />
+                                                                <div className="editor-container">
+                                                                    <div ref={quillRef} />
+                                                                </div>
                                                             </FormControl>
                                                             <FormMessage />
                                                         </FormItem>
