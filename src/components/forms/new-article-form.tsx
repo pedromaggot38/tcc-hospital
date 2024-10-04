@@ -169,7 +169,7 @@ const NewArticle = () => {
                                                             <FormItem>
                                                                 <FormLabel>Sub-título</FormLabel>
                                                                 <FormControl>
-                                                                    <Input placeholder="Título da publicação" {...field} />
+                                                                    <Input placeholder="Sub-título da publicação" {...field} />
                                                                 </FormControl>
                                                                 <FormMessage />
                                                             </FormItem>
