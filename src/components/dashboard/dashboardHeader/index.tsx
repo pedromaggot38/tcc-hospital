@@ -75,7 +75,6 @@ export function DashboardHeader() {
                     <span className="sr-only">Logo</span>
                 </Link>
                 {menuItems.map((item) => {
-                    // Verifica se a URL está ativa
                     const isActive =
                         (pathname === item.path) ||
                         (pathname.startsWith(item.path + '/') && item.path !== '/dashboard');

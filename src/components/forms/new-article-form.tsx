@@ -69,10 +69,10 @@ const NewArticle = () => {
     }, [title, form]);
 
     {/***************** Quill Editor**************** */ }
-    const { quill } = useQuill();
     const moduleType = {
         toolbar: toolbarOptions,
     }
+    const { quill, quillRef } = useQuill({ modules: moduleType });
     useEffect(() => {
         if (quill) {
             const handleTextChange = () => {
@@ -87,9 +87,8 @@ const NewArticle = () => {
             };
         }
     }, [quill, form]);
-
-    const { quillRef } = useQuill({ modules: moduleType });
     {/***************** Quill Editor**************** */ }
+
 
     const onSubmit = (values: z.infer<typeof ArticleSchema>) => {
         setSuccess('');

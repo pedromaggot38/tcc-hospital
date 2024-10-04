@@ -26,8 +26,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import Link from "next/link";
 import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
-
 import 'quill/dist/quill.snow.css'
+import { useQuill } from 'react-quilljs';
 import { useRouter } from "next/navigation";
 
 interface Article {
@@ -49,7 +49,6 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
     const [success, setSuccess] = useState<string | undefined>("");
     const [error, setError] = useState<string | undefined>("");
 
-
     const form = useForm<z.infer<typeof ArticleSchema>>({
         resolver: zodResolver(ArticleSchema),
         defaultValues: {
@@ -62,6 +61,9 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
         }
     });
 
+    // Hook do Quill Editor
+    const { quill, quillRef } = useQuill();
+
     useEffect(() => {
         form.reset({
             title: article.title,
@@ -72,6 +74,17 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
             content: article.content || '',
         });
     }, [article, form]);
+
+    // Atualiza o conteúdo do Quill quando o artigo é carregado
+    useEffect(() => {
+        if (quill) {
+            quill.root.innerHTML = article.content || ''; // Preenche o editor com o conteúdo do artigo
+            quill.on('text-change', () => {
+                const updatedContent = quill.root.innerHTML;
+                form.setValue("content", updatedContent); // Atualiza o valor no formulário
+            });
+        }
+    }, [quill, article.content, form]);
 
     const onSubmit = (values: z.infer<typeof ArticleSchema>) => {
         setSuccess('');
@@ -219,7 +232,9 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
                                                         <FormItem>
                                                             <FormLabel>Conteúdo</FormLabel>
                                                             <FormControl>
-                                                               
+                                                                <div className="editor-container">
+                                                                    <div ref={quillRef} />
+                                                                </div>
                                                             </FormControl>
                                                             <FormMessage />
                                                         </FormItem>
