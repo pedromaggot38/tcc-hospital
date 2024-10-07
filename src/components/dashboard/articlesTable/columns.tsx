@@ -61,8 +61,8 @@ export const columns: ColumnDef<Articles>[] = [
         header: "Título",
     },
     {
-        accessorKey: "content",
-        header: "Conteúdo",
+        accessorKey: "subtitle",
+        header: "Sub-Título",
         meta: { className: "w-2/2" },
         cell: info => {
             const value = info.getValue<string>();

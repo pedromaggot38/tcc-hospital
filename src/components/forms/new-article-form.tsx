@@ -98,8 +98,8 @@ const NewArticle = () => {
                 .then((data) => {
                     if (data.success) {
                         setSuccess(data.success);
-                        form.reset();
                         router.push("/dashboard/articles");
+                        form.reset();
                     } else if (data.error) {
                         setError(data.error);
                     }
