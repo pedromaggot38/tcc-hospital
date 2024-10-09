@@ -1,7 +1,7 @@
 'use client'
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +21,8 @@ import { useDialog } from "@/hooks/useDialog";
 import { PasswordResetSchema } from "@/schemas/auth/user";
 import { passwordReset } from "@/actions/auth/passReset";
 import { useRouter } from "next/navigation";
+import TokenInput from "../../tokenInput";
+import { generateVerificationToken } from "@/lib/tokenGenerate";
 
 interface User {
     username: string;
@@ -38,6 +40,7 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
     const isRoot = currentRole === 'root';
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
+    const [token, setToken] = useState<string | null>(null); // Novo estado para armazenar o token
     const [isPending, startTransition] = useTransition();
 
     const { openDialog, handleConfirm, handleCancel } = useDialog(() => {
@@ -51,6 +54,26 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
             confirmNewPassword: "",
         },
     });
+
+    useEffect(() => {
+        const fetchToken = async () => {
+            try {
+                const response = await fetch(`/api/token?username=${user.username}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setToken(data.token);
+                } else {
+                    setError(data.error || 'Erro ao buscar o token.');
+                }
+            } catch (err) {
+                setError('Erro ao buscar o token.');
+            }
+        };
+
+        if (user.username) {
+            fetchToken();
+        }
+    }, [user.username]);
 
     const onSubmit = (values: z.infer<typeof PasswordResetSchema>) => {
         setError('');
@@ -67,7 +90,7 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
                         setError(response.error);
                     } else {
                         setSuccess(response.success);
-                        router.push('/dashboard/users'); 
+                        router.push('/dashboard/users');
                     }
                 })
                 .catch((error) => {
@@ -96,6 +119,11 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
+                        <div className="space-y-1">
+                            {user?.username && (
+                                <TokenInput username={user.username} />
+                            )}
+                        </div>
                         <div className="space-y-1">
                             <FormField
                                 control={form.control}
@@ -137,7 +165,7 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
                             />
                         </div>
 
-                        <div className="mt-6">
+                        <div>
                             {!isRoot && (
                                 <span className="block text-red-600 bg-red-200 p-2 rounded-sm">
                                     Você não possui permissão para alterar a senha manualmente.
@@ -147,13 +175,9 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
                             <FormSuccess message={success} />
                         </div>
                     </CardContent>
-                    <CardFooter className={`flex ${isRoot ? 'justify-between' : 'justify-center'}`}>
-                        <Button variant="outline">Copiar Token</Button>
+                    <CardFooter className="justify-end">
                         {isRoot && (
                             <>
-                                <Button variant="outline" className="hover:bg-red-500 hover:text-white">
-                                    Resetar token
-                                </Button>
                                 <AlertDialog>
                                     <AlertDialogTrigger className="hover:bg-primary hover:text-white" asChild>
                                         <Button variant="default">Salvar</Button>
