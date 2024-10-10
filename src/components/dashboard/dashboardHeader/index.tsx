@@ -18,6 +18,7 @@ import AvatarDashboard from "../avatarDashboard";
 import { Badge } from "@/components/ui/badge";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { Separator } from "@/components/ui/separator";
+import { ModeToggle } from "../toggleButton";
 
 const menuItems = [
     {
@@ -142,6 +143,10 @@ export function DashboardHeader() {
                             >
                                 {user?.role}
                             </Badge>
+                        </div>
+                        <Separator orientation="vertical" className="mx-2 h-6" />
+                        <div>
+                            <ModeToggle />
                         </div>
                     </div>
                 </div>
