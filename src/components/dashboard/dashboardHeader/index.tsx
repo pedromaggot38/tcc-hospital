@@ -31,14 +31,9 @@ const menuItems = [
         accessibility: "Usuários",
     },
     {
-        title: "Notícias",
+        title: "Artigos",
         path: "/dashboard/articles",
-        accessibility: "Notícias",
-    },
-    {
-        title: "Página Inicial",
-        path: "/",
-        accessibility: "Página Inicial",
+        accessibility: "Artigos",
     },
 ];
 

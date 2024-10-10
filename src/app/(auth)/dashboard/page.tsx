@@ -9,25 +9,25 @@ const DashboardPage = async () => {
 
   const cardItems = [
     {
-      title: "Out",
-      description: "Lorem Ipsium",
-      fetchCount: 12,
+      title: "Artigos Publicados",
+      description: "Quantidade total de artigos que estão publicados.",
+      fetchCount: data.publishedArticlesCount,
     },
     {
-      title: "In",
-      description: "Lorem Ipsium",
-      fetchCount: 20,
+      title: "Artigos Recentes",
+      description: "Artigos criados nos últimos 7 dias.",
+      fetchCount: data.recentArticlesCountLast7Days,
+    },
+    {
+      title: "Total de Artigos",
+      description: "Quantidade total de artigos cadastrados.",
+      fetchCount: data.articlesCount,
     },
     {
       title: "Usuários",
-      description: "Quantidade total de usuários",
+      description: "Quantidade total de usuários registrados.",
       fetchCount: data.usersCount,
     },
-    {
-      title: "Total de notícias",
-      description: "Quantidade total de notícias publicadas",
-      fetchCount: data.articlesCount,
-    }
   ];
 
   return (

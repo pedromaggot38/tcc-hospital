@@ -79,7 +79,7 @@ export function DataTable<TData, TValue>({
     <div>
       <div>
         <div className="flex items-center justify-between py-4">
-          <h1 className="text-3xl font-semibold">Notícias</h1>
+          <h1 className="text-3xl font-semibold">Artigos</h1>
           <div className="flex space-x-2">
             <Input
               placeholder="Procure por um título..."

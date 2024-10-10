@@ -53,10 +53,10 @@ export const createArticle = async (values: z.infer<typeof ArticleSchema>) => {
         })
     } catch (error) {
         console.error(error);
-        return { error: "Erro ao criar noticia" }
+        return { error: "Erro ao criar o artigo" }
     }
     revalidatePath('/dashboard/articles')
-    return { success: "Notícia criada!" }
+    return { success: "Artigo criado!" }
 }
 
 export const updateArticle = async (values: z.infer<typeof ArticleSchema> & { slug: string }, originalSlug: string) => {
@@ -110,7 +110,7 @@ export const updateArticle = async (values: z.infer<typeof ArticleSchema> & { sl
         }
     });
 
-    return { success: "Notícia atualizada!" };
+    return { success: "Artigo atualizado!" };
 };
 
 export const deleteArticle = async (slug: string) => {
