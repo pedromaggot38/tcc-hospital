@@ -9,25 +9,25 @@ const DashboardPage = async () => {
 
   const cardItems = [
     {
-      title: "Out",
-      description: "Lorem Ipsium",
-      fetchCount: 12,
+      title: "Artigos Publicados",
+      description: "Quantidade total de artigos que estão publicados.",
+      fetchCount: data.publishedArticlesCount,
     },
     {
-      title: "In",
-      description: "Lorem Ipsium",
-      fetchCount: 20,
+      title: "Artigos Recentes",
+      description: "Artigos criados nos últimos 7 dias.",
+      fetchCount: data.recentArticlesCountLast7Days,
+    },
+    {
+      title: "Total de Artigos",
+      description: "Quantidade total de artigos cadastrados.",
+      fetchCount: data.articlesCount,
     },
     {
       title: "Usuários",
-      description: "Quantidade total de usuários",
+      description: "Quantidade total de usuários registrados.",
       fetchCount: data.usersCount,
     },
-    {
-      title: "Total de notícias",
-      description: "Quantidade total de notícias publicadas",
-      fetchCount: data.articlesCount,
-    }
   ];
 
   return (
@@ -37,7 +37,7 @@ const DashboardPage = async () => {
           <Card key={index} className="dark:bg-">
             <CardHeader>
               <div className="flex items-center justify-center">
-                <CardTitle className="sm:text-xl text-lg text-gray-800 select-none">
+                <CardTitle className="sm:text-xl text-lg text-gray-800 select-none dark:text-gray-300">
                   {item.title}
                 </CardTitle>
               </div>

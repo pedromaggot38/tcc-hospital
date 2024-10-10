@@ -9,7 +9,6 @@ export const useDialog = (onConfirm: () => void) => {
     const openDialog = () => setDialogOpen(true);
     const closeDialog = () => setDialogOpen(false);
 
-    // Função para confirmar a ação
     const handleConfirm = () => {
         closeDialog();
         startTransition(() => {

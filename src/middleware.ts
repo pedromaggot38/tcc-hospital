@@ -23,19 +23,14 @@ export default auth((req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      console.log("Redirecting to dashboard");
       return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
     return NextResponse.next();
   }
 
   if (!isLoggedIn && !isPublicRoute) {
-    console.log("Redirecting to login");
     return NextResponse.redirect(new URL('/login', nextUrl));
   }
-  
-  console.log("Middleware is running");
-  console.log("IS LOGGED IN:", isLoggedIn);
   return NextResponse.next();
 });
 

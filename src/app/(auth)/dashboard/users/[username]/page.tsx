@@ -10,13 +10,15 @@ import {
 } from "@/components/ui/tabs";
 import AccountTabContent from "@/components/dashboard/usersTable/accountTab";
 import PasswordTabContent from "@/components/dashboard/usersTable/passwordTab";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
 
 interface Params {
     username: string;
 }
 
 const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
-
     const currentUserData = await currentUser();
     if (currentUserData?.role === 'journalist') {
         return redirect('/dashboard/users');
@@ -42,7 +44,18 @@ const UserPage: NextPage<{ params: Params }> = async ({ params }) => {
 
     return (
         <div className="flex flex-col items-center">
-            <Tabs defaultValue="account" className="w-[400px]">
+            <Tabs defaultValue="account" className="w-[500px]">
+                <div className="flex gap-4 mb-2 justify-start">
+                    <Link href="/dashboard/users">
+                        <Button variant="outline" size="icon" className="h-7 w-7">
+                            <ChevronLeft className="h-4 w-4" />
+                            <span className="sr-only">Voltar</span>
+                        </Button>
+                    </Link>
+                    <h1 className="whitespace-nowrap text-xl font-semibold tracking-tight">
+                        Editar Usuário
+                    </h1>
+                </div>
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="account">Conta</TabsTrigger>
                     <TabsTrigger value="password">Senha</TabsTrigger>

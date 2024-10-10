@@ -18,6 +18,7 @@ import AvatarDashboard from "../avatarDashboard";
 import { Badge } from "@/components/ui/badge";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { Separator } from "@/components/ui/separator";
+import { ModeToggle } from "../toggleButton";
 
 const menuItems = [
     {
@@ -31,14 +32,9 @@ const menuItems = [
         accessibility: "Usuários",
     },
     {
-        title: "Notícias",
+        title: "Artigos",
         path: "/dashboard/articles",
-        accessibility: "Notícias",
-    },
-    {
-        title: "Página Inicial",
-        path: "/",
-        accessibility: "Página Inicial",
+        accessibility: "Artigos",
     },
 ];
 
@@ -65,7 +61,7 @@ export function DashboardHeader() {
     };
 
     return (
-        <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+        <header className="top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
             <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                 <Link
                     href="#"
@@ -74,16 +70,22 @@ export function DashboardHeader() {
                     <Package2 className="h-6 w-6" />
                     <span className="sr-only">Logo</span>
                 </Link>
-                {menuItems.map((item) => (
-                    <Link
-                        key={item.title}
-                        href={item.path}
-                        className={`text-muted-foreground transition-colors hover:text-foreground ${pathname === item.path ? 'text-primary font-semibold' : ''}`}
-                    >
-                        <span>{item.title}</span>
-                        <span className="sr-only">, {item.accessibility}</span>
-                    </Link>
-                ))}
+                {menuItems.map((item) => {
+                    const isActive =
+                        (pathname === item.path) ||
+                        (pathname.startsWith(item.path + '/') && item.path !== '/dashboard');
+
+                    return (
+                        <Link
+                            key={item.title}
+                            href={item.path}
+                            className={`text-muted-foreground transition-colors hover:text-foreground ${isActive ? 'text-primary font-semibold' : ''}`}
+                        >
+                            <span>{item.title}</span>
+                            <span className="sr-only">, {item.accessibility}</span>
+                        </Link>
+                    );
+                })}
             </nav>
             <Sheet open={isSheetOpen} onOpenChange={setSheetIsOpen}>
                 <SheetTrigger asChild>
@@ -127,8 +129,8 @@ export function DashboardHeader() {
                                     {user?.name ? `Bem-vindo, ${user.name}` : "Bem-vindo"}
                                 </span>
                             </div>
-                            <Separator orientation="vertical" className="mx-2 h-6" />
                         </div>
+                        <Separator orientation="vertical" className="mx-2 h-6" />
                         <div className="ml-auto sm:ml-0">
                             <Badge
                                 variant={
@@ -141,6 +143,10 @@ export function DashboardHeader() {
                             >
                                 {user?.role}
                             </Badge>
+                        </div>
+                        <Separator orientation="vertical" className="mx-2 h-6" />
+                        <div>
+                            <ModeToggle />
                         </div>
                     </div>
                 </div>

@@ -61,8 +61,8 @@ export const columns: ColumnDef<Articles>[] = [
         header: "Título",
     },
     {
-        accessorKey: "content",
-        header: "Conteúdo",
+        accessorKey: "subtitle",
+        header: "Sub-Título",
         meta: { className: "w-2/2" },
         cell: info => {
             const value = info.getValue<string>();
@@ -108,7 +108,7 @@ export const columns: ColumnDef<Articles>[] = [
                                     </Badge>
                                 </div>
                                 <p className="text-sm">
-                                    Total de notícias do usuário: {user.articleCount}
+                                    Total de artigos publicados do usuário: {user.articleCount}
                                 </p>
                                 <div className="flex items-center pt-2">
                                     <span className="text-xs text-muted-foreground">

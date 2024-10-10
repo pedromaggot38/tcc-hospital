@@ -31,12 +31,7 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    --blue-0: #032030
-    --blue-1: #022b42
-    --blue-2: #003554
-    --blue-3: #004d74
-    --blue-4: #006494
-    --blue-5: #006da4
+    --blue-0: #032030 --blue-1: #022b42 --blue-2: #003554 --blue-3: #004d74 --blue-4: #006494 --blue-5: #006da4
   }
 
   .dark {
@@ -72,7 +67,13 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.editor-container {
+  max-width: 800px;
+  margin: 0 auto;
 }
