@@ -37,7 +37,7 @@ const DashboardPage = async () => {
           <Card key={index} className="dark:bg-">
             <CardHeader>
               <div className="flex items-center justify-center">
-                <CardTitle className="sm:text-xl text-lg text-gray-800 select-none">
+                <CardTitle className="sm:text-xl text-lg text-gray-800 select-none dark:text-gray-300">
                   {item.title}
                 </CardTitle>
               </div>

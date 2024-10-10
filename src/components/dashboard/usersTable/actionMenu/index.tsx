@@ -51,7 +51,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ user }) => {
                                 router.push(`/dashboard/users/${user.username}`);
                             }}
                         >
-                            Editar usuário
+                            <span className='text-red-500'>Editar usuário</span>
                         </DropdownMenuItem>
                     </div>
                 )}

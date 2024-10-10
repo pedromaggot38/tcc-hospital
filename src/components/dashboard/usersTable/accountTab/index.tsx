@@ -110,12 +110,7 @@ const AccountTabContent: React.FC<AccountTabProps> = ({ user, currentRole }) => 
                 <Card>
                     <CardHeader>
                         <CardTitle className="flex justify-between">
-                            <div>
-                                Conta
-                            </div>
-                            <div className="text-sm">
-                                Current Role: {currentRole}
-                            </div>
+                            Conta
                         </CardTitle>
                         <CardDescription>
                             Faça as mudanças do usuário <span className="text-blue-500">@{user.username}</span> aqui

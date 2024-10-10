@@ -23,6 +23,7 @@ import { passwordReset } from "@/actions/auth/passReset";
 import { useRouter } from "next/navigation";
 import TokenInput from "../../tokenInput";
 import { generateVerificationToken } from "@/lib/tokenGenerate";
+import { Separator } from "@/components/ui/separator";
 
 interface User {
     username: string;
@@ -106,23 +107,30 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
             <form className="grid gap-4 py-4" onSubmit={(e) => { e.preventDefault(); openDialog(); }}>
                 <Card>
                     <CardHeader>
+                        <CardTitle>Token</CardTitle>
+                        <CardDescription>
+                            Código para a recuperação de senha do usuário <span className="text-blue-500">@{user.username}</span>
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {user?.username && (
+                            <>
+                                <TokenInput username={user.username} />
+                            </>
+                        )}
+                    </CardContent>
+                    <Separator className="my-4" />
+                    <CardHeader>
                         <CardTitle className="flex justify-between">
-                            <div>
-                                Senha
-                            </div>
-                            <div className="text-sm">
-                                Current Role: {currentRole}
-                            </div>
+                            Senha
                         </CardTitle>
                         <CardDescription>
-                            Configure a nova senha para a conta <span className="text-blue-500">@{user.username}</span>
+                            Configure a nova senha para a conta
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
                         <div className="space-y-1">
-                            {user?.username && (
-                                <TokenInput username={user.username} />
-                            )}
+
                         </div>
                         <div className="space-y-1">
                             <FormField
@@ -166,38 +174,39 @@ const PasswordTabContent: React.FC<PasswordTabContentProps> = ({ user, currentRo
                         </div>
 
                         <div>
-                            {!isRoot && (
-                                <span className="block text-red-600 bg-red-200 p-2 rounded-sm">
-                                    Você não possui permissão para alterar a senha manualmente.
-                                </span>
-                            )}
                             <FormError message={error} />
                             <FormSuccess message={success} />
                         </div>
                     </CardContent>
-                    <CardFooter className="justify-end">
-                        {isRoot && (
-                            <>
-                                <AlertDialog>
-                                    <AlertDialogTrigger className="hover:bg-primary hover:text-white" asChild>
-                                        <Button variant="default">Salvar</Button>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                            <AlertDialogTitle>Confirmar Atualização</AlertDialogTitle>
-                                            <AlertDialogFooter>
-                                                <AlertDialogCancel onClick={handleCancel}>Cancelar</AlertDialogCancel>
-                                                <AlertDialogAction onClick={handleConfirm}>Confirmar</AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogHeader>
-                                    </AlertDialogContent>
-                                </AlertDialog>
-                            </>
-                        )}
-                    </CardFooter>
+                    {!isRoot && (
+                        <CardFooter className="justify-center">
+                            <span className="block text-red-600 bg-red-200 dark:text-white dark:bg-red-800 p-2 rounded-sm">
+                                Você não possui permissão para alterar a senha manualmente.
+                            </span>
+                        </CardFooter>
+                    )}
+                    {isRoot && (
+                        <CardFooter className="justify-end">
+
+                            <AlertDialog>
+                                <AlertDialogTrigger className="hover:bg-primary hover:text-white" asChild>
+                                    <Button variant="default">Salvar</Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Confirmar Atualização</AlertDialogTitle>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel onClick={handleCancel}>Cancelar</AlertDialogCancel>
+                                            <AlertDialogAction onClick={handleConfirm}>Confirmar</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogHeader>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                        </CardFooter>
+                    )}
                 </Card>
             </form>
-        </Form>
+        </Form >
     );
 };
 
