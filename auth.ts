@@ -54,6 +54,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  jwt: {
+    maxAge: 60 * 60 * 4, // tempo de expiração do token em segundos (neste caso, 4 horas)
+  },
   ...authConfig,
 })
 
