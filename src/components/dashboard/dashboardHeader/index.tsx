@@ -129,8 +129,8 @@ export function DashboardHeader() {
                                     {user?.name ? `Bem-vindo, ${user.name}` : "Bem-vindo"}
                                 </span>
                             </div>
-                            <Separator orientation="vertical" className="mx-2 h-6" />
                         </div>
+                        <Separator orientation="vertical" className="mx-2 h-6" />
                         <div className="ml-auto sm:ml-0">
                             <Badge
                                 variant={
