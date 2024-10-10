@@ -21,14 +21,26 @@ import { ArticleSchema } from "@/schemas/article";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useEffect, useTransition } from "react";
-import { updateArticle } from "@/actions/article";
+import { deleteArticle, updateArticle } from "@/actions/article";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import Link from "next/link";
 import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
-import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.snow.css';
 import { useQuill } from 'react-quilljs';
 import { useRouter } from "next/navigation";
+import {
+    AlertDialog,
+    AlertDialogTrigger,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogCancel,
+    AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { useCurrentRole } from "@/hooks/use-current-role";
 
 interface Article {
     title: string;
@@ -45,6 +57,7 @@ interface EditArticleProps {
 
 const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) => {
     const router = useRouter();
+    const role = useCurrentRole();
     const [isPending, startTransition] = useTransition();
     const [success, setSuccess] = useState<string | undefined>("");
     const [error, setError] = useState<string | undefined>("");
@@ -61,7 +74,6 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
         }
     });
 
-    // Hook do Quill Editor
     const { quill, quillRef } = useQuill();
 
     useEffect(() => {
@@ -75,13 +87,12 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
         });
     }, [article, form]);
 
-    // Atualiza o conteúdo do Quill quando o artigo é carregado
     useEffect(() => {
         if (quill) {
-            quill.root.innerHTML = article.content || ''; // Preenche o editor com o conteúdo do artigo
+            quill.root.innerHTML = article.content || '';
             quill.on('text-change', () => {
                 const updatedContent = quill.root.innerHTML;
-                form.setValue("content", updatedContent); // Atualiza o valor no formulário
+                form.setValue("content", updatedContent);
             });
         }
     }, [quill, article.content, form]);
@@ -94,12 +105,9 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
                 .then((data) => {
                     if (data.success) {
                         setSuccess(data.success);
-                        router.refresh(); // Atualiza a página atual para garantir que as mudanças apareçam
-                        router.push("/dashboard/articles"); // Navega para a página de artigos
-                        // A chamada abaixo garante que a nova página também carregue os dados atualizados
-                        router.refresh();
-                    }
-                    else if (data.error) {
+                        setTimeout(() => setSuccess(''), 2000);
+                        router.replace("/dashboard/articles");
+                    } else if (data.error) {
                         setError(data.error);
                     }
                 })
@@ -109,6 +117,20 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
                 });
         });
     };
+    const handleDelete = async () => {
+        const response = await deleteArticle(originalSlug);
+        if (response.success) {
+            setSuccess(response.message);
+            setTimeout(() => {
+                setSuccess('');
+                router.replace("/dashboard/articles");
+            }, 2000);
+        } else {
+            setError(response.message);
+            setTimeout(() => setError(''), 2000);
+        }
+    };
+
 
     return (
         <div className="flex flex-col sm:gap-4 sm:pl-14 w-full">
@@ -238,8 +260,7 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
                                                             </FormControl>
                                                             <FormMessage />
                                                         </FormItem>
-                                                    )}
-                                                />
+                                                    )} />
                                             </div>
                                         </CardContent>
                                     </Card>
@@ -249,7 +270,28 @@ const EditArticleForm: React.FC<EditArticleProps> = ({ article, originalSlug }) 
                                             {success && <FormSuccess message={success} />}
                                             {error && <FormError message={error} />}
                                         </div>
-                                        <div>
+                                        <div className="flex gap-2">
+                                            {role !== 'journalist' && (
+                                                <>
+                                                    <AlertDialog>
+                                                        <AlertDialogTrigger asChild>
+                                                            <Button variant="destructive">Apagar</Button>
+                                                        </AlertDialogTrigger>
+                                                        <AlertDialogContent>
+                                                            <AlertDialogHeader>
+                                                                <AlertDialogTitle>Confirmar Exclusão</AlertDialogTitle>
+                                                                <AlertDialogDescription>
+                                                                    Você tem certeza que deseja apagar este artigo? Esta ação não pode ser desfeita.
+                                                                </AlertDialogDescription>
+                                                            </AlertDialogHeader>
+                                                            <AlertDialogFooter>
+                                                                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                                                <AlertDialogAction onClick={handleDelete}>Confirmar</AlertDialogAction>
+                                                            </AlertDialogFooter>
+                                                        </AlertDialogContent>
+                                                    </AlertDialog>
+                                                </>
+                                            )}
                                             <Button type="submit" disabled={isPending}>Salvar Publicação</Button>
                                         </div>
                                     </div>

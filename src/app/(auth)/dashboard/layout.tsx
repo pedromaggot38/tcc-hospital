@@ -1,4 +1,4 @@
-import { DashboardHeader } from "@/components/dashboard/dashboardHeader";
+  import { DashboardHeader } from "@/components/dashboard/dashboardHeader";
 import { SessionProvider } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { auth } from "@/../auth";

@@ -55,7 +55,6 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ user }) => {
                         </DropdownMenuItem>
                     </div>
                 )}
-
             </DropdownMenuContent>
         </DropdownMenu>
     );
