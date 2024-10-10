@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Copy, Eye, EyeOff } from "lucide-react"; // Importando ícones do Lucide
 
 interface TokenInputProps {
     username: string;
@@ -50,10 +51,10 @@ const TokenInput: React.FC<TokenInputProps> = ({ username }) => {
                     readOnly
                 />
                 <Button onClick={copyToClipboard} variant="outline" disabled={isLoadingToken || !token}>
-                    Copiar
+                    <Copy className="w-5 h-5" />
                 </Button>
                 <Button onClick={() => setIsTokenVisible(!isTokenVisible)} variant="outline">
-                    {isTokenVisible ? "Ocultar" : "Mostrar"}
+                    {isTokenVisible ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </Button>
             </div>
             {copySuccess && <p className="text-green-500">Token copiado com sucesso!</p>}
